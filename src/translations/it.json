@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "title": "Ciao, sono uno sviluppatore",
+    "switch_language": "Cambia lingua"
+  },
+  "car": {
+    "engine": "Motore",
+    "displacement": "Cilindrata",
+    "price": "Prezzo"
+  }
+}

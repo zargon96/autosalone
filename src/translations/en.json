@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "title": "Hi, I'm a developer",
+    "switch_language": "Switch language"
+  },
+  "car": {
+    "engine": "Engine",
+    "displacement": "Displacement",
+    "price": "Price"
+  }
+}

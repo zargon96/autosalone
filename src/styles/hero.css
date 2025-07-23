@@ -1,0 +1,95 @@
+:root {
+  --model-height: 50vh;
+}
+
+.hero {
+  margin-top: 40px;
+  padding-top: 170px;
+  position: relative;
+  width: 100%;
+  background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 150px;
+    margin-top: 0;
+  }
+}
+
+.description {
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.model-view {
+  width: 100%;
+  height: var(--model-height);
+}
+
+.model-view canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero .swiper,
+.hero .swiper-slide {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: var(--model-height);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute !important;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  color: #1792ff;
+  opacity: 0.85;
+  z-index: 20;
+  transition: opacity 0.2s;
+  pointer-events: auto;
+}
+
+.swiper-button-prev {
+  left: 20px;
+}
+.swiper-button-next {
+  right: 20px;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  opacity: 1;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 32px;
+}
+
+.car-stats {
+  margin-top: -5rem;
+  margin-bottom: 4rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.car-stats h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}

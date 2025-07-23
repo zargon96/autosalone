@@ -1,0 +1,24 @@
+:root {
+  --bg-color: #f5f6fa;
+  --text-color: #212529;
+  --model-height: 60vh;
+}
+
+.dark-mode {
+  --bg-color: #212529;
+  --text-color: #f5f6fa;
+}
+
+body,
+html,
+#root {
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.car-stats p,
+.car-stats h2 {
+  color: var(--text-color);
+}
