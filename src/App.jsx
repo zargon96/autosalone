@@ -10,6 +10,10 @@ function App() {
   return (
     <>
       <LangProvider>
+        <div className="bg-blobs">
+          <div className="blob blob1"></div>
+          <div className="blob blob2"></div>
+        </div>
         <Navbar />
         <Hero />
       </LangProvider>

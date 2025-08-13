@@ -1,11 +1,18 @@
 {
-  "navbar": {
-    "title": "Ciao, sono uno sviluppatore",
-    "switch_language": "Cambia lingua"
-  },
   "car": {
     "engine": "Motore",
     "displacement": "Cilindrata",
-    "price": "Prezzo"
+    "price": "Prezzo",
+    "tech_sheet": "Scheda tecnica",
+    "year": "Anno",
+    "power": "Potenza",
+    "torque": "Coppia",
+    "drivetrain": "Trazione",
+    "transmission": "Trasmissione",
+    "weight": "Peso",
+    "zeroTo100": "0-100 km/h",
+    "topSpeed": "Velocità massima",
+    "dimensions": "Dimensioni (L × L × H)",
+    "wheelbase": "Passo"
   }
 }
