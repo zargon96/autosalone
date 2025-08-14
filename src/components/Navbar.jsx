@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import useLang from "../context/useLang";
 import { Navbar, Container } from "react-bootstrap";
 import Switch from "../components/Switch";
-import "hamburgers/dist/hamburgers.css";
 import itFlag from "../assets/it.webp";
 import enFlag from "../assets/en.webp";
 

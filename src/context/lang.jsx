@@ -1,34 +1,32 @@
 import PropTypes from "prop-types";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { LangContext } from "./langContext";
 
 import it from "../translations/it.json";
 import en from "../translations/en.json";
 
-const translations = {
-  it,
-  en,
-};
+const translations = { it, en };
 
 export const LangProvider = ({ children }) => {
-  const [lang, setLang] = useState("it");
+  const [lang, setLangState] = useState("it");
 
-  const toggleLanguage = () => {
-    setLang((prevLang) => (prevLang === "it" ? "en" : "it"));
-  };
+  const toggleLanguage = useCallback(
+    () => setLangState((prev) => (prev === "it" ? "en" : "it")),
+    []
+  );
 
-  const setSpecificLanguage = (lang) => {
-    setLang(lang);
-  };
+  const setLang = useCallback((newLang) => {
+    if (translations[newLang]) setLangState(newLang);
+  }, []);
 
   const value = useMemo(
     () => ({
       lang,
       toggleLanguage,
-      setLang: setSpecificLanguage,
+      setLang,
       t: translations[lang],
     }),
-    [lang]
+    [lang, toggleLanguage, setLang]
   );
 
   return <LangContext.Provider value={value}>{children}</LangContext.Provider>;

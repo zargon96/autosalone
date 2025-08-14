@@ -1,0 +1,36 @@
+:root {
+  --icon-footer-color: #000;
+  --icon-github-hover: #000;
+  --icon-linkedin-hover: #0a66c2;
+}
+
+.dark-mode {
+  --icon-footer-color: #fff;
+  --icon-github-hover: #000;
+  --icon-linkedin-hover: #0a66c2;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-icons a {
+  color: var(--icon-footer-color);
+  transition: color 0.3s ease;
+}
+
+.footer-icons a.github-icon:hover {
+  color: var(--icon-github-hover);
+}
+
+.footer-icons a.linkedin-icon:hover {
+  color: var(--icon-linkedin-hover);
+}
+
+.footer-text {
+  text-align: center;
+  padding-top: 10px;
+}

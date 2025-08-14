@@ -14,5 +14,11 @@
     "topSpeed": "Top Speed",
     "dimensions": "Dimensions (L × W × H)",
     "wheelbase": "Wheelbase"
+  },
+  "footer": {
+    "brand": "Autosalone",
+    "text": "All rights reserved.",
+    "github_aria": "Marco Crucitti's GitHub profile",
+    "linkedin_aria": "Marco Crucitti's LinkedIn profile"
   }
 }

@@ -5,6 +5,7 @@ import Hero from "./components/Hero";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         </div>
         <Navbar />
         <Hero />
+        <Footer />
       </LangProvider>
     </>
   );
