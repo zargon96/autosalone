@@ -1,10 +1,12 @@
 :root {
   --model-height: 50vh;
   --swiper-arrow-color: #000;
+  --swiper-pagination-color: #000;
 }
 
 .dark-mode {
   --swiper-arrow-color: #fff;
+  --swiper-pagination-color: #fff;
 }
 .hero {
   margin-top: 40px;
@@ -16,6 +18,19 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.swiper-pagination-bullet {
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -56,6 +71,13 @@
   height: 100% !important;
 }
 
+.swiper {
+  margin-top: 50px;
+  --swiper-pagination-bullet-inactive-color: #999;
+  --swiper-pagination-bullet-size: 14px;
+  --swiper-pagination-bullet-horizontal-gap: 8px;
+}
+
 .hero .swiper,
 .hero .swiper-slide {
   position: absolute;
@@ -79,13 +101,6 @@
   z-index: 20;
   transition: opacity 0.2s;
   pointer-events: auto;
-}
-
-.swiper-button-prev {
-  left: 20px;
-}
-.swiper-button-next {
-  right: 20px;
 }
 
 .swiper-button-prev:hover,
