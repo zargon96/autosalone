@@ -11,14 +11,9 @@ import AnimatedModel from "../AnimatedModel";
 import Loader3D from "../Loader3D";
 
 export default function CarCanvas({ car, cameraPosition, cars, active }) {
-  // Preload dinamico del modello attivo
   useEffect(() => {
     if (!car) return;
-
-    // preload del modello attuale
     useGLTF.preload(car.model);
-
-    // preload next & prev
     const next = cars[active + 1];
     const prev = cars[active - 1];
     if (next) useGLTF.preload(next.model);
