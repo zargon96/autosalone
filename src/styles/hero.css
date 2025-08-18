@@ -35,8 +35,8 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding-top: 150px;
-    margin-top: 0;
+    padding-top: 80px;
+    margin-top: 0px;
   }
   .hero .swiper,
   .hero .swiper-slide {
@@ -50,6 +50,12 @@
   }
   .car-stats {
     width: 100% !important;
+  }
+  .swiper-pagination {
+    bottom: 50px !important;
+  }
+  .title-car {
+    font-size: 26px;
   }
 }
 
