@@ -248,4 +248,3 @@ export const cars = [
   },
 ];
 useGLTF.preload(cars[0].model);
-// cars.forEach((c) => useGLTF.preload(c.model));
