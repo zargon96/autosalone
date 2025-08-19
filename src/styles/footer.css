@@ -33,5 +33,10 @@
 
 .footer-text {
   text-align: center;
-  padding-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .credits {
+    padding-bottom: 30px;
+  }
 }

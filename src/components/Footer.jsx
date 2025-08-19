@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 import useLang from "../context/useLang";
 import "../styles/footer.css";
 
@@ -33,6 +34,11 @@ export default function Footer() {
       <p className="footer-text text-color">
         © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}
         {t.footer.brand}. {t.footer.text}
+      </p>
+      <p className="footer-text credits">
+        <Link to="/credits" className="text-color">
+          Credits & Licenses
+        </Link>
       </p>
     </footer>
   );
