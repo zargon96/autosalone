@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 const creditsData = [
   {
     title: "2003 Nissan 350Z Veliside Z33 Ver.III Body Kit",
@@ -80,10 +82,27 @@ const creditsData = [
 ];
 
 const Credits = () => {
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains("dark-mode"));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="container mt-5 section-shadow p-4 rounded">
-      <h1 className="text-center mb-4 text-white">Credits & Licenses</h1>
-      <p className="text-center text-white">
+      <h1 className="text-center mb-4 text-color">Credits & Licenses</h1>
+      <p className="text-center text-color">
         All 3D models used on this website belong to their respective authors
         and are subject to the following licenses.
       </p>
@@ -121,7 +140,12 @@ const Credits = () => {
       </div>
 
       <div className="text-center mt-4">
-        <Link to="/" className="btn btn-outline-light">
+        <Link
+          to="/"
+          className={`btn ${
+            isDarkMode ? "btn-outline-light" : "btn-outline-dark"
+          }`}
+        >
           ⬅ Back to Home
         </Link>
       </div>
