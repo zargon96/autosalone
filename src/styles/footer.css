@@ -10,6 +10,10 @@
   --icon-linkedin-hover: #0a66c2;
 }
 
+footer.footer.container {
+  margin-top: -50px;
+}
+
 .footer-icons {
   display: flex;
   justify-content: center;

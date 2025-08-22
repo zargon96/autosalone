@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-export default function HeroStats({ statPairs, t, active }) {
+function HeroStats({ children, active }) {
   const statsRef = useRef(null);
 
   useEffect(() => {
@@ -19,42 +19,31 @@ export default function HeroStats({ statPairs, t, active }) {
 
   return (
     <div className="car-stats" ref={statsRef}>
-      <div className="tech-sheet">
-        <h2>{t.car.tech_sheet}</h2>
-
-        {(() => {
-          const rows = [];
-          let tempRow = [];
-          statPairs.forEach((stat) => {
-            if (stat.fullWidth) {
-              if (tempRow.length > 0) {
-                rows.push(tempRow);
-                tempRow = [];
-              }
-              rows.push([stat]);
-            } else {
-              tempRow.push(stat);
-              if (tempRow.length === 2) {
-                rows.push(tempRow);
-                tempRow = [];
-              }
-            }
-          });
-          if (tempRow.length > 0) rows.push(tempRow);
-
-          return rows.map((row, i) => (
-            <div className="row" key={i}>
-              {row.map((stat, j) => (
-                <div className={stat.fullWidth ? "col-12" : "col-md-6"} key={j}>
-                  <p>
-                    {stat.label}: {stat.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ));
-        })()}
-      </div>
+      <div className="tech-sheet">{children}</div>
     </div>
   );
 }
+
+function Title({ children }) {
+  return <h2>{children}</h2>;
+}
+
+function Row({ children }) {
+  return <div className="row mb-2">{children}</div>;
+}
+
+function Item({ label, value, fullWidth = false }) {
+  return (
+    <div className={fullWidth ? "col-12" : "col-md-6"}>
+      <p>
+        {label}: {value}
+      </p>
+    </div>
+  );
+}
+
+HeroStats.Title = Title;
+HeroStats.Row = Row;
+HeroStats.Item = Item;
+
+export default HeroStats;

@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
-export default function HeroCarousel({ cars, onSlideChange }) {
+export default function HeroCarousel({ cars, carKeys, onSlideChange }) {
   return (
     <Swiper
       modules={[Navigation, EffectFade, Pagination]}
@@ -18,9 +18,10 @@ export default function HeroCarousel({ cars, onSlideChange }) {
       onSlideChange={(sw) => onSlideChange(sw.activeIndex)}
       className="swiper"
     >
-      {cars.map((car) => (
-        <SwiperSlide key={car.id}></SwiperSlide>
-      ))}
+      {carKeys.map((key) => {
+        const car = cars[key];
+        return <SwiperSlide key={car.id}></SwiperSlide>;
+      })}
     </Swiper>
   );
 }
