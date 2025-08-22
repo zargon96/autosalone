@@ -2,8 +2,9 @@ import { useGLTF } from "@react-three/drei";
 
 const BASE_URL = import.meta.env.VITE_CARS_BASE_URL;
 
-export const cars = [
-  {
+export const cars = {
+  f40: {
+    id: "f40",
     name: "Ferrari F40",
     model: `${BASE_URL}/ferrari_f40.glb`,
     scale: 1,
@@ -29,7 +30,9 @@ export const cars = [
       wheelbase_mm: 2450,
     },
   },
-  {
+
+  zonda_cinque: {
+    id: "zonda_cinque",
     name: "Pagani Zonda Cinque",
     model: `${BASE_URL}/pagani_zonda_cinque.glb`,
     scale: 1.1,
@@ -56,7 +59,8 @@ export const cars = [
     },
   },
 
-  {
+  f12: {
+    id: "f12",
     name: "Ferrari F12 berlinetta",
     model: `${BASE_URL}/ferrari_f12_berlinetta.glb`,
     scale: 100,
@@ -83,7 +87,8 @@ export const cars = [
     },
   },
 
-  {
+  f488: {
+    id: "f488",
     name: "Ferrari 488 Pista",
     model: `${BASE_URL}/ferrari_488_pista.glb`,
     scale: 65,
@@ -109,7 +114,9 @@ export const cars = [
       wheelbase_mm: 2650,
     },
   },
-  {
+
+  m3_e30: {
+    id: "m3_e30",
     name: "BMW M3 E30",
     model: `${BASE_URL}/bmw_m3.glb`,
     scale: 1,
@@ -131,7 +138,9 @@ export const cars = [
       wheelbase_mm: 2565,
     },
   },
-  {
+
+  charger69: {
+    id: "charger69",
     name: "Dodge Charger (1969)",
     model: `${BASE_URL}/dodge_charger.glb`,
     scale: 0.9,
@@ -153,7 +162,9 @@ export const cars = [
       wheelbase_mm: 2970,
     },
   },
-  {
+
+  supra_mk4: {
+    id: "supra_mk4",
     name: "Toyota Supra MK4 (1993)",
     model: `${BASE_URL}/toyota_supra.glb`,
     scale: 0.3,
@@ -180,7 +191,8 @@ export const cars = [
     },
   },
 
-  {
+  skyline_r33: {
+    id: "skyline_r33",
     name: "Nissan Skyline GT-R (R33)",
     model: `${BASE_URL}/nissan_skyline_r33.glb`,
     scale: 0.3,
@@ -202,7 +214,9 @@ export const cars = [
       wheelbase_mm: 2720,
     },
   },
-  {
+
+  skyline_r34: {
+    id: "skyline_r34",
     name: "Nissan Skyline GT-R (R34)",
     model: `${BASE_URL}/nissan_skyline_r34.glb`,
     scale: 104,
@@ -224,7 +238,9 @@ export const cars = [
       wheelbase_mm: 2665,
     },
   },
-  {
+
+  z350: {
+    id: "z350",
     name: "Nissan 350Z (2003)",
     model: `${BASE_URL}/nissan_350z.glb`,
     scale: 104,
@@ -247,7 +263,8 @@ export const cars = [
     },
   },
 
-  {
+  rx7_fd: {
+    id: "rx7_fd",
     name: "Mazda RX-7 (FD, 1993)",
     model: `${BASE_URL}/mazda_rx-7.glb`,
     scale: 0.4,
@@ -273,7 +290,9 @@ export const cars = [
       wheelbase_mm: 2425,
     },
   },
-  {
+
+  tt_rs: {
+    id: "tt_rs",
     name: "Audi TT RS",
     model: `${BASE_URL}/audi_tt_rs.glb`,
     scale: 105,
@@ -295,5 +314,7 @@ export const cars = [
       wheelbase_mm: 2505,
     },
   },
-];
-useGLTF.preload(cars[0].model);
+};
+
+const firstCarKey = Object.keys(cars)[0];
+useGLTF.preload(cars[firstCarKey].model);

@@ -21,7 +21,9 @@ import "../../styles/hero.css";
 export default function Hero() {
   const { t, lang } = useLang();
   const [active, setActive] = useState(0);
-  const s = cars[active].specs;
+  const carKeys = Object.keys(cars);
+  const activeCar = cars[carKeys[active]];
+  const s = activeCar.specs;
 
   const rates = useFxRates();
 
@@ -44,7 +46,7 @@ export default function Hero() {
   }, [lang, s]);
 
   const priceLabel = useMemo(() => {
-    const eur = cars[active].stats.price_eur ?? null;
+    const eur = activeCar.stats.price_eur ?? null;
     if (!eur) return "—";
 
     if (lang === "en") {
@@ -69,36 +71,38 @@ export default function Hero() {
       currency: "EUR",
       maximumFractionDigits: 0,
     }).format(eur);
-  }, [active, lang, rates]);
+  }, [lang, rates, activeCar]);
 
   const statPairs = useMemo(() => {
     return [
-      [t.car.engine, cars[active].stats.engine],
-      [t.car.displacement, cars[active].stats.displacement],
-      [t.car.year, String(s.year)],
-      [t.car.power, powerValue],
-      [t.car.drivetrain, s.drivetrain],
-      [t.car.transmission, s.transmission],
-      [t.car.weight, asWeight(s.weight_kg, lang)],
-      [t.car.zeroTo100, `${nf1(lang).format(s.zeroTo100_s)}s`],
-      [t.car.wheelbase, asLengthMm(s.wheelbase_mm, lang)],
-      [
-        t.car.topSpeed,
-        <span key={active} className="count-up-text">
-          <CountUp
-            from={0}
-            to={
-              lang === "en"
-                ? Math.round(s.topSpeed_kmh * KMH_TO_MPH)
-                : s.topSpeed_kmh
-            }
-            separator=","
-            direction="up"
-            duration={1.5}
-          />
-          {lang === "en" ? " mph" : " km/h"}
-        </span>,
-      ],
+      { label: t.car.engine, value: activeCar.stats.engine },
+      { label: t.car.displacement, value: activeCar.stats.displacement },
+      { label: t.car.year, value: String(s.year) },
+      { label: t.car.power, value: powerValue },
+      { label: t.car.drivetrain, value: s.drivetrain },
+      { label: t.car.transmission, value: s.transmission },
+      { label: t.car.weight, value: asWeight(s.weight_kg, lang) },
+      { label: t.car.zeroTo100, value: `${nf1(lang).format(s.zeroTo100_s)}s` },
+      { label: t.car.wheelbase, value: asLengthMm(s.wheelbase_mm, lang) },
+      {
+        label: t.car.topSpeed,
+        value: (
+          <span key={active} className="count-up-text">
+            <CountUp
+              from={0}
+              to={
+                lang === "en"
+                  ? Math.round(s.topSpeed_kmh * KMH_TO_MPH)
+                  : s.topSpeed_kmh
+              }
+              separator=","
+              direction="up"
+              duration={1.5}
+            />
+            {lang === "en" ? " mph" : " km/h"}
+          </span>
+        ),
+      },
       {
         label: t.car.dimensions,
         value: asDimensions(
@@ -113,25 +117,28 @@ export default function Hero() {
       },
       { label: t.car.price, value: priceLabel, fullWidth: true },
     ];
-  }, [active, lang, s, t, powerValue, priceLabel]);
+  }, [active, lang, s, t, powerValue, priceLabel, activeCar]);
 
   return (
     <section className="hero container">
       <h1>
         <BlurText
           key={active}
-          text={cars[active].name}
+          text={activeCar.name}
           delay={50}
           animateBy="letters"
           direction="top"
           className="text-color title-car"
         />
       </h1>
-      <HeroCarousel cars={cars} onSlideChange={handleSlideChange} />
+      <HeroCarousel
+        cars={carKeys.map((key) => cars[key])}
+        onSlideChange={handleSlideChange}
+      />
       <div className="row">
         <div className="col-md-7">
           <CarCanvas
-            car={cars[active]}
+            car={activeCar}
             cars={cars}
             active={active}
             cameraPosition={cameraPosition}

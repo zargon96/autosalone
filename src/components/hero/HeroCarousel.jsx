@@ -19,7 +19,7 @@ export default function HeroCarousel({ cars, onSlideChange }) {
       className="swiper"
     >
       {cars.map((car) => (
-        <SwiperSlide key={car.model}></SwiperSlide>
+        <SwiperSlide key={car.id}></SwiperSlide>
       ))}
     </Swiper>
   );

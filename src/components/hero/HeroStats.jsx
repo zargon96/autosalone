@@ -33,7 +33,7 @@ export default function HeroStats({ statPairs, t, active }) {
               }
               rows.push([stat]);
             } else {
-              tempRow.push({ label: stat[0], value: stat[1] });
+              tempRow.push(stat);
               if (tempRow.length === 2) {
                 rows.push(tempRow);
                 tempRow = [];

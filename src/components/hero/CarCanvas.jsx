@@ -6,11 +6,11 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, memo } from "react";
 import Loader3D from "../Loader3D";
 import gsap from "gsap";
 
-function AnimatedModel({ car }) {
+const AnimatedModel = memo(function AnimatedModel({ car }) {
   const { scene } = useGLTF(car.model);
   const ref = useRef();
 
@@ -35,17 +35,16 @@ function AnimatedModel({ car }) {
       position={car.offset}
     />
   );
-}
+});
 
-export default function CarCanvas({ car, cameraPosition, cars, active }) {
+export default function CarCanvas({ car, cameraPosition }) {
   useEffect(() => {
-    if (!car) return;
-    useGLTF.preload(car.model);
-    const next = cars[active + 1];
-    const prev = cars[active - 1];
-    if (next) useGLTF.preload(next.model);
-    if (prev) useGLTF.preload(prev.model);
-  }, [car, cars, active]);
+    if (car?.model) {
+      useGLTF.preload(car.model);
+    }
+  }, [car]);
+
+  if (!car) return null;
 
   return (
     <div className="model-view">
@@ -65,7 +64,7 @@ export default function CarCanvas({ car, cameraPosition, cars, active }) {
             </Html>
           }
         >
-          {car && <AnimatedModel car={car} />}
+          <AnimatedModel car={car} />
         </Suspense>
 
         <ContactShadows
