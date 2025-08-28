@@ -3,8 +3,6 @@ import { ContactShadows, useGLTF } from "@react-three/drei";
 import { Suspense, useMemo } from "react";
 import { cars } from "../components/hero/carsData";
 
-Object.values(cars).forEach((car) => useGLTF.preload(car.model));
-
 function Model({ car, sideView, visible }) {
   const { scene } = useGLTF(car.model);
   const rotation = sideView ? [0, -Math.PI / 2, 0] : car.rotation;
