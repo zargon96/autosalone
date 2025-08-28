@@ -31,11 +31,11 @@ export default function CarCanvasStatic({ activeIndex, sideView = false }) {
       <Canvas
         shadows
         frameloop="demand"
-        dpr={1}
+        dpr={[1, 2]}
         gl={{
           toneMappingExposure: 1.5,
           powerPreference: "high-performance",
-          antialias: false,
+          antialias: true,
           preserveDrawingBuffer: false,
         }}
         camera={{ position: [0, 4, 6], fov: fovValue }}
