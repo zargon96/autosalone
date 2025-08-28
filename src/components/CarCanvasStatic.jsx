@@ -2,6 +2,8 @@ import { Canvas } from "@react-three/fiber";
 import { ContactShadows, useGLTF } from "@react-three/drei";
 import { Suspense, useMemo } from "react";
 import { cars } from "../components/hero/carsData";
+import { Html } from "@react-three/drei";
+import Loader3D from "./Loader3D";
 
 function Model({ car, sideView, visible }) {
   const { scene } = useGLTF(car.model);
@@ -54,12 +56,17 @@ export default function CarCanvasStatic({ activeIndex, sideView = false }) {
           groundColor="#666666"
         />
         <ambientLight intensity={0.6} />
-
         <directionalLight position={[6, 8, 6]} intensity={2.2} castShadow />
         <directionalLight position={[-6, 4, -3]} intensity={1.0} />
         <directionalLight position={[0, 6, -6]} intensity={1.4} />
 
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Html center>
+              <Loader3D />
+            </Html>
+          }
+        >
           {carKeys.map((key, i) => (
             <Model
               key={cars[key].id}
@@ -69,7 +76,6 @@ export default function CarCanvasStatic({ activeIndex, sideView = false }) {
             />
           ))}
         </Suspense>
-
         <ContactShadows
           position={[0, -0.01, 0]}
           opacity={0.35}
