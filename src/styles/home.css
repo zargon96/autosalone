@@ -275,8 +275,20 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 }
 
 @media (max-width: 768px) {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  .showcase-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
   footer.footer2 {
-    margin-top: 588px !important;
+    /* margin-top: 588px !important; */
+    margin-top: auto !important;
     bottom: 30px;
     left: 0;
     transform: translateX(0);
