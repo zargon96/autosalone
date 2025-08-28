@@ -1,5 +1,3 @@
-import { useGLTF } from "@react-three/drei";
-
 const BASE_URL = import.meta.env.VITE_CARS_BASE_URL;
 
 export const cars = {
@@ -315,6 +313,3 @@ export const cars = {
     },
   },
 };
-
-const firstCarKey = Object.keys(cars)[0];
-useGLTF.preload(cars[firstCarKey].model);
