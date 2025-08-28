@@ -10,37 +10,48 @@
   --icon-linkedin-hover: #0a66c2;
 }
 
-footer.footer.container {
-  margin-top: -50px;
-}
-
-.footer-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
-}
-
-.footer-icons a {
-  color: var(--icon-footer-color);
-  transition: color 0.3s ease;
-}
-
-.footer-icons a.github-icon:hover {
-  color: var(--icon-github-hover);
-}
-
-.footer-icons a.linkedin-icon:hover {
-  color: var(--icon-linkedin-hover);
-}
-
 .footer-text {
   text-align: center;
 }
 
 @media (max-width: 768px) {
   .credits {
-    padding-bottom: 30px;
+    padding-bottom: 0px;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-content {
+    flex: 1;
+  }
+
+  footer.footer {
+    margin-top: 48px;
+    bottom: 30px;
+    left: 50%;
+    text-align: center;
+    font-size: 0.9rem;
+    z-index: 5;
+    position: relative;
+  }
+  .footer-icons {
+    margin-top: 30px;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .footer .credits {
+    padding-bottom: 20px;
+    font-size: 0.8rem;
   }
 }

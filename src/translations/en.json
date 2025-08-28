@@ -13,7 +13,9 @@
     "zeroTo100": "0-100 km/h",
     "topSpeed": "Top Speed",
     "dimensions": "Dimensions (L × W × H)",
-    "wheelbase": "Wheelbase"
+    "wheelbase": "Wheelbase",
+    "details": "Full details →",
+    "back_home": "Back to Home"
   },
   "footer": {
     "brand": "Autosalone",

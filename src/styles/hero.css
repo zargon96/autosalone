@@ -9,7 +9,6 @@
   --swiper-pagination-color: #fff;
 }
 .hero {
-  padding-top: 100px;
   position: relative;
   width: 100%;
   display: flex;
@@ -19,32 +18,9 @@
   overflow: hidden;
 }
 
-.swiper-pagination {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  pointer-events: auto;
-}
-
-.swiper-pagination-bullet {
-  cursor: pointer;
-}
-
 @media (max-width: 768px) {
   .hero {
     padding-top: 80px;
-  }
-  .hero .swiper,
-  .hero .swiper-slide {
-    position: absolute;
-    top: 22% !important;
-    left: 0;
-    width: 100%;
-    height: var(--model-height);
-    transform: translateY(-50%);
-    pointer-events: none;
   }
   .car-stats {
     width: 100% !important;
@@ -54,6 +30,30 @@
   }
   .title-car {
     font-size: 26px;
+  }
+  .stats-bottom-center {
+    gap: 1.5rem;
+    bottom: 8.75rem;
+  }
+  .stat-value {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-color);
+  }
+  .stats-bottom-center {
+    position: absolute;
+    bottom: 9.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+  }
+  .price-top-right {
+    right: 1.25rem;
+    top: 152px;
   }
 }
 
@@ -82,52 +82,18 @@
   --swiper-pagination-bullet-horizontal-gap: 8px;
 }
 
-.hero .swiper,
-.hero .swiper-slide {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: var(--model-height);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-  position: absolute !important;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  color: var(--swiper-arrow-color);
-  opacity: 0.85;
-  z-index: 20;
-  transition: opacity 0.2s;
-  pointer-events: auto;
-}
-
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-  opacity: 1;
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  font-size: 32px;
-}
 .title-car {
   margin-bottom: 30px;
 }
 .car-stats {
-  margin-bottom: 10rem;
+  padding-bottom: 0px !important;
   color: var(--text-color);
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px) saturate(150%);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 1.5rem;
+  padding: 17px;
   max-width: 500px;
   width: 120%;
   margin-inline: auto;
@@ -145,4 +111,33 @@
 .car-stats h2 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
+}
+
+.hero-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 1.5rem;
+}
+
+.hero-topbar h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.footer-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-icons a {
+  color: var(--text-color);
+  transition: opacity 0.2s;
+}
+
+.footer-icons a:hover {
+  opacity: 0.7;
 }
