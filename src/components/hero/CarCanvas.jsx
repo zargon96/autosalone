@@ -38,12 +38,6 @@ const AnimatedModel = memo(function AnimatedModel({ car }) {
 });
 
 export default function CarCanvas({ car, cameraPosition }) {
-  useEffect(() => {
-    if (car?.model) {
-      useGLTF.preload(car.model);
-    }
-  }, [car]);
-
   if (!car) return null;
 
   return (
