@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import useCanvas from "../context/CanvasContext";
 
 const creditsData = [
   {
@@ -82,6 +83,13 @@ const creditsData = [
 ];
 
 const Credits = () => {
+  const { setMode } = useCanvas();
+
+  useEffect(() => {
+    setMode("hidden");
+    return () => setMode("static");
+  }, [setMode]);
+
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );

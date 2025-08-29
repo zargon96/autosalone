@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useLang from "../../context/useLang";
+import useCanvas from "../../context/CanvasContext";
 import { cars } from "./carsData";
 import BlurText from "../BlurText";
 import CountUp from "../CountUp";
-import CarCanvas from "./CarCanvas";
 import HeroStats from "./HeroStats";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -27,8 +27,9 @@ export default function Hero() {
   const { t, lang } = useLang();
   const { id } = useParams();
   const navigate = useNavigate();
-  const carKeys = Object.keys(cars);
+  const { setActiveCarId, setMode, setContainerClass } = useCanvas();
 
+  const carKeys = Object.keys(cars);
   const initialIndex = carKeys.indexOf(id);
   const [active] = useState(initialIndex >= 0 ? initialIndex : 0);
 
@@ -36,10 +37,16 @@ export default function Hero() {
   const s = car.specs;
   const rates = useFxRates();
 
-  const cameraPosition = useMemo(
-    () => (window.innerWidth <= 768 ? [0, 1.5, 5.5] : [0, 1.5, 5]),
-    []
-  );
+  useEffect(() => {
+    setMode("hero");
+    setActiveCarId(car.id);
+    setContainerClass?.("hero-canvas");
+
+    return () => {
+      setMode("static");
+      setContainerClass?.("model-center");
+    };
+  }, [car, setMode, setActiveCarId, setContainerClass]);
 
   const powerValue = useMemo(() => {
     const hp = s.power_hp;
@@ -83,7 +90,7 @@ export default function Hero() {
       <Navbar />
       <section className="hero container mt-4">
         <div className="row hero-content">
-          <div className="col-md-7">
+          <div className="col-md-12">
             <h1 className="m-0">
               <BlurText
                 key={active}
@@ -94,125 +101,134 @@ export default function Hero() {
                 className="text-color title-car"
               />
             </h1>
-            <CarCanvas
-              car={car}
-              cars={cars}
-              active={active}
-              cameraPosition={cameraPosition}
-            />
-            <button
-              className="btn-details mt-2"
-              onClick={() => navigate("/")}
-              type="button"
-            >
-              ← {t.car.back_home}
-            </button>
           </div>
-          <div className="col-md-5">
-            <div className="hero-topbar d-flex justify-content-end align-items-center">
-              <div className="footer-icons">
-                <a
-                  href="https://github.com/zargon96"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t.footer.github_aria}
-                >
-                  <FontAwesomeIcon icon={faGithub} size="2x" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/marcocrucitti96/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={t.footer.linkedin_aria}
-                >
-                  <FontAwesomeIcon icon={faLinkedin} size="2x" />
-                </a>
-              </div>
+          <div className="row">
+            <div className="col-md-6">
+              <button
+                className="btn-details mt-2"
+                onClick={() => {
+                  setMode("static");
+                  setContainerClass("model-center");
+                  navigate("/");
+                }}
+                type="button"
+              >
+                ← {t.car.back_home}
+              </button>
             </div>
-            <HeroStats active={active}>
-              <HeroStats.Title>{t.car.tech_sheet}</HeroStats.Title>
+            <div className="col-md-6 mb-5">
+              <div className="hero-topbar d-flex justify-content-end align-items-center">
+                <div className="footer-icons">
+                  <a
+                    href="https://github.com/zargon96"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t.footer.github_aria}
+                  >
+                    <FontAwesomeIcon icon={faGithub} size="2x" />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/marcocrucitti96/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t.footer.linkedin_aria}
+                  >
+                    <FontAwesomeIcon icon={faLinkedin} size="2x" />
+                  </a>
+                </div>
+              </div>
 
-              <HeroStats.Row>
-                <HeroStats.Item label={t.car.engine} value={car.stats.engine} />
-                <HeroStats.Item
-                  label={t.car.displacement}
-                  value={car.stats.displacement}
-                />
-              </HeroStats.Row>
+              <HeroStats active={active}>
+                <HeroStats.Title>{t.car.tech_sheet}</HeroStats.Title>
 
-              <HeroStats.Row>
-                <HeroStats.Item label={t.car.year} value={s.year} />
-                <HeroStats.Item label={t.car.power} value={powerValue} />
-              </HeroStats.Row>
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.engine}
+                    value={car.stats.engine}
+                  />
+                  <HeroStats.Item
+                    label={t.car.displacement}
+                    value={car.stats.displacement}
+                  />
+                </HeroStats.Row>
 
-              <HeroStats.Row>
-                <HeroStats.Item label={t.car.drivetrain} value={s.drivetrain} />
-                <HeroStats.Item
-                  label={t.car.transmission}
-                  value={s.transmission}
-                />
-              </HeroStats.Row>
+                <HeroStats.Row>
+                  <HeroStats.Item label={t.car.year} value={s.year} />
+                  <HeroStats.Item label={t.car.power} value={powerValue} />
+                </HeroStats.Row>
 
-              <HeroStats.Row>
-                <HeroStats.Item
-                  label={t.car.weight}
-                  value={asWeight(s.weight_kg, lang)}
-                />
-                <HeroStats.Item
-                  label={t.car.zeroTo100}
-                  value={`${nf1(lang).format(s.zeroTo100_s)}s`}
-                />
-              </HeroStats.Row>
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.drivetrain}
+                    value={s.drivetrain}
+                  />
+                  <HeroStats.Item
+                    label={t.car.transmission}
+                    value={s.transmission}
+                  />
+                </HeroStats.Row>
 
-              <HeroStats.Row>
-                <HeroStats.Item
-                  label={t.car.topSpeed}
-                  value={
-                    <span key={active} className="count-up-text">
-                      <CountUp
-                        from={0}
-                        to={
-                          lang === "en"
-                            ? Math.round(s.topSpeed_kmh * KMH_TO_MPH)
-                            : s.topSpeed_kmh
-                        }
-                        separator=","
-                        direction="up"
-                        duration={1.5}
-                      />
-                      {lang === "en" ? " mph" : " km/h"}
-                    </span>
-                  }
-                />
-                <HeroStats.Item
-                  label={t.car.wheelbase}
-                  value={asLengthMm(s.wheelbase_mm, lang)}
-                />
-              </HeroStats.Row>
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.weight}
+                    value={asWeight(s.weight_kg, lang)}
+                  />
+                  <HeroStats.Item
+                    label={t.car.zeroTo100}
+                    value={`${nf1(lang).format(s.zeroTo100_s)}s`}
+                  />
+                </HeroStats.Row>
 
-              <HeroStats.Row>
-                <HeroStats.Item
-                  label={t.car.dimensions}
-                  value={asDimensions(
-                    {
-                      length_mm: s.length_mm,
-                      width_mm: s.width_mm,
-                      height_mm: s.height_mm,
-                    },
-                    lang
-                  )}
-                  fullWidth
-                />
-              </HeroStats.Row>
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.topSpeed}
+                    value={
+                      <span key={active} className="count-up-text">
+                        <CountUp
+                          from={0}
+                          to={
+                            lang === "en"
+                              ? Math.round(s.topSpeed_kmh * KMH_TO_MPH)
+                              : s.topSpeed_kmh
+                          }
+                          separator=","
+                          direction="up"
+                          duration={1.5}
+                        />
+                        {lang === "en" ? " mph" : " km/h"}
+                      </span>
+                    }
+                  />
+                  <HeroStats.Item
+                    label={t.car.wheelbase}
+                    value={asLengthMm(s.wheelbase_mm, lang)}
+                  />
+                </HeroStats.Row>
 
-              <HeroStats.Row>
-                <HeroStats.Item
-                  label={t.car.price}
-                  value={priceLabel}
-                  fullWidth
-                />
-              </HeroStats.Row>
-            </HeroStats>
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.dimensions}
+                    value={asDimensions(
+                      {
+                        length_mm: s.length_mm,
+                        width_mm: s.width_mm,
+                        height_mm: s.height_mm,
+                      },
+                      lang
+                    )}
+                    fullWidth
+                  />
+                </HeroStats.Row>
+
+                <HeroStats.Row>
+                  <HeroStats.Item
+                    label={t.car.price}
+                    value={priceLabel}
+                    fullWidth
+                  />
+                </HeroStats.Row>
+              </HeroStats>
+            </div>
           </div>
         </div>
       </section>

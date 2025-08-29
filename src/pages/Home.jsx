@@ -1,32 +1,42 @@
-import { useEffect, useLayoutEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import useLang from "../context/useLang";
 import useFxRates from "../components/hero/useFxRates";
 import { nf0 } from "../components/hero/formatters";
 import gsap from "gsap";
 import Navbar from "../components/Navbar";
 import { cars } from "../components/hero/carsData";
-import CarCanvasStatic from "../components/CarCanvasStatic";
-import Loader3D from "../components/Loader3D";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import BlurText from "../components/BlurText";
+import useCanvas from "../context/CanvasContext";
 import "../styles/home.css";
 
 export default function Home() {
+  const {
+    setActiveCarId,
+    setMode,
+    setContainerClass,
+    homeIndex,
+    setHomeIndex,
+  } = useCanvas();
+
   const { t, lang } = useLang();
   const rates = useFxRates();
   const navigate = useNavigate();
   const carKeys = Object.keys(cars);
   const currentYear = new Date().getFullYear();
+
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
-  const indexRef = useRef(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const indexRef = useRef(homeIndex || 0); // 🔑 parti dall’indice salvato
+  const [currentIndex, setCurrentIndex] = useState(homeIndex || 0);
   const animatingRef = useRef(false);
   const touchStartY = useRef(null);
   const initDone = useRef(false);
   const wheelAccRef = useRef(0);
+
+  const gotoSectionRef = useRef(() => {});
 
   const formatPower = (specs) => {
     if (!specs?.power_hp) return "—";
@@ -78,11 +88,16 @@ export default function Home() {
     initDone.current = true;
     const sections = sectionsRef.current.filter(Boolean);
     gsap.set(sections, {
-      yPercent: (i) => (i === 0 ? 0 : 100),
-      autoAlpha: (i) => (i === 0 ? 1 : 0),
+      yPercent: (i) => (i === currentIndex ? 0 : 100),
+      autoAlpha: (i) => (i === currentIndex ? 1 : 0),
       force3D: true,
     });
-  }, []);
+
+    // Home setup
+    setMode("static");
+    setActiveCarId(carKeys[currentIndex]);
+    setContainerClass?.("model-center");
+  }, [carKeys, currentIndex, setActiveCarId, setMode, setContainerClass]);
 
   const gotoSection = (nextIndex, dir) => {
     const sections = sectionsRef.current.filter(Boolean);
@@ -93,6 +108,8 @@ export default function Home() {
 
     animatingRef.current = true;
     setCurrentIndex(nextIndex);
+    setHomeIndex(nextIndex); // 🔑 salva nel context
+    setActiveCarId(carKeys[nextIndex]);
 
     const from = sections[cur];
     const to = sections[nextIndex];
@@ -115,6 +132,8 @@ export default function Home() {
       );
   };
 
+  gotoSectionRef.current = gotoSection;
+
   useEffect(() => {
     const WHEEL_THRESHOLD = 100;
 
@@ -122,11 +141,11 @@ export default function Home() {
       wheelAccRef.current += e.deltaY;
       if (wheelAccRef.current > WHEEL_THRESHOLD) {
         e.preventDefault();
-        gotoSection(indexRef.current + 1, 1);
+        gotoSectionRef.current(indexRef.current + 1, 1);
         wheelAccRef.current = 0;
       } else if (wheelAccRef.current < -WHEEL_THRESHOLD) {
         e.preventDefault();
-        gotoSection(indexRef.current - 1, -1);
+        gotoSectionRef.current(indexRef.current - 1, -1);
         wheelAccRef.current = 0;
       }
     };
@@ -136,10 +155,10 @@ export default function Home() {
       const up = ["ArrowUp", "PageUp"];
       if (down.includes(e.key) || (e.key === " " && !e.shiftKey)) {
         e.preventDefault();
-        gotoSection(indexRef.current + 1, 1);
+        gotoSectionRef.current(indexRef.current + 1, 1);
       } else if (up.includes(e.key) || (e.key === " " && e.shiftKey)) {
         e.preventDefault();
-        gotoSection(indexRef.current - 1, -1);
+        gotoSectionRef.current(indexRef.current - 1, -1);
       }
     };
 
@@ -152,8 +171,8 @@ export default function Home() {
       if (Math.abs(d) < 50) return;
       e.preventDefault();
       d > 0
-        ? gotoSection(indexRef.current + 1, 1)
-        : gotoSection(indexRef.current - 1, -1);
+        ? gotoSectionRef.current(indexRef.current + 1, 1)
+        : gotoSectionRef.current(indexRef.current - 1, -1);
       touchStartY.current = null;
     };
     const onTouchEnd = () => (touchStartY.current = null);
@@ -182,6 +201,7 @@ export default function Home() {
             {String(currentIndex + 1).padStart(2, "0")}
           </span>
         </div>
+
         <div className="social-vertical">
           <a
             href="https://github.com/zargon96"
@@ -199,12 +219,6 @@ export default function Home() {
           >
             <FontAwesomeIcon icon={faLinkedin} size="2x" />
           </a>
-        </div>
-
-        <div className="model-center">
-          <Suspense fallback={<Loader3D />}>
-            <CarCanvasStatic activeIndex={currentIndex} sideView />
-          </Suspense>
         </div>
 
         {carKeys.map((key, i) => {
@@ -292,7 +306,7 @@ export default function Home() {
 
         <div
           className="scroll-left"
-          onClick={() => gotoSection(indexRef.current + 1, 1)}
+          onClick={() => gotoSectionRef.current(indexRef.current + 1, 1)}
         >
           <i className="bi bi-caret-down-fill bounce-icon"></i>
         </div>
