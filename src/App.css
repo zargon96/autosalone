@@ -55,7 +55,7 @@ html {
 
 @media (max-width: 768px) {
   .hero-canvas {
-    top: 65% !important;
+    top: 70% !important;
     width: 90vw !important;
     height: 40vh !important;
     transform: translate(-50%, -50%) !important;
