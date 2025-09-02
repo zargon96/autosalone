@@ -12,7 +12,8 @@ import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 
 const Model = memo(function Model({ car }) {
-  const { scene } = useGLTF(car.model);
+  // const { scene } = useGLTF(car.model);
+  const { scene } = useGLTF(car.model());
   return (
     <primitive
       object={scene}
@@ -103,8 +104,8 @@ function usePrefetchAround(activeCarId, carKeys) {
     if (!activeCarId) return;
     const i = carKeys.indexOf(activeCarId);
     if (i === -1) return;
-    if (i > 0) useGLTF.preload(cars[carKeys[i - 1]].model);
-    if (i < carKeys.length - 1) useGLTF.preload(cars[carKeys[i + 1]].model);
+    if (i > 0) useGLTF.preload(cars[carKeys[i - 1]].model());
+    if (i < carKeys.length - 1) useGLTF.preload(cars[carKeys[i + 1]].model());
   }, [activeCarId, carKeys]);
 }
 

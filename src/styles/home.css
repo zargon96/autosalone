@@ -1,9 +1,11 @@
 :root {
   --text-color: #212529;
+  --icon-filter: invert(0);
 }
 
 .dark-mode {
   --text-color: #f5f6fa;
+  --icon-filter: invert(1);
 }
 
 nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
@@ -219,6 +221,9 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 .bounce-icon {
   display: inline-block;
   animation: bounce 1.5s infinite;
+  width: 35px;
+  height: 35px;
+  filter: var(--icon-filter);
 }
 
 @keyframes bounce {

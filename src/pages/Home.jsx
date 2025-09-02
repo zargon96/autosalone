@@ -11,6 +11,7 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import BlurText from "../components/BlurText";
 import useCanvas from "../context/CanvasContext";
 import "../styles/home.css";
+import caretDown from "../assets/caret-down-fill.svg";
 
 export default function Home() {
   const {
@@ -24,7 +25,6 @@ export default function Home() {
   const { t, lang } = useLang();
   const rates = useFxRates();
   const navigate = useNavigate();
-  // const carKeys = Object.keys(cars);
   const carKeys = useMemo(() => Object.keys(cars), []);
   const currentYear = new Date().getFullYear();
 
@@ -324,7 +324,7 @@ export default function Home() {
           className="scroll-left"
           onClick={() => gotoSectionRef.current(indexRef.current + 1, 1)}
         >
-          <i className="bi bi-caret-down-fill bounce-icon"></i>
+          <img src={caretDown} alt="Scroll down" className="bounce-icon" />
         </div>
 
         <footer className="footer2 container">
