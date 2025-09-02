@@ -11,7 +11,7 @@ import useCanvas from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 
-function Model({ car, visible }) {
+function Model({ car }) {
   const { scene } = useGLTF(car.model);
   return (
     <primitive
@@ -19,7 +19,6 @@ function Model({ car, visible }) {
       scale={car.scale}
       rotation={car.rotation}
       position={car.offset}
-      visible={visible}
     />
   );
 }
@@ -99,9 +98,20 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
+function usePrefetchAround(activeCarId, carKeys) {
+  useEffect(() => {
+    const i = carKeys.indexOf(activeCarId);
+    if (i > 0) useGLTF.preload(cars[carKeys[i - 1]].model);
+    if (i < carKeys.length - 1) useGLTF.preload(cars[carKeys[i + 1]].model);
+  }, [activeCarId, carKeys]);
+}
+
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
   const carKeys = useMemo(() => Object.keys(cars), []);
+
+  usePrefetchAround(activeCarId, carKeys);
+
   if (mode === "hidden") return null;
 
   return (
@@ -125,13 +135,7 @@ export default function GlobalCanvas() {
           </Html>
         }
       >
-        {carKeys.map((key) => (
-          <Model
-            key={cars[key].id}
-            car={cars[key]}
-            visible={cars[key].id === activeCarId}
-          />
-        ))}
+        {activeCarId && <Model car={cars[activeCarId]} />}
       </Suspense>
 
       <ContactShadows

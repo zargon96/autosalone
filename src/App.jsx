@@ -1,15 +1,11 @@
 import "./App.css";
-import { LangProvider } from "./context/lang";
-import useCanvas from "./context/CanvasContext";
+import { LangProvider } from "./context/lang.jsx";
+import useCanvas, { CanvasProvider } from "./context/CanvasContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CanvasProvider } from "./context/CanvasContext";
 import Home from "./pages/Home";
 import Credits from "./pages/Credits";
 import Hero from "./components/hero/Hero";
 import GlobalCanvas from "./components/GlobalCanvas";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function App() {
   return (
@@ -31,6 +27,7 @@ export default function App() {
     </Router>
   );
 }
+
 function CanvasWrapper() {
   const { containerClass, mode } = useCanvas();
 

@@ -29,7 +29,7 @@ export default function Home() {
 
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
-  const indexRef = useRef(homeIndex || 0); // 🔑 parti dall’indice salvato
+  const indexRef = useRef(homeIndex || 0);
   const [currentIndex, setCurrentIndex] = useState(homeIndex || 0);
   const animatingRef = useRef(false);
   const touchStartY = useRef(null);
@@ -87,13 +87,15 @@ export default function Home() {
     if (initDone.current) return;
     initDone.current = true;
     const sections = sectionsRef.current.filter(Boolean);
-    gsap.set(sections, {
-      yPercent: (i) => (i === currentIndex ? 0 : 100),
-      autoAlpha: (i) => (i === currentIndex ? 1 : 0),
-      force3D: true,
+
+    requestAnimationFrame(() => {
+      gsap.set(sections, {
+        yPercent: (i) => (i === currentIndex ? 0 : 100),
+        autoAlpha: (i) => (i === currentIndex ? 1 : 0),
+        force3D: true,
+      });
     });
 
-    // Home setup
     setMode("static");
     setActiveCarId(carKeys[currentIndex]);
     setContainerClass?.("model-center");
@@ -108,7 +110,7 @@ export default function Home() {
 
     animatingRef.current = true;
     setCurrentIndex(nextIndex);
-    setHomeIndex(nextIndex); // 🔑 salva nel context
+    setHomeIndex(nextIndex);
     setActiveCarId(carKeys[nextIndex]);
 
     const from = sections[cur];
