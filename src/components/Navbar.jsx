@@ -35,7 +35,7 @@ export default function NavigationBar() {
             src={itFlag}
             alt="Italiano"
             style={{
-              width: "30px",
+              width: "38px",
               height: "auto",
               cursor: "pointer",
               marginRight: "10px",
@@ -46,7 +46,7 @@ export default function NavigationBar() {
             src={enFlag}
             alt="English"
             style={{
-              width: "30px",
+              width: "38px",
               height: "auto",
               cursor: "pointer",
               marginRight: "10px",
