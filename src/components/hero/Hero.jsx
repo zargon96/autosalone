@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useLang from "../../context/useLang";
 import useCanvas from "../../context/CanvasContext";
@@ -33,8 +33,9 @@ export default function Hero() {
   const initialIndex = carKeys.indexOf(id);
   const [active] = useState(initialIndex >= 0 ? initialIndex : 0);
 
-  const car = cars[carKeys[active]];
-  const s = car.specs;
+  const car = useMemo(() => cars[carKeys[active]], [carKeys, active]);
+  const s = useMemo(() => car.specs, [car]);
+
   const rates = useFxRates();
 
   useEffect(() => {
@@ -85,6 +86,12 @@ export default function Hero() {
     }).format(eur);
   }, [car, lang, rates]);
 
+  const goHome = useCallback(() => {
+    setMode("static");
+    setContainerClass("model-center");
+    navigate("/");
+  }, [setMode, setContainerClass, navigate]);
+
   return (
     <>
       <Navbar />
@@ -106,11 +113,7 @@ export default function Hero() {
             <div className="col-md-6">
               <button
                 className="btn-details mt-2"
-                onClick={() => {
-                  setMode("static");
-                  setContainerClass("model-center");
-                  navigate("/");
-                }}
+                onClick={goHome}
                 type="button"
               >
                 ← {t.car.back_home}

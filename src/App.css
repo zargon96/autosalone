@@ -74,6 +74,11 @@ html {
   font-display: swap;
 }
 
+@font-face {
+  font-family: "bootstrap-icons";
+  font-display: swap;
+}
+
 body {
   font-family: "MozillaText", sans-serif !important;
 }

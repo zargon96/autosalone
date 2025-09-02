@@ -1,4 +1,5 @@
 import "./App.css";
+import { memo } from "react";
 import { LangProvider } from "./context/lang.jsx";
 import useCanvas, { CanvasProvider } from "./context/CanvasContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -28,9 +29,8 @@ export default function App() {
   );
 }
 
-function CanvasWrapper() {
+const CanvasWrapper = memo(function CanvasWrapper() {
   const { containerClass, mode } = useCanvas();
-
   return (
     <div
       className={`canvas-container ${containerClass} ${
@@ -40,4 +40,4 @@ function CanvasWrapper() {
       <GlobalCanvas />
     </div>
   );
-}
+});

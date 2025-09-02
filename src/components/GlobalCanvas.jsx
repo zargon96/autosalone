@@ -6,12 +6,12 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
 import useCanvas from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 
-function Model({ car }) {
+const Model = memo(function Model({ car }) {
   const { scene } = useGLTF(car.model);
   return (
     <primitive
@@ -21,7 +21,7 @@ function Model({ car }) {
       position={car.offset}
     />
   );
-}
+});
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
@@ -100,7 +100,9 @@ function HeroControls({ enabled }) {
 
 function usePrefetchAround(activeCarId, carKeys) {
   useEffect(() => {
+    if (!activeCarId) return;
     const i = carKeys.indexOf(activeCarId);
+    if (i === -1) return;
     if (i > 0) useGLTF.preload(cars[carKeys[i - 1]].model);
     if (i < carKeys.length - 1) useGLTF.preload(cars[carKeys[i + 1]].model);
   }, [activeCarId, carKeys]);
@@ -122,12 +124,10 @@ export default function GlobalCanvas() {
       camera={{ position: [12, 8, 5.5], fov: 12 }}
     >
       <CameraRig mode={mode} />
-
       <ambientLight intensity={0.6} />
       <directionalLight position={[6, 8, 6]} intensity={2.2} castShadow />
       <directionalLight position={[-6, 4, -3]} intensity={1.0} />
       <directionalLight position={[0, 6, -6]} intensity={1.4} />
-
       <Suspense
         fallback={
           <Html center>
@@ -137,7 +137,6 @@ export default function GlobalCanvas() {
       >
         {activeCarId && <Model car={cars[activeCarId]} />}
       </Suspense>
-
       <ContactShadows
         position={[0, -0.01, 0]}
         opacity={0.4}
@@ -145,7 +144,6 @@ export default function GlobalCanvas() {
         scale={14}
         far={8}
       />
-
       <HeroControls enabled={mode === "hero"} />
       {mode === "hero" && <Environment preset="sunset" />}
     </Canvas>

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import useLang from "../context/useLang";
 import useFxRates from "../components/hero/useFxRates";
 import { nf0 } from "../components/hero/formatters";
@@ -24,7 +24,8 @@ export default function Home() {
   const { t, lang } = useLang();
   const rates = useFxRates();
   const navigate = useNavigate();
-  const carKeys = Object.keys(cars);
+  // const carKeys = Object.keys(cars);
+  const carKeys = useMemo(() => Object.keys(cars), []);
   const currentYear = new Date().getFullYear();
 
   const containerRef = useRef(null);
@@ -48,30 +49,33 @@ export default function Home() {
     return `${nf0("en").format(hp)} hp`;
   };
 
-  const formatPrice = (eur) => {
-    if (!eur) return "—";
-    if (lang === "en") {
-      const gbpRate = rates?.rates?.GBP;
-      if (gbpRate) {
-        const inGbp = eur * gbpRate;
+  const formatPrice = useCallback(
+    (eur) => {
+      if (!eur) return "—";
+      if (lang === "en") {
+        const gbpRate = rates?.rates?.GBP;
+        if (gbpRate) {
+          const inGbp = eur * gbpRate;
+          return new Intl.NumberFormat("en-GB", {
+            style: "currency",
+            currency: "GBP",
+            maximumFractionDigits: 0,
+          }).format(inGbp);
+        }
         return new Intl.NumberFormat("en-GB", {
           style: "currency",
-          currency: "GBP",
+          currency: "EUR",
           maximumFractionDigits: 0,
-        }).format(inGbp);
+        }).format(eur);
       }
-      return new Intl.NumberFormat("en-GB", {
+      return new Intl.NumberFormat("it-IT", {
         style: "currency",
         currency: "EUR",
         maximumFractionDigits: 0,
       }).format(eur);
-    }
-    return new Intl.NumberFormat("it-IT", {
-      style: "currency",
-      currency: "EUR",
-      maximumFractionDigits: 0,
-    }).format(eur);
-  };
+    },
+    [lang, rates]
+  );
 
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
@@ -83,7 +87,7 @@ export default function Home() {
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (initDone.current) return;
     initDone.current = true;
     const sections = sectionsRef.current.filter(Boolean);
@@ -193,6 +197,15 @@ export default function Home() {
       window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
+  const activeCar = useMemo(
+    () => cars[carKeys[currentIndex]],
+    [carKeys, currentIndex]
+  );
+
+  const activePrice = useMemo(
+    () => formatPrice(activeCar.stats.price_eur),
+    [activeCar, formatPrice]
+  );
 
   return (
     <>
@@ -226,7 +239,6 @@ export default function Home() {
         {carKeys.map((key, i) => {
           const car = cars[key];
           const isActive = i === currentIndex;
-          const activeCar = cars[carKeys[currentIndex]];
 
           return (
             <section
@@ -249,7 +261,9 @@ export default function Home() {
               <div className="price-top-right text-end">
                 <BlurText
                   key={`${currentIndex}-${car.id}-price`}
-                  text={formatPrice(car.stats.price_eur)}
+                  text={
+                    isActive ? activePrice : formatPrice(car.stats.price_eur)
+                  }
                   delay={40}
                   animateBy="letters"
                   direction="top"

@@ -3,19 +3,20 @@ import gsap from "gsap";
 
 function HeroStats({ children, active }) {
   const statsRef = useRef(null);
+  const q = gsap.utils.selector(statsRef);
 
   useEffect(() => {
     if (!statsRef.current) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        statsRef.current.querySelectorAll("p, h1, h2"),
+        q("p, h1, h2"),
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
       );
     }, statsRef);
 
     return () => ctx.revert();
-  }, [active]);
+  }, [active, q]);
 
   return (
     <div className="car-stats" ref={statsRef}>
@@ -36,7 +37,7 @@ function Item({ label, value, fullWidth = false }) {
   return (
     <div className={fullWidth ? "col-12" : "col-md-6"}>
       <p>
-        {label}: {value}
+        <strong>{label}:</strong> {value}
       </p>
     </div>
   );
