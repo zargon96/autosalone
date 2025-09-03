@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import useLang from "../context/useLang";
+import { useLang } from "../context/langContext.jsx";
 import { Navbar, Container } from "react-bootstrap";
 import Switch from "../components/Switch";
 import itFlag from "../assets/it.webp";

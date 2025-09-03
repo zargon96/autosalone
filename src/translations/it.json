@@ -15,7 +15,8 @@
     "dimensions": "Dimensioni (L × L × H)",
     "wheelbase": "Passo",
     "details": "Dettagli completi →",
-    "back_home": "Torna alla Home"
+    "back_home": "Torna alla Home",
+    "back_to_top": "Torna su"
   },
   "footer": {
     "brand": "Autosalone",

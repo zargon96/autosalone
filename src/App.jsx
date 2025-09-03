@@ -1,13 +1,12 @@
 import "./App.css";
 import { memo } from "react";
-import { LangProvider } from "./context/lang.jsx";
-import useCanvas, { CanvasProvider } from "./context/CanvasContext";
+import { LangProvider } from "./context/langContext.jsx";
+import { useCanvas, CanvasProvider } from "./context/CanvasContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Credits from "./pages/Credits";
 import Hero from "./components/hero/Hero";
 import GlobalCanvas from "./components/GlobalCanvas";
-
 export default function App() {
   return (
     <Router>

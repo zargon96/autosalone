@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useMemo, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import useLang from "../../context/useLang";
-import useCanvas from "../../context/CanvasContext";
+import { useLang } from "../../context/langContext";
+import { useCanvas } from "../../context/CanvasContext";
 import { cars } from "./carsData";
 import BlurText from "../BlurText";
 import CountUp from "../CountUp";
@@ -28,10 +28,11 @@ export default function Hero() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { setActiveCarId, setMode, setContainerClass } = useCanvas();
-
-  const carKeys = Object.keys(cars);
-  const initialIndex = carKeys.indexOf(id);
-  const [active] = useState(initialIndex >= 0 ? initialIndex : 0);
+  const carKeys = useMemo(() => Object.keys(cars), []);
+  const active = useMemo(() => {
+  const idx = carKeys.indexOf(id);
+  return idx >= 0 ? idx : 0;
+}, [id, carKeys]);
 
   const car = useMemo(() => cars[carKeys[active]], [carKeys, active]);
   const s = useMemo(() => car.specs, [car]);
@@ -91,6 +92,7 @@ export default function Hero() {
     setContainerClass("model-center");
     navigate("/");
   }, [setMode, setContainerClass, navigate]);
+
 
   return (
     <>

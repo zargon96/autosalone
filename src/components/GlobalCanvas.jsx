@@ -1,4 +1,5 @@
 import { Canvas, useThree } from "@react-three/fiber";
+import gsap from "gsap";
 import {
   OrbitControls,
   Environment,
@@ -7,13 +8,12 @@ import {
   useGLTF,
 } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
-import useCanvas from "../context/CanvasContext";
+import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 
 const Model = memo(function Model({ car }) {
-  // const { scene } = useGLTF(car.model);
-  const { scene } = useGLTF(car.model());
+  const { scene } = useGLTF(car.model);
   return (
     <primitive
       object={scene}
@@ -23,6 +23,24 @@ const Model = memo(function Model({ car }) {
     />
   );
 });
+const Lights = memo(() => (
+  <>
+    <ambientLight intensity={0.6} />
+    <directionalLight position={[6, 8, 6]} intensity={2.2} castShadow />
+    <directionalLight position={[-6, 4, -3]} intensity={1.0} />
+    <directionalLight position={[0, 6, -6]} intensity={1.4} />
+  </>
+));
+
+const Shadows = memo(() => (
+  <ContactShadows
+    position={[0, -0.01, 0]}
+    opacity={0.4}
+    blur={0.8}
+    scale={14}
+    far={8}
+  />
+));
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
@@ -55,31 +73,24 @@ function CameraRig({ mode }) {
       ? HERO_DESKTOP
       : HOME_DESKTOP;
 
-    const dur = 0.35;
-    let t = 0;
-    let raf;
-    const startPos = camera.position.clone();
-    const startFov = camera.fov;
+    gsap.to(camera.position, {
+      x: targetCfg.pos[0],
+      y: targetCfg.pos[1],
+      z: targetCfg.pos[2],
+      duration: 0.5,
+      ease: "power2.out",
+      onUpdate: () => {
+        camera.lookAt(0, 0, 0);
+        camera.updateProjectionMatrix();
+      },
+    });
 
-    const step = () => {
-      t += 1 / 60 / dur;
-      const a = t >= 1 ? 1 : t;
-
-      camera.position.set(
-        startPos.x + (targetCfg.pos[0] - startPos.x) * a,
-        startPos.y + (targetCfg.pos[1] - startPos.y) * a,
-        startPos.z + (targetCfg.pos[2] - startPos.z) * a
-      );
-      camera.fov = startFov + (targetCfg.fov - startFov) * a;
-
-      camera.lookAt(0, 0, 0);
-      camera.updateProjectionMatrix();
-
-      if (a < 1) raf = requestAnimationFrame(step);
-    };
-
-    step();
-    return () => raf && cancelAnimationFrame(raf);
+    gsap.to(camera, {
+      fov: targetCfg.fov,
+      duration: 0.5,
+      ease: "power2.out",
+      onUpdate: () => camera.updateProjectionMatrix(),
+    });
   }, [mode, camera, isMobile]);
 
   return null;
@@ -99,21 +110,8 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
-function usePrefetchAround(activeCarId, carKeys) {
-  useEffect(() => {
-    if (!activeCarId) return;
-    const i = carKeys.indexOf(activeCarId);
-    if (i === -1) return;
-    if (i > 0) useGLTF.preload(cars[carKeys[i - 1]].model());
-    if (i < carKeys.length - 1) useGLTF.preload(cars[carKeys[i + 1]].model());
-  }, [activeCarId, carKeys]);
-}
-
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
-  const carKeys = useMemo(() => Object.keys(cars), []);
-
-  usePrefetchAround(activeCarId, carKeys);
 
   if (mode === "hidden") return null;
 
@@ -125,10 +123,7 @@ export default function GlobalCanvas() {
       camera={{ position: [12, 8, 5.5], fov: 12 }}
     >
       <CameraRig mode={mode} />
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[6, 8, 6]} intensity={2.2} castShadow />
-      <directionalLight position={[-6, 4, -3]} intensity={1.0} />
-      <directionalLight position={[0, 6, -6]} intensity={1.4} />
+      <Lights />
       <Suspense
         fallback={
           <Html center>
@@ -138,13 +133,7 @@ export default function GlobalCanvas() {
       >
         {activeCarId && <Model car={cars[activeCarId]} />}
       </Suspense>
-      <ContactShadows
-        position={[0, -0.01, 0]}
-        opacity={0.4}
-        blur={0.8}
-        scale={14}
-        far={8}
-      />
+      <Shadows />
       <HeroControls enabled={mode === "hero"} />
       {mode === "hero" && <Environment preset="sunset" />}
     </Canvas>

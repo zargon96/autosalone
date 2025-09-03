@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import useLang from "../context/useLang";
+import { useLang } from "../context/langContext.jsx";
 import useFxRates from "../components/hero/useFxRates";
 import { nf0 } from "../components/hero/formatters";
 import gsap from "gsap";
@@ -9,7 +9,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import BlurText from "../components/BlurText";
-import useCanvas from "../context/CanvasContext";
+import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
 import caretDown from "../assets/caret-down-fill.svg";
 
@@ -39,15 +39,18 @@ export default function Home() {
 
   const gotoSectionRef = useRef(() => {});
 
-  const formatPower = (specs) => {
-    if (!specs?.power_hp) return "—";
-    const hp = specs.power_hp;
-    if (lang === "it") {
-      const cv = Math.round(hp * 1.014);
-      return `${nf0("it").format(cv)} CV`;
-    }
-    return `${nf0("en").format(hp)} hp`;
-  };
+  const formatPower = useCallback(
+    (specs) => {
+      if (!specs?.power_hp) return "—";
+      const hp = specs.power_hp;
+      if (lang === "it") {
+        const cv = Math.round(hp * 1.014);
+        return `${nf0("it").format(cv)} CV`;
+      }
+      return `${nf0("en").format(hp)} hp`;
+    },
+    [lang]
+  );
 
   const formatPrice = useCallback(
     (eur) => {
@@ -105,40 +108,45 @@ export default function Home() {
     setContainerClass?.("model-center");
   }, [carKeys, currentIndex, setActiveCarId, setMode, setContainerClass]);
 
-  const gotoSection = (nextIndex, dir) => {
-    const sections = sectionsRef.current.filter(Boolean);
-    const cur = indexRef.current;
-    if (animatingRef.current) return;
-    if (nextIndex < 0 || nextIndex >= sections.length) return;
-    if (nextIndex === cur) return;
+  const gotoSection = useCallback(
+    (nextIndex, dir) => {
+      const sections = sectionsRef.current.filter(Boolean);
+      const cur = indexRef.current;
+      if (animatingRef.current) return;
+      if (nextIndex < 0 || nextIndex >= sections.length) return;
+      if (nextIndex === cur) return;
 
-    animatingRef.current = true;
-    setCurrentIndex(nextIndex);
-    setHomeIndex(nextIndex);
-    setActiveCarId(carKeys[nextIndex]);
+      animatingRef.current = true;
+      setCurrentIndex(nextIndex);
+      setHomeIndex(nextIndex);
+      setActiveCarId(carKeys[nextIndex]);
 
-    const from = sections[cur];
-    const to = sections[nextIndex];
+      const from = sections[cur];
+      const to = sections[nextIndex];
 
-    gsap
-      .timeline({
-        defaults: { ease: "power2.inOut", duration: 0.9 },
-        onComplete: () => {
-          indexRef.current = nextIndex;
-          animatingRef.current = false;
-          wheelAccRef.current = 0;
-        },
-      })
-      .to(from, { yPercent: dir > 0 ? -100 : 100, autoAlpha: 0 }, 0)
-      .fromTo(
-        to,
-        { yPercent: dir > 0 ? 100 : -100, autoAlpha: 0 },
-        { yPercent: 0, autoAlpha: 1 },
-        0
-      );
-  };
+      gsap
+        .timeline({
+          defaults: { ease: "power2.inOut", duration: 0.9 },
+          onComplete: () => {
+            indexRef.current = nextIndex;
+            animatingRef.current = false;
+            wheelAccRef.current = 0;
+          },
+        })
+        .to(from, { yPercent: dir > 0 ? -100 : 100, autoAlpha: 0 }, 0)
+        .fromTo(
+          to,
+          { yPercent: dir > 0 ? 100 : -100, autoAlpha: 0 },
+          { yPercent: 0, autoAlpha: 1 },
+          0
+        );
+    },
+    [carKeys, setActiveCarId, setHomeIndex]
+  );
 
-  gotoSectionRef.current = gotoSection;
+  useEffect(() => {
+    gotoSectionRef.current = gotoSection;
+  }, [gotoSection]);
 
   useEffect(() => {
     const WHEEL_THRESHOLD = 100;
@@ -216,7 +224,6 @@ export default function Home() {
             {String(currentIndex + 1).padStart(2, "0")}
           </span>
         </div>
-
         <div className="social-vertical">
           <a
             href="https://github.com/zargon96"
@@ -235,7 +242,6 @@ export default function Home() {
             <FontAwesomeIcon icon={faLinkedin} size="2x" />
           </a>
         </div>
-
         {carKeys.map((key, i) => {
           const car = cars[key];
           const isActive = i === currentIndex;
@@ -319,12 +325,20 @@ export default function Home() {
             </section>
           );
         })}
-
         <div
           className="scroll-left"
           onClick={() => gotoSectionRef.current(indexRef.current + 1, 1)}
         >
           <img src={caretDown} alt="Scroll down" className="bounce-icon" />
+        </div>
+        <div className="scroll-right">
+          <button
+            type="button"
+            className="btn-details"
+            onClick={() => gotoSectionRef.current(0, -1)}
+          >
+            {t.car.back_to_top}
+          </button>
         </div>
 
         <footer className="footer2 container">

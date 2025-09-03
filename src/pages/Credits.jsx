@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import useCanvas from "../context/CanvasContext";
+import { useCanvas } from "../context/CanvasContext";
 
 const creditsData = [
   {

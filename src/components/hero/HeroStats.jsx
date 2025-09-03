@@ -1,22 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import gsap from "gsap";
 
 function HeroStats({ children, active }) {
   const statsRef = useRef(null);
-  const q = gsap.utils.selector(statsRef);
 
-  useEffect(() => {
-    if (!statsRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        q("p, h1, h2"),
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
-      );
-    }, statsRef);
+useEffect(() => {
+  if (!statsRef.current) return;
+  const ctx = gsap.context(() => {
+    gsap.fromTo(
+      statsRef.current.querySelectorAll("p, h1, h2"),
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
+    );
+  }, statsRef);
 
-    return () => ctx.revert();
-  }, [active, q]);
+  return () => ctx.revert();
+}, [active]);
+
 
   return (
     <div className="car-stats" ref={statsRef}>
@@ -33,7 +33,7 @@ function Row({ children }) {
   return <div className="row mb-2">{children}</div>;
 }
 
-function Item({ label, value, fullWidth = false }) {
+const Item = memo(function Item({ label, value, fullWidth = false }) {
   return (
     <div className={fullWidth ? "col-12" : "col-md-6"}>
       <p>
@@ -41,7 +41,7 @@ function Item({ label, value, fullWidth = false }) {
       </p>
     </div>
   );
-}
+});
 
 HeroStats.Title = Title;
 HeroStats.Row = Row;

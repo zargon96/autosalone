@@ -2,10 +2,16 @@ const KG_TO_LB = 2.2046226218;
 const KMH_TO_MPH = 0.6213711922;
 const MM_TO_IN = 1 / 25.4;
 
-export const nf0 = (l) =>
-  new Intl.NumberFormat(l, { maximumFractionDigits: 0 });
-export const nf1 = (l) =>
-  new Intl.NumberFormat(l, { maximumFractionDigits: 1 });
+
+const formatters = {
+  "en-0": new Intl.NumberFormat("en", { maximumFractionDigits: 0 }),
+  "en-1": new Intl.NumberFormat("en", { maximumFractionDigits: 1 }),
+  "it-0": new Intl.NumberFormat("it", { maximumFractionDigits: 0 }),
+  "it-1": new Intl.NumberFormat("it", { maximumFractionDigits: 1 }),
+};
+
+export const nf0 = (l) => formatters[`${l}-0`];
+export const nf1 = (l) => formatters[`${l}-1`];
 
 export const asWeight = (kg, l) => {
   if (l === "en") return `${nf0(l).format(Math.round(kg * KG_TO_LB))} lb`;

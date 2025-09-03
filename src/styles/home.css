@@ -13,6 +13,28 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   z-index: 999999999 !important;
 }
 
+.scroll-right {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.btn-back-to-top {
+  background: var(--text-color);
+  color: var(--bg-color, #fff);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-back-to-top:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
 .showcase-container {
   position: fixed;
   inset: 0;
@@ -162,7 +184,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 
 .scroll-left {
   position: absolute;
-  bottom: 40px;
+  bottom: 45px;
   left: 30px;
   font-size: 2rem;
   color: var(--text-color);
@@ -170,8 +192,12 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   z-index: 10;
 }
 
-.scroll-left:hover {
-  color: var(--text-color);
+.scroll-right {
+  position: absolute;
+  bottom: 45px;
+  cursor: pointer;
+  right: 20px;
+  z-index: 9999999;
 }
 
 .social-vertical {

@@ -25,7 +25,7 @@ export function CanvasProvider({ children }) {
     </CanvasContext.Provider>
   );
 }
-// eslint-disable-next-line react-refresh/only-export-components
-export default function useCanvas() {
+
+export function useCanvas() {
   return useContext(CanvasContext);
 }
