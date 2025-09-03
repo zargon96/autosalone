@@ -312,4 +312,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
     font-weight: 700;
     color: var(--text-color);
   }
+  #mobile-none {
+    display: none !important;
+  }
 }

@@ -12,6 +12,7 @@ import BlurText from "../components/BlurText";
 import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
 import caretDown from "../assets/caret-down-fill.svg";
+import caretUp from "../assets/caret-up-fill.svg";
 
 export default function Home() {
   const {
@@ -331,10 +332,17 @@ export default function Home() {
         >
           <img src={caretDown} alt="Scroll down" className="bounce-icon" />
         </div>
+        <div
+          className="scroll-right d-md-none"
+          onClick={() => gotoSectionRef.current(0, -1)}
+        >
+          <img src={caretUp} alt={t.car.back_to_top} className="bounce-icon" />
+        </div>
         <div className="scroll-right">
           <button
             type="button"
             className="btn-details"
+            id="mobile-none"
             onClick={() => gotoSectionRef.current(0, -1)}
           >
             {t.car.back_to_top}
