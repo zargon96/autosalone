@@ -1,11 +1,11 @@
 import "./App.css";
-import { memo } from "react";
+import { memo, lazy } from "react";
 import { LangProvider } from "./context/langContext.jsx";
 import { useCanvas, CanvasProvider } from "./context/CanvasContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Credits from "./pages/Credits";
-import Hero from "./components/hero/Hero";
+const Credits = lazy(() => import("./pages/Credits"));
+const Hero = lazy(() => import("./components/hero/Hero"));
 import GlobalCanvas from "./components/GlobalCanvas";
 export default function App() {
   return (

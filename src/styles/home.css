@@ -228,11 +228,13 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   text-align: center;
   font-size: 0.9rem;
   z-index: 5;
+  color: var(--text-color);
 }
 
 .footer .credits {
   margin-top: 6px;
   font-size: 0.8rem;
+  color: var(--text-color);
 }
 
 .footer a {
@@ -244,6 +246,9 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   text-decoration: underline;
 }
 
+.text-color {
+  color: var(--text-color);
+}
 .bounce-icon {
   display: inline-block;
   animation: bounce 1.5s infinite;
