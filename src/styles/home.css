@@ -330,4 +330,8 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   #mobile-none {
     display: none !important;
   }
+  .price-top-right {
+    position: absolute;
+    margin-top: 50px !important;
+  }
 }
