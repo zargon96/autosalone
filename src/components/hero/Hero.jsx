@@ -1,4 +1,5 @@
 import { useMemo, useEffect, useCallback } from "react";
+import { useGLTF } from "@react-three/drei";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLang } from "../../context/langContext";
 import { useCanvas } from "../../context/CanvasContext";
@@ -27,12 +28,18 @@ export default function Hero() {
   const { t, lang } = useLang();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { setActiveCarId, setMode, setContainerClass } = useCanvas();
+  const { setActiveCarId, setMode, setContainerClass, setHomeIndex } =
+    useCanvas();
   const carKeys = useMemo(() => Object.keys(cars), []);
   const active = useMemo(() => {
-  const idx = carKeys.indexOf(id);
-  return idx >= 0 ? idx : 0;
-}, [id, carKeys]);
+    const idx = carKeys.indexOf(id);
+    return idx >= 0 ? idx : 0;
+  }, [id, carKeys]);
+
+  useEffect(() => {
+    if (!carKeys[active]) return;
+    useGLTF.preload(cars[carKeys[active]].model);
+  }, [active, carKeys]);
 
   const car = useMemo(() => cars[carKeys[active]], [carKeys, active]);
   const s = useMemo(() => car.specs, [car]);
@@ -90,14 +97,14 @@ export default function Hero() {
   const goHome = useCallback(() => {
     setMode("static");
     setContainerClass("model-center");
+    setHomeIndex(active);
     navigate("/");
-  }, [setMode, setContainerClass, navigate]);
-
+  }, [setMode, setContainerClass, navigate, active]);
 
   return (
     <>
       <Navbar />
-      <section className="hero container mt-4">
+      <section className="container mt-4">
         <div className="row hero-content">
           <div className="col-md-12">
             <h1 className="m-0">
@@ -233,6 +240,39 @@ export default function Hero() {
                   />
                 </HeroStats.Row>
               </HeroStats>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-6">
+              <button
+                type="button"
+                className="btn-details mb-5"
+                onClick={() => {
+                  if (active > 0) {
+                    navigate(`/cars/${carKeys[active - 1]}`);
+                  }
+                }}
+                disabled={active === 0}
+              >
+                ← {t.car.prev}
+              </button>
+            </div>
+
+            <div className="col-6">
+              <div className="box-next">
+                <button
+                  type="button"
+                  className="btn-details mb-5"
+                  onClick={() => {
+                    if (active < carKeys.length - 1) {
+                      navigate(`/cars/${carKeys[active + 1]}`);
+                    }
+                  }}
+                  disabled={active === carKeys.length - 1}
+                >
+                  {t.car.next} →
+                </button>
+              </div>
             </div>
           </div>
         </div>

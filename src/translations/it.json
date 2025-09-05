@@ -16,7 +16,8 @@
     "wheelbase": "Passo",
     "details": "Dettagli completi →",
     "back_home": "Torna alla Home",
-    "back_to_top": "Torna su"
+    "prev": "precedente",
+    "next": "successivo"
   },
   "footer": {
     "brand": "Autosalone",

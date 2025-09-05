@@ -328,27 +328,16 @@ export default function Home() {
         })}
         <div
           className="scroll-left"
-          onClick={() => gotoSectionRef.current(indexRef.current + 1, 1)}
+          onClick={() => gotoSectionRef.current(carKeys.length - 1, 1)}
         >
           <img src={caretDown} alt="Scroll down" className="bounce-icon" />
         </div>
         <div
-          className="scroll-right d-md-none"
+          className="scroll-right"
           onClick={() => gotoSectionRef.current(0, -1)}
         >
           <img src={caretUp} alt={t.car.back_to_top} className="bounce-icon" />
         </div>
-        <div className="scroll-right">
-          <button
-            type="button"
-            className="btn-details"
-            id="mobile-none"
-            onClick={() => gotoSectionRef.current(0, -1)}
-          >
-            {t.car.back_to_top}
-          </button>
-        </div>
-
         <footer className="footer2 container">
           <p className="footer-text text-color">
             © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}

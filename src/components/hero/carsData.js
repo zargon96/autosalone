@@ -139,7 +139,7 @@ export const cars = {
 
   charger69: {
     id: "charger69",
-    name: "Dodge Charger (1969)",
+    name: "Dodge Charger",
     model: `${BASE_URL}/dodge_charger.glb`,
     scale: 0.9,
     rotation: [0, -0.4, 0],
@@ -163,7 +163,7 @@ export const cars = {
 
   supra_mk4: {
     id: "supra_mk4",
-    name: "Toyota Supra MK4 (1993)",
+    name: "Toyota Supra MK4",
     model: `${BASE_URL}/toyota_supra.glb`,
     scale: 0.3,
     rotation: [0, -0.4, 0],
@@ -239,7 +239,7 @@ export const cars = {
 
   z350: {
     id: "z350",
-    name: "Nissan 350Z (2003)",
+    name: "Nissan 350Z",
     model: `${BASE_URL}/nissan_350z.glb`,
     scale: 104,
     rotation: [0, -0.4, 0],
@@ -263,7 +263,7 @@ export const cars = {
 
   rx7_fd: {
     id: "rx7_fd",
-    name: "Mazda RX-7 (FD, 1993)",
+    name: "Mazda RX-7",
     model: `${BASE_URL}/mazda_rx-7.glb`,
     scale: 0.4,
     rotation: [0, -0.4, 0],

@@ -167,7 +167,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 }
 @media (max-width: 640px) {
   .car-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   .price-value {
     font-size: 1.2rem;
@@ -283,6 +283,16 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   color: var(--bg-color);
 }
 
+.btn-details:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.box-next {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
 @media (max-width: 768px) {
   footer.footer2 {
     position: fixed;

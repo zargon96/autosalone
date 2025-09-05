@@ -16,7 +16,8 @@
     "wheelbase": "Wheelbase",
     "details": "Full details →",
     "back_home": "Back to Home",
-    "back_to_top": "Back to top"
+    "prev": "prev",
+    "next": "next"
   },
   "footer": {
     "brand": "Autosalone",
