@@ -17,7 +17,9 @@
     "details": "Dettagli completi →",
     "back_home": "Torna alla Home",
     "prev": "precedente",
-    "next": "successivo"
+    "next": "successivo",
+    "back_to_top": "Torna in cima",
+    "scroll_down": "Scorri in basso"
   },
   "footer": {
     "brand": "Autosalone",

@@ -5,7 +5,12 @@ const Switch = ({ isDarkMode, toggleTheme }) => {
   return (
     <StyledWrapper>
       <label className="switch">
-        <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+        <input
+          type="checkbox"
+          checked={isDarkMode}
+          onChange={toggleTheme}
+          aria-label="Toggle dark mode"
+        />
         <span className="slider">
           <div className="star star_1" />
           <div className="star star_2" />

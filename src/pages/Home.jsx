@@ -330,7 +330,11 @@ export default function Home() {
           className="scroll-left"
           onClick={() => gotoSectionRef.current(carKeys.length - 1, 1)}
         >
-          <img src={caretDown} alt="Scroll down" className="bounce-icon" />
+          <img
+            src={caretDown}
+            alt={t.car.scroll_down}
+            className="bounce-icon"
+          />
         </div>
         <div
           className="scroll-right"
