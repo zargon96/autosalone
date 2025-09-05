@@ -250,6 +250,9 @@ export default function Hero() {
                 onClick={() => {
                   if (active > 0) {
                     navigate(`/cars/${carKeys[active - 1]}`);
+                    if (window.innerWidth < 768) {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
                   }
                 }}
                 disabled={active === 0}
@@ -266,6 +269,9 @@ export default function Hero() {
                   onClick={() => {
                     if (active < carKeys.length - 1) {
                       navigate(`/cars/${carKeys[active + 1]}`);
+                      if (window.innerWidth < 768) {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }
                     }
                   }}
                   disabled={active === carKeys.length - 1}
