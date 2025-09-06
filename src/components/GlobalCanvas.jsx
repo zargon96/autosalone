@@ -7,10 +7,11 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import { Suspense, useEffect, useRef, useState, memo } from "react";
+import { Suspense, useEffect, useRef, useState, memo, useMemo } from "react";
 import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
+import { CAMERA_CONFIGS } from "./cameraConfigs";
 
 const Model = memo(function Model({ car }) {
   const { scene } = useGLTF(car.model);
@@ -34,37 +35,47 @@ const Shadows = memo(() => (
   />
 ));
 
-function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
+function useDeviceType() {
+  const [device, setDevice] = useState(() => {
+    const w = window.innerWidth;
+    if (w <= 768) return "mobile";
+    if (w <= 1536) return "smallLaptop";
+    return "desktop";
+  });
 
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < breakpoint);
+    const onResize = () => {
+      const w = window.innerWidth;
+      if (w <= 768) setDevice("mobile");
+      else if (w <= 1536) setDevice("smallLaptop");
+      else setDevice("desktop");
+    };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [breakpoint]);
+  }, []);
 
-  return isMobile;
+  return device;
 }
 
 function CameraRig({ mode }) {
   const { camera } = useThree();
-  const isMobile = useIsMobile();
+  const device = useDeviceType();
+
+  const targetCfg = useMemo(() => {
+    if (device === "mobile")
+      return mode === "hero"
+        ? CAMERA_CONFIGS.mobile.hero
+        : CAMERA_CONFIGS.mobile.home;
+    if (device === "smallLaptop")
+      return mode === "hero"
+        ? CAMERA_CONFIGS.smallLaptop.hero
+        : CAMERA_CONFIGS.smallLaptop.home;
+    return mode === "hero"
+      ? CAMERA_CONFIGS.desktop.hero
+      : CAMERA_CONFIGS.desktop.home;
+  }, [device, mode]);
 
   useEffect(() => {
-    const HOME_DESKTOP = { pos: [12, 8, 5.5], fov: 12 };
-    const HERO_DESKTOP = { pos: [-2.5, 3, 6], fov: 26 };
-
-    const HOME_MOBILE = { pos: [12, 8, 5.5], fov: 22 };
-    const HERO_MOBILE = { pos: [-2, 2.5, 5], fov: 30 };
-
-    const targetCfg = isMobile
-      ? mode === "hero"
-        ? HERO_MOBILE
-        : HOME_MOBILE
-      : mode === "hero"
-      ? HERO_DESKTOP
-      : HOME_DESKTOP;
-
     gsap.to(camera.position, {
       x: targetCfg.pos[0],
       y: targetCfg.pos[1],
@@ -83,7 +94,7 @@ function CameraRig({ mode }) {
       ease: "power2.out",
       onUpdate: () => camera.updateProjectionMatrix(),
     });
-  }, [mode, camera, isMobile]);
+  }, [camera, targetCfg]);
 
   return null;
 }

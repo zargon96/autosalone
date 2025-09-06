@@ -80,7 +80,17 @@ html {
 
 @media (min-width: 1024px) and (max-width: 1536px) {
   .hero-canvas {
-    top: 60% !important;
+    top: 65% !important;
+    height: 60vh;
+  }
+  .stats-bottom-center {
+    bottom: 7.25rem !important;
+  }
+  .model-center {
+    top: 55% !important;
+  }
+  .footer2 {
+    bottom: 10px !important;
   }
 }
 
