@@ -7,7 +7,7 @@ import {
   Html,
   useGLTF,
 } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
+import { Suspense, useEffect, useRef, useState, memo } from "react";
 import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
@@ -23,14 +23,6 @@ const Model = memo(function Model({ car }) {
     />
   );
 });
-const Lights = memo(() => (
-  <>
-    <ambientLight intensity={0.6} />
-    <directionalLight position={[6, 8, 6]} intensity={2.2} castShadow />
-    <directionalLight position={[-6, 4, -3]} intensity={1.0} />
-    <directionalLight position={[0, 6, -6]} intensity={1.4} />
-  </>
-));
 
 const Shadows = memo(() => (
   <ContactShadows
@@ -63,7 +55,7 @@ function CameraRig({ mode }) {
     const HERO_DESKTOP = { pos: [-2.5, 3, 6], fov: 26 };
 
     const HOME_MOBILE = { pos: [12, 8, 5.5], fov: 22 };
-    const HERO_MOBILE = { pos: [-2, 2.5, 5], fov: 38 };
+    const HERO_MOBILE = { pos: [-2, 2.5, 5], fov: 30 };
 
     const targetCfg = isMobile
       ? mode === "hero"
@@ -123,7 +115,7 @@ export default function GlobalCanvas() {
       camera={{ position: [12, 8, 5.5], fov: 12 }}
     >
       <CameraRig mode={mode} />
-      <Lights />
+
       <Suspense
         fallback={
           <Html center>
@@ -133,9 +125,11 @@ export default function GlobalCanvas() {
       >
         {activeCarId && <Model car={cars[activeCarId]} />}
       </Suspense>
+
       <Shadows />
       <HeroControls enabled={mode === "hero"} />
-      {mode === "hero" && <Environment preset="sunset" />}
+
+      <Environment preset="sunset" background={false} />
     </Canvas>
   );
 }

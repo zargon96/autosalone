@@ -2,11 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useLang } from "../context/langContext.jsx";
 import { Navbar, Container } from "react-bootstrap";
 import Switch from "../components/Switch";
-import itFlag from "../assets/it.webp";
-import enFlag from "../assets/en.webp";
 
 export default function NavigationBar() {
-  const { setLang } = useLang();
+  const { lang, setLang } = useLang();
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -30,29 +28,24 @@ export default function NavigationBar() {
   return (
     <Navbar variant="dark" expand="lg" className="pt-4">
       <Container>
-        <div className="d-flex align-items-center">
-          <img
-            src={itFlag}
-            alt="Italiano"
-            style={{
-              width: "38px",
-              height: "auto",
-              cursor: "pointer",
-              marginRight: "10px",
-            }}
+        <div className="lang-switch">
+          <button
+            type="button"
             onClick={() => setLang("it")}
-          />
-          <img
-            src={enFlag}
-            alt="English"
-            style={{
-              width: "38px",
-              height: "auto",
-              cursor: "pointer",
-              marginRight: "10px",
-            }}
+            className={`lang-btn ${lang === "it" ? "active" : ""}`}
+            aria-label="Cambia lingua in Italiano"
+          >
+            IT
+          </button>
+          <span className="mx-2 text-color">|</span>
+          <button
+            type="button"
             onClick={() => setLang("en")}
-          />
+            className={`lang-btn ${lang === "en" ? "active" : ""}`}
+            aria-label="Switch language to English"
+          >
+            EN
+          </button>
         </div>
 
         <Switch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />

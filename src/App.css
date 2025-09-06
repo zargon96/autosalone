@@ -19,6 +19,22 @@ html {
   --accent-2: rgba(224, 195, 252, 0.8);
 }
 
+.text-color {
+  color: var(--text-color);
+}
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.lang-btn.active {
+  text-decoration: underline;
+}
+
 .dark-mode {
   --bg-color: #212529;
   --text-color: #f5f6fa;
@@ -47,7 +63,7 @@ html {
   left: 50%;
   transform: translate(-76%, -45%);
   width: min(900px, 78vw);
-  height: min(520px, 35vh);
+  height: min(520px, 45vh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,7 +71,7 @@ html {
 
 @media (max-width: 768px) {
   .hero-canvas {
-    top: 70% !important;
+    top: 60% !important;
     width: 90vw !important;
     height: 40vh !important;
     transform: translate(-50%, -50%) !important;
