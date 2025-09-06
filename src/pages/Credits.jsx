@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCanvas } from "../context/CanvasContext";
+import ButtonGlobal from "../components/ButtonGlobal";
+import caretLeft from "../assets/caret-left-fill.svg";
 
 const creditsData = [
   {
@@ -148,13 +150,15 @@ const Credits = () => {
       </div>
 
       <div className="text-center mt-4">
-        <Link
-          to="/"
-          className={`btn ${
-            isDarkMode ? "btn-outline-light" : "btn-outline-dark"
-          }`}
-        >
-          ⬅ Back to Home
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <ButtonGlobal>
+            <img
+              src={caretLeft}
+              alt="Back to Home"
+              className="icon-static me-2"
+            />
+            Back to Home
+          </ButtonGlobal>
         </Link>
       </div>
     </div>
