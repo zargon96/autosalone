@@ -28,7 +28,7 @@ html {
   color: var(--text-color);
   font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .lang-btn.active {
