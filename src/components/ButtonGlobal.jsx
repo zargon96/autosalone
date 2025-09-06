@@ -47,7 +47,7 @@ const StyledWrapper = styled.div`
 
   button span {
     background-color: rgb(5, 6, 45);
-    padding: 10px 16px;
+    padding: 16px 20px;
     border-radius: 6px;
     transition: 300ms;
     display: flex;

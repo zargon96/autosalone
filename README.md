@@ -1,23 +1,20 @@
 # 3D Car Showcase
 
-Un'applicazione **React + Three.js** per visualizzare modelli 3D di auto con schede tecniche interattive, animazioni fluide e supporto per più lingue (italiano e inglese).  
-Il progetto utilizza un carosello basato su **Swiper.js** per navigare tra i modelli e un sistema di conversione automatica delle unità di misura e della valuta.
+Un’applicazione React + Three.js che permette di esplorare modelli 3D di auto in tempo reale
 
 ---
 
 ## Funzionalità
 
-- Visualizzazione **3D interattiva** delle auto con **Three.js** e **@react-three/fiber**
-- Carosello di navigazione con **Swiper.js**
-- **Scheda tecnica** con dati reali di ciascun veicolo
-- **Cambio lingua** (IT / EN) con conversione automatica:
-  - CV ↔ HP
-  - km/h ↔ mph
-  - kg ↔ lb
-  - mm ↔ pollici
-  - Euro ↔ Sterlina (con aggiornamento tassi di cambio)
-- Animazioni fluide con **GSAP**
-- **Tema chiaro/scuro** con sfondo animato
+Schede tecniche interattive: dati dettagliati su motore, prestazioni e dimensioni, presentati con animazioni (GSAP).
+
+Supporto multilingua: italiano e inglese, con traduzioni dinamiche.
+
+Conversione automatica: unità di misura (CV↔HP, kg↔lb, mm↔in) e valuta (EUR↔GBP) in base alla lingua selezionata.
+
+Esperienza immersiva: animazioni di transizione tra auto, ombre realistiche e controlli interattivi della telecamera.
+
+Dark mode con toggle personalizzato.
 
 ---
 
@@ -28,8 +25,7 @@ Il progetto utilizza un carosello basato su **Swiper.js** per navigare tra i mod
 - [Three.js]
 - [@react-three/fiber]
 - [@react-three/drei]
-- [Swiper.js]
 - [GSAP]
 - [Bootstrap]
 - API **Frankfurter.app** per i tassi di cambio
-- Context API per gestione lingua e tema
+- Context per gestione lingua e tema

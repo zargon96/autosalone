@@ -122,12 +122,8 @@ export default function Hero() {
             </h1>
           </div>
           <div className="col-md-6">
-            <ButtonGlobal className="btn-details mt-2" onClick={goHome}>
-              <img
-                src={caretLeft}
-                alt={t.car.prev}
-                className="icon-static me-2"
-              />
+            <ButtonGlobal className="btn-details" onClick={goHome}>
+              <img src={caretLeft} alt={t.car.prev} className="icon-static" />
               {t.car.back_home}
             </ButtonGlobal>
           </div>
@@ -251,11 +247,7 @@ export default function Hero() {
               }}
               disabled={active === 0}
             >
-              <img
-                src={caretLeft}
-                alt={t.car.prev}
-                className="icon-static me-2"
-              />
+              <img src={caretLeft} alt={t.car.prev} className="icon-static" />
               {t.car.prev}
             </ButtonGlobal>
           </div>
@@ -277,7 +269,7 @@ export default function Hero() {
                 <img
                   src={caretRight}
                   alt={t.car.next}
-                  className="icon-static ms-2"
+                  className="icon-static"
                 />
               </ButtonGlobal>
             </div>

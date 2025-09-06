@@ -318,14 +318,14 @@ export default function Home() {
                 </div>
 
                 <ButtonGlobal
-                  className="btn-details ms-2"
+                  className="btn-details"
                   onClick={() => navigate(`/cars/${activeCar.id}`)}
                 >
                   {t.car.details}
                   <img
                     src={caretRight}
                     alt={t.car.next}
-                    className="icon-static ms-2"
+                    className="icon-static"
                   />
                 </ButtonGlobal>
               </div>
