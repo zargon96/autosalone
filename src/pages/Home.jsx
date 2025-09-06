@@ -13,6 +13,8 @@ import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
 import caretDown from "../assets/caret-down-fill.svg";
 import caretUp from "../assets/caret-up-fill.svg";
+import caretRight from "../assets/caret-right-fill.svg";
+import ButtonGlobal from "../components/ButtonGlobal";
 
 export default function Home() {
   const {
@@ -315,13 +317,17 @@ export default function Home() {
                   <span className="stat-label">{t.car.power}</span>
                 </div>
 
-                <button
+                <ButtonGlobal
                   className="btn-details ms-2"
                   onClick={() => navigate(`/cars/${activeCar.id}`)}
-                  type="button"
                 >
                   {t.car.details}
-                </button>
+                  <img
+                    src={caretRight}
+                    alt={t.car.next}
+                    className="icon-static ms-2"
+                  />
+                </ButtonGlobal>
               </div>
             </section>
           );

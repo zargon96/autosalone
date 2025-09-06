@@ -12,6 +12,9 @@ import Footer from "../../components/Footer";
 import useFxRates from "./useFxRates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import caretLeft from "../../assets/caret-left-fill.svg";
+import caretRight from "../../assets/caret-right-fill.svg";
+import ButtonGlobal from "../ButtonGlobal";
 import {
   nf0,
   nf1,
@@ -119,9 +122,14 @@ export default function Hero() {
             </h1>
           </div>
           <div className="col-md-6">
-            <button className="btn-details mt-2" onClick={goHome} type="button">
-              ← {t.car.back_home}
-            </button>
+            <ButtonGlobal className="btn-details mt-2" onClick={goHome}>
+              <img
+                src={caretLeft}
+                alt={t.car.prev}
+                className="icon-static me-2"
+              />
+              {t.car.back_home}
+            </ButtonGlobal>
           </div>
           <div className="col-md-6 mb-5">
             <div className="hero-topbar d-flex justify-content-end align-items-center">
@@ -232,9 +240,7 @@ export default function Hero() {
           </div>
 
           <div className="col-6">
-            <button
-              type="button"
-              className="btn-details mb-5"
+            <ButtonGlobal
               onClick={() => {
                 if (active > 0) {
                   navigate(`/cars/${carKeys[active - 1]}`);
@@ -245,15 +251,18 @@ export default function Hero() {
               }}
               disabled={active === 0}
             >
-              ← {t.car.prev}
-            </button>
+              <img
+                src={caretLeft}
+                alt={t.car.prev}
+                className="icon-static me-2"
+              />
+              {t.car.prev}
+            </ButtonGlobal>
           </div>
 
           <div className="col-6">
             <div className="box-next">
-              <button
-                type="button"
-                className="btn-details mb-5"
+              <ButtonGlobal
                 onClick={() => {
                   if (active < carKeys.length - 1) {
                     navigate(`/cars/${carKeys[active + 1]}`);
@@ -264,8 +273,13 @@ export default function Hero() {
                 }}
                 disabled={active === carKeys.length - 1}
               >
-                {t.car.next} →
-              </button>
+                {t.car.next}
+                <img
+                  src={caretRight}
+                  alt={t.car.next}
+                  className="icon-static ms-2"
+                />
+              </ButtonGlobal>
             </div>
           </div>
         </div>
