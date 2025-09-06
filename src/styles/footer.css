@@ -56,3 +56,9 @@
     font-size: 0.8rem;
   }
 }
+
+@media (min-width: 1024px) and (max-width: 1536px) {
+  .footer .credits {
+    padding-bottom: 20px !important;
+  }
+}
