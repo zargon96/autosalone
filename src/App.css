@@ -35,13 +35,13 @@ html {
   align-items: center;
   background: var(--accent-1);
   border-radius: 8px;
-  color: var(--text-color);
+  color: #000;
   padding: 2px 6px;
 }
 
 .dark-mode {
   --bg-color: #212529;
-  --text-color: #f5f6fa;
+  --text-color: #fff;
   --bg-1: #1a1f29;
   --bg-2: #0f141c;
   --accent-1: rgba(79, 125, 248, 0.4);
