@@ -1,11 +1,10 @@
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useThree, useLoader } from "@react-three/fiber";
 import gsap from "gsap";
 import {
   OrbitControls,
   Environment,
   ContactShadows,
   Html,
-  useGLTF,
 } from "@react-three/drei";
 import { Suspense, useEffect, useRef, useState, memo, useMemo } from "react";
 import { useCanvas } from "../context/CanvasContext";
@@ -13,10 +12,19 @@ import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 import { CAMERA_CONFIGS } from "./cameraConfigs";
 import * as THREE from "three";
-useGLTF.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 const Model = memo(function Model({ car }) {
-  const { scene } = useGLTF(car.model);
+  const gltf = useLoader(GLTFLoader, car.model, (loader) => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+    loader.setDRACOLoader(dracoLoader);
+  });
+
+  const { scene } = gltf;
+
   useEffect(() => {
     const box = new THREE.Box3().setFromObject(scene);
     const center = new THREE.Vector3();
