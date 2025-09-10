@@ -10,12 +10,15 @@
       href="https://pub-67bbafe0d17b47029e176cdfe1e3b7a9.r2.dev"
       crossorigin
     />
-
     <link rel="dns-prefetch" href="https://api.frankfurter.app" />
     <link rel="preconnect" href="https://api.frankfurter.app" crossorigin />
-
-    <link rel="dns-prefetch" href="https://www.gstatic.com" />
-    <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://www.gstatic.com/draco/v1/decoders/draco_decoder.wasm"
+      as="fetch"
+      type="application/wasm"
+      crossorigin="anonymous"
+    />
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo-car.svg" />

@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 const Credits = lazy(() => import("./pages/Credits"));
 const Hero = lazy(() => import("./components/hero/Hero"));
 import GlobalCanvas from "./components/GlobalCanvas";
+
 export default function App() {
   return (
     <Router>

@@ -12,9 +12,20 @@ import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 import { CAMERA_CONFIGS } from "./cameraConfigs";
+import * as THREE from "three";
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 
 const Model = memo(function Model({ car }) {
   const { scene } = useGLTF(car.model);
+  useEffect(() => {
+    const box = new THREE.Box3().setFromObject(scene);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    scene.position.sub(center);
+    const height = box.max.y - box.min.y;
+    scene.position.y += height * 0.5;
+  }, [scene]);
+
   return (
     <primitive
       object={scene}
