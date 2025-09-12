@@ -160,7 +160,11 @@ const Credits = () => {
 
       <div className="text-center mt-4">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <ButtonGlobal>
+          <ButtonGlobal
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
             <img
               src={caretLeft}
               alt="Back to Home"
