@@ -162,6 +162,11 @@ body::after {
 .hero-canvas {
   margin-top: 50px;
   height: 100%;
+  cursor: grab;
+}
+
+.hero-canvas:active {
+  cursor: grabbing;
 }
 
 .hero-canvas canvas {
