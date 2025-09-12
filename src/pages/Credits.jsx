@@ -95,9 +95,11 @@ const Credits = () => {
   const { setMode } = useCanvas();
 
   useEffect(() => {
-    setMode("hidden");
-    return () => setMode("static");
-  }, [setMode]);
+    document.body.classList.add("page-credits");
+    return () => {
+      document.body.classList.remove("page-credits");
+    };
+  }, []);
 
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem("theme") === "dark"

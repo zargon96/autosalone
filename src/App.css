@@ -174,3 +174,9 @@ body::after {
   height: 100% !important;
   object-fit: contain;
 }
+
+body.page-credits .canvas-container,
+body.page-credits .hero-canvas,
+body.page-credits #global-canvas-root {
+  display: none !important;
+}

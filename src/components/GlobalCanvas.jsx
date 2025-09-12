@@ -138,8 +138,6 @@ function HeroControls({ enabled }) {
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
 
-  if (mode === "hidden") return null;
-
   return (
     <Canvas
       shadows
