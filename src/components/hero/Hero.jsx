@@ -122,10 +122,11 @@ export default function Hero() {
             </h1>
           </div>
           <div className="col-md-6">
-            <ButtonGlobal className="btn-details" onClick={goHome}>
+            <ButtonGlobal className="btn-details mt-3" onClick={goHome}>
               <img src={caretLeft} alt={t.car.prev} className="icon-static" />
               {t.car.back_home}
             </ButtonGlobal>
+            <div id="hero-canvas-slot" />
           </div>
           <div className="col-md-6 mb-5">
             <div className="hero-topbar d-flex justify-content-end align-items-center">
@@ -148,7 +149,6 @@ export default function Hero() {
                 </a>
               </div>
             </div>
-
             <HeroStats active={active}>
               <HeroStats.Title>{t.car.tech_sheet}</HeroStats.Title>
 
@@ -234,7 +234,6 @@ export default function Hero() {
               </HeroStats.Row>
             </HeroStats>
           </div>
-
           <div className="col-6">
             <ButtonGlobal
               onClick={() => {

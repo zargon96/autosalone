@@ -112,6 +112,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: -1;
 }
 .model-center canvas {
   pointer-events: none;
@@ -161,6 +162,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
     width: 82vw;
     height: 46vh;
     transform: translate(-50%, -42%);
+    z-index: -1;
   }
   .stats-bottom-center {
     gap: 1.5rem;
@@ -178,6 +180,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
     width: 88vw;
     height: 40vh;
     transform: translate(-50%, -38%);
+    z-index: -1;
   }
   .stats-bottom-center {
     gap: 1rem;

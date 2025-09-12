@@ -7,7 +7,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_f40_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V8 biturbo",
       displacement: "2936 cc",
@@ -34,7 +34,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_fxx_k_2015_draco.glb`,
     scale: 40,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 6.3L + KERS",
       displacement: "6262 cc",
@@ -61,7 +61,7 @@ export const cars = {
     model: `${BASE_URL}/pagani_zonda_cinque_draco.glb`,
     scale: 1.1,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 AMG 6.0L",
       displacement: "5987 cc",
@@ -89,7 +89,7 @@ export const cars = {
     model: `${BASE_URL}/porsche_911_turbo_1975_draco.glb`,
     scale: 1.5,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "Flat-6 Turbo 3.0L",
       displacement: "2994 cc",
@@ -117,7 +117,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_f12_berlinetta_draco.glb`,
     scale: 100,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 aspirato 6.3L",
       displacement: "6262 cc",
@@ -145,7 +145,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_488_pista_draco.glb`,
     scale: 65,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V8 biturbo 3.9L",
       displacement: "3902 cc",
@@ -173,7 +173,7 @@ export const cars = {
     model: `${BASE_URL}/bmw_m3_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "S14 I4", displacement: "2302 cc", price_eur: 55000 },
     specs: {
       year: 1990,
@@ -197,7 +197,7 @@ export const cars = {
     model: `${BASE_URL}/dodge_charger_draco.glb`,
     scale: 0.9,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "426 HEMI V8", displacement: "6997 cc", price_eur: 40000 },
     specs: {
       year: 1969,
@@ -221,7 +221,7 @@ export const cars = {
     model: `${BASE_URL}/toyota_supra_draco.glb`,
     scale: 0.3,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2JZ 3.0L biturbo",
       displacement: "2997 cc",
@@ -249,7 +249,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_skyline_r33_draco.glb`,
     scale: 0.3,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "RB26DETT", displacement: "2568 cc", price_eur: 80000 },
     specs: {
       year: 1995,
@@ -273,7 +273,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_skyline_r34_draco.glb`,
     scale: 104,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "RB26DETT", displacement: "2568 cc", price_eur: 120000 },
     specs: {
       year: 1999,
@@ -297,7 +297,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_350z_draco.glb`,
     scale: 104,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "VQ35DE V6", displacement: "3498 cc", price_eur: 20000 },
     specs: {
       year: 2003,
@@ -321,7 +321,7 @@ export const cars = {
     model: `${BASE_URL}/mazda_rx-7_draco.glb`,
     scale: 0.4,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "twin-turbo rotary",
       displacement: "1308 cc",
@@ -349,7 +349,7 @@ export const cars = {
     model: `${BASE_URL}/audi_tt_rs_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: [0, 0, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2.5 L TFSI turbo I-5",
       displacement: "2480 cc",

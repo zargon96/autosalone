@@ -1,5 +1,5 @@
 import "./App.css";
-import { memo, lazy } from "react";
+import { memo, lazy, useEffect } from "react";
 import { LangProvider } from "./context/langContext.jsx";
 import { useCanvas, CanvasProvider } from "./context/CanvasContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -31,12 +31,27 @@ export default function App() {
 
 const CanvasWrapper = memo(function CanvasWrapper() {
   const { containerClass, mode } = useCanvas();
+
+  useEffect(() => {
+    if (containerClass === "hero-canvas") {
+      const slot = document.getElementById("hero-canvas-slot");
+      const wrapper = document.getElementById("global-canvas-wrapper");
+      if (slot && wrapper) {
+        slot.appendChild(wrapper);
+      }
+    } else {
+      const root = document.getElementById("global-canvas-root");
+      const wrapper = document.getElementById("global-canvas-wrapper");
+      if (root && wrapper) {
+        root.appendChild(wrapper);
+      }
+    }
+  }, [containerClass]);
+
+  if (mode === "hidden") return null;
+
   return (
-    <div
-      className={`canvas-container ${containerClass} ${
-        mode === "hidden" ? "canvas-hidden" : ""
-      }`}
-    >
+    <div id="global-canvas-wrapper" className={containerClass}>
       <GlobalCanvas />
     </div>
   );

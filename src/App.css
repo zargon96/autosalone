@@ -10,6 +10,7 @@ html {
   margin: 0;
   padding: 0;
 }
+
 :root {
   --bg-color: #f5f6fa;
   --text-color: #111111;
@@ -46,56 +47,6 @@ html {
   --bg-2: #0f141c;
   --accent-1: rgba(79, 125, 248, 0.4);
   --accent-2: rgba(165, 108, 245, 0.4);
-}
-
-.model-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -45%);
-  width: min(900px, 78vw);
-  height: min(520px, 58vh);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-canvas {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-76%, -45%);
-  width: min(900px, 78vw);
-  height: min(520px, 45vh);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .hero-canvas {
-    top: 60% !important;
-    width: 90vw !important;
-    height: 40vh !important;
-    transform: translate(-50%, -50%) !important;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1536px) {
-  .hero-canvas {
-    top: 65% !important;
-    height: 60vh;
-  }
-  .stats-bottom-center {
-    bottom: 7.25rem !important;
-  }
-  .model-center {
-    top: 55% !important;
-  }
-  .footer2 {
-    bottom: 10px !important;
-  }
 }
 
 .canvas-hidden {
@@ -206,4 +157,15 @@ body::after {
   100% {
     transform: translate(0, 0);
   }
+}
+
+.hero-canvas {
+  margin-top: 50px;
+  height: 100%;
+}
+
+.hero-canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
 }

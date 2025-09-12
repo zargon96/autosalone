@@ -32,7 +32,10 @@ const Model = memo(function Model({ car }) {
     scene.position.sub(center);
     const height = box.max.y - box.min.y;
     scene.position.y += height * 0.5;
-  }, [scene]);
+    if (car?.offset) {
+      scene.position.add(new THREE.Vector3(...car.offset));
+    }
+  }, [scene, car?.offset]);
 
   return (
     <primitive
