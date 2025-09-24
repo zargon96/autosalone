@@ -6,6 +6,8 @@ function HeroStats({ children, active }) {
 
   useEffect(() => {
     if (!statsRef.current) return;
+
+    // animate stats items when active changes
     const ctx = gsap.context(() => {
       gsap.fromTo(
         statsRef.current.querySelectorAll("p, h1, h2"),
@@ -14,6 +16,7 @@ function HeroStats({ children, active }) {
       );
     }, statsRef);
 
+    // cleanup animations
     return () => ctx.revert();
   }, [active]);
 
@@ -24,14 +27,17 @@ function HeroStats({ children, active }) {
   );
 }
 
+// section title
 function Title({ children }) {
   return <h2>{children}</h2>;
 }
 
+// row wrapper for items
 function Row({ children }) {
   return <div className="row mb-2">{children}</div>;
 }
 
+// single stat item
 const Item = memo(function Item({ label, value, fullWidth = false }) {
   return (
     <div className={fullWidth ? "col-12" : "col-md-6"}>

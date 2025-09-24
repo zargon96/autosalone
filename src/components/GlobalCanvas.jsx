@@ -16,6 +16,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
+// load and render a gltf model with optional draco compression
 const Model = memo(function Model({ car }) {
   const gltf = useLoader(GLTFLoader, car.model, (loader) => {
     const dracoLoader = new DRACOLoader();
@@ -25,13 +26,18 @@ const Model = memo(function Model({ car }) {
 
   const { scene } = gltf;
 
+  // center the model
   useEffect(() => {
     const box = new THREE.Box3().setFromObject(scene);
     const center = new THREE.Vector3();
     box.getCenter(center);
     scene.position.sub(center);
+
+    // lift model based on its height
     const height = box.max.y - box.min.y;
     scene.position.y += height * 0.5;
+
+    // apply optional offset
     if (car?.offset) {
       scene.position.add(new THREE.Vector3(...car.offset));
     }
@@ -47,6 +53,7 @@ const Model = memo(function Model({ car }) {
   );
 });
 
+// shadows
 const Shadows = memo(() => (
   <ContactShadows
     position={[0, -0.01, 0]}
@@ -57,6 +64,7 @@ const Shadows = memo(() => (
   />
 ));
 
+// detect device type for responsive camera configs
 function useDeviceType() {
   const [device, setDevice] = useState(() => {
     const w = window.innerWidth;
@@ -79,6 +87,7 @@ function useDeviceType() {
   return device;
 }
 
+// animate camera position and fov based on mode and device
 function CameraRig({ mode }) {
   const { camera } = useThree();
   const device = useDeviceType();
@@ -121,6 +130,7 @@ function CameraRig({ mode }) {
   return null;
 }
 
+// orbit controls for hero mode only
 function HeroControls({ enabled }) {
   const ref = useRef(null);
 
@@ -135,6 +145,7 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
+// canvas
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
 
@@ -143,7 +154,6 @@ export default function GlobalCanvas() {
       shadows
       dpr={[1, 2]}
       gl={{ powerPreference: "high-performance", antialias: true }}
-      camera={{ position: [12, 8, 5.5], fov: 12 }}
     >
       <CameraRig mode={mode} />
 

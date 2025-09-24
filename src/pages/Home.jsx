@@ -31,6 +31,7 @@ export default function Home() {
   const carKeys = useMemo(() => Object.keys(cars), []);
   const currentYear = new Date().getFullYear();
 
+  // refs for scrolling and navigation
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
   const indexRef = useRef(homeIndex || 0);
@@ -42,6 +43,7 @@ export default function Home() {
 
   const gotoSectionRef = useRef(() => {});
 
+  // format power depending on locale
   const formatPower = useCallback(
     (specs) => {
       if (!specs?.power_hp) return "—";
@@ -55,6 +57,7 @@ export default function Home() {
     [lang]
   );
 
+  // format price depending on locale and fx rates
   const formatPrice = useCallback(
     (eur) => {
       if (!eur) return "—";
@@ -83,6 +86,7 @@ export default function Home() {
     [lang, rates]
   );
 
+  // lock body scroll
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -93,6 +97,7 @@ export default function Home() {
     };
   }, []);
 
+  // init sections and set default car
   useEffect(() => {
     if (initDone.current) return;
     initDone.current = true;
@@ -111,6 +116,7 @@ export default function Home() {
     setContainerClass?.("model-center");
   }, [carKeys, currentIndex, setActiveCarId, setMode, setContainerClass]);
 
+  // animate transition between sections
   const gotoSection = useCallback(
     (nextIndex, dir) => {
       const sections = sectionsRef.current.filter(Boolean);
@@ -151,6 +157,7 @@ export default function Home() {
     gotoSectionRef.current = gotoSection;
   }, [gotoSection]);
 
+  // wheel, keyboard and touch navigation
   useEffect(() => {
     const WHEEL_THRESHOLD = 100;
 
@@ -208,6 +215,8 @@ export default function Home() {
       window.removeEventListener("touchend", onTouchEnd);
     };
   }, []);
+
+  // current active car and price
   const activeCar = useMemo(
     () => cars[carKeys[currentIndex]],
     [carKeys, currentIndex]
@@ -222,11 +231,14 @@ export default function Home() {
     <>
       <Navbar />
       <div ref={containerRef} className="showcase-container container">
+        {/* section indicator */}
         <div className="section-indicator">
           <span className="current-section">
             {String(currentIndex + 1).padStart(2, "0")}
           </span>
         </div>
+
+        {/* social links */}
         <div className="social-vertical">
           <a
             href="https://github.com/zargon96"
@@ -245,6 +257,8 @@ export default function Home() {
             <FontAwesomeIcon icon={faLinkedin} size="2x" />
           </a>
         </div>
+
+        {/* cars */}
         {carKeys.map((key, i) => {
           const car = cars[key];
           const isActive = i === currentIndex;
@@ -332,6 +346,8 @@ export default function Home() {
             </section>
           );
         })}
+
+        {/* scroll controls */}
         <div
           className="scroll-left"
           onClick={() => gotoSectionRef.current(carKeys.length - 1, 1)}
@@ -348,6 +364,8 @@ export default function Home() {
         >
           <img src={caretUp} alt={t.car.back_to_top} className="bounce-icon" />
         </div>
+
+        {/* footer */}
         <footer className="footer2 container">
           <p className="footer-text text-color">
             © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}

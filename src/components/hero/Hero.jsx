@@ -28,27 +28,40 @@ import "../../styles/hero.css";
 import "../../styles/footer.css";
 
 export default function Hero() {
+  // translation and current language
   const { t, lang } = useLang();
+
+  // car id from route params
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // canvas context setters
   const { setActiveCarId, setMode, setContainerClass, setHomeIndex } =
     useCanvas();
+
+  // list of car keys
   const carKeys = useMemo(() => Object.keys(cars), []);
+
+  // index of active car
   const active = useMemo(() => {
     const idx = carKeys.indexOf(id);
     return idx >= 0 ? idx : 0;
   }, [id, carKeys]);
 
+  // preload current car model
   useEffect(() => {
     if (!carKeys[active]) return;
     useGLTF.preload(cars[carKeys[active]].model);
   }, [active, carKeys]);
 
+  // active car and specs
   const car = useMemo(() => cars[carKeys[active]], [carKeys, active]);
   const s = useMemo(() => car.specs, [car]);
 
+  // exchange rates
   const rates = useFxRates();
 
+  // set canvas mode when entering hero, reset on cleanup
   useEffect(() => {
     setMode("hero");
     setActiveCarId(car.id);
@@ -60,6 +73,7 @@ export default function Hero() {
     };
   }, [car, setMode, setActiveCarId, setContainerClass]);
 
+  // localized power value
   const powerValue = useMemo(() => {
     const hp = s.power_hp;
     if (lang === "it") {
@@ -69,6 +83,7 @@ export default function Hero() {
     return `${nf0("en").format(hp)} hp`;
   }, [lang, s]);
 
+  // localized price
   const priceLabel = useMemo(() => {
     const eur = car.stats.price_eur ?? null;
     if (!eur) return "—";
@@ -97,6 +112,7 @@ export default function Hero() {
     }).format(eur);
   }, [car, lang, rates]);
 
+  // go back home and reset canvas state
   const goHome = useCallback(() => {
     setMode("static");
     setContainerClass("model-center");
@@ -109,6 +125,7 @@ export default function Hero() {
       <Navbar />
       <section className="container mt-4">
         <div className="row hero-content">
+          {/* car name */}
           <div className="col-md-12">
             <h1 className="m-0">
               <BlurText
@@ -121,6 +138,8 @@ export default function Hero() {
               />
             </h1>
           </div>
+
+          {/* canvas slot and back button */}
           <div className="col-md-6">
             <ButtonGlobal className="btn-details mt-3" onClick={goHome}>
               <img src={caretLeft} alt={t.car.prev} className="icon-static" />
@@ -128,6 +147,8 @@ export default function Hero() {
             </ButtonGlobal>
             <div id="hero-canvas-slot" />
           </div>
+
+          {/* stats and social icons */}
           <div className="col-md-6 mb-5">
             <div className="hero-topbar d-flex justify-content-end align-items-center">
               <div className="footer-icons">
@@ -149,6 +170,8 @@ export default function Hero() {
                 </a>
               </div>
             </div>
+
+            {/* car technical sheet */}
             <HeroStats active={active}>
               <HeroStats.Title>{t.car.tech_sheet}</HeroStats.Title>
 
@@ -234,6 +257,8 @@ export default function Hero() {
               </HeroStats.Row>
             </HeroStats>
           </div>
+
+          {/* prev button */}
           <div className="col-6">
             <ButtonGlobal
               onClick={() => {
@@ -251,6 +276,7 @@ export default function Hero() {
             </ButtonGlobal>
           </div>
 
+          {/* next button */}
           <div className="col-6">
             <div className="box-next">
               <ButtonGlobal

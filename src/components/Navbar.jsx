@@ -6,10 +6,12 @@ import Switch from "../components/Switch";
 export default function NavigationBar() {
   const { lang, setLang } = useLang();
 
+  // state for dark mode
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
+  // apply theme class to root and persist in localstorage
   useEffect(() => {
     const root = document.documentElement;
     if (isDarkMode) {
@@ -21,6 +23,7 @@ export default function NavigationBar() {
     }
   }, [isDarkMode]);
 
+  // toggle dark/light mode
   const toggleTheme = useCallback(() => {
     setIsDarkMode((prev) => !prev);
   }, []);

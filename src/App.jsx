@@ -13,11 +13,16 @@ export default function App() {
     <Router>
       <CanvasProvider>
         <LangProvider>
+          {/* background blobs */}
           <div className="bg-blobs">
             <div className="blob blob1"></div>
             <div className="blob blob2"></div>
           </div>
+
+          {/* global canvas wrapper */}
           <CanvasWrapper />
+
+          {/* routes */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cars/:id" element={<Hero />} />
@@ -29,6 +34,7 @@ export default function App() {
   );
 }
 
+// wrapper that moves the global canvas in/out of hero slot or root
 const CanvasWrapper = memo(function CanvasWrapper() {
   const { containerClass, mode } = useCanvas();
 
@@ -48,6 +54,7 @@ const CanvasWrapper = memo(function CanvasWrapper() {
     }
   }, [containerClass]);
 
+  // hide canvas if mode is "hidden"
   if (mode === "hidden") return null;
 
   return (

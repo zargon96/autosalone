@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 
-let cachedRates = null;
-let inFlight = null;
+let cachedRates = null; // store cached rates in memory
+let inFlight = null; // keep track of ongoing request
 
 export default function useFxRates() {
   const [rates, setRates] = useState(cachedRates);
 
   useEffect(() => {
-    if (cachedRates) return; 
+    // return early if already cached
+    if (cachedRates) return;
     const cacheKey = import.meta.env.VITE_FX_CACHE_KEY;
     const apiBase = import.meta.env.VITE_FX_API_BASE;
     const url = `${apiBase}/latest?base=EUR&symbols=GBP`;
 
+    // try to read from localstorage cache
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
         const obj = JSON.parse(cached);
+
+        // cache is valid for 1 hour
         if (Date.now() - obj.ts < 60 * 60 * 1000) {
           cachedRates = obj.data;
           setRates(obj.data);
@@ -26,11 +30,13 @@ export default function useFxRates() {
       console.warn("[FX] Cache read error:", err);
     }
 
+    // reuse in-flight request if one exists
     if (inFlight) {
       inFlight.then(setRates).catch(() => {});
       return;
     }
 
+    // fetch fresh data
     inFlight = fetch(url, { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -39,6 +45,8 @@ export default function useFxRates() {
       .then((data) => {
         cachedRates = data;
         setRates(data);
+
+        // write to localstorage
         try {
           localStorage.setItem(
             cacheKey,
@@ -51,6 +59,7 @@ export default function useFxRates() {
       })
       .catch((err) => {
         console.warn("[FX] Fetch failed:", err);
+        // fallback to stale cache if available
         try {
           const stale = localStorage.getItem(cacheKey);
           if (stale) {
