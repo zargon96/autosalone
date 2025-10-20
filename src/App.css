@@ -3,13 +3,17 @@ html {
   height: 100%;
 }
 
-*,
+* {
+  outline: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+/* *,
 *::before,
 *::after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-}
+} */
 
 :root {
   --bg-color: #f5f6fa;
@@ -92,6 +96,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -1;
+  height: 100dvh;
   pointer-events: none;
 }
 
