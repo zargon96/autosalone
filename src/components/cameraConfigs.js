@@ -9,6 +9,6 @@ export const CAMERA_CONFIGS = {
   },
   smallLaptop: {
     home: { pos: [12, 8, 5.5], fov: 12 },
-    hero: { pos: [-4, 1, 6], fov: 26 },
+    hero: { pos: [-4, 1, 6], fov: 16 },
   },
 };

@@ -35,10 +35,6 @@
   .title-car {
     font-size: 26px;
   }
-  .stats-bottom-center {
-    gap: 1.5rem;
-    bottom: 8.75rem;
-  }
   .stat-value {
     display: block;
     font-size: 12px;
@@ -47,11 +43,11 @@
   }
   .stats-bottom-center {
     position: absolute;
-    bottom: 9.25rem;
+    gap: 1.5rem;
+    bottom: 8.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2.25rem;
     padding: 0.5rem 1rem;
     border-radius: 12px;
   }
