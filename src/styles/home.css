@@ -304,7 +304,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   align-items: center;
 }
 @media (max-width: 768px) {
-  footer.footer2 {
+  /* footer.footer2 {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -313,6 +313,16 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
     text-align: center;
     font-size: 0.9rem;
     padding: 35px 0;
+  } */
+  footer.footer2 {
+    position: fixed;
+    bottom: 65px;
+    left: 0;
+    transform: translateX(0);
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0px;
   }
   .stats-bottom-center {
     position: absolute !important;
@@ -335,8 +345,14 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   #mobile-none {
     display: none !important;
   }
+  .title-top-left {
+    position: absolute;
+    top: 104px;
+    left: 1rem;
+  }
   .price-top-right {
     position: absolute;
     margin-top: 50px !important;
+    right: 1rem;
   }
 }
