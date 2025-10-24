@@ -14,12 +14,20 @@ export default function NavigationBar() {
   // apply theme class to root and persist in localstorage
   useEffect(() => {
     const root = document.documentElement;
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
     if (isDarkMode) {
       root.classList.add("dark-mode");
       localStorage.setItem("theme", "dark");
     } else {
       root.classList.remove("dark-mode");
       localStorage.setItem("theme", "light");
+    }
+
+    if (metaThemeColor) {
+      const computed = getComputedStyle(root);
+      const bgColor = computed.getPropertyValue("--bg-2").trim();
+      metaThemeColor.setAttribute("content", bgColor);
     }
   }, [isDarkMode]);
 

@@ -153,7 +153,11 @@ export default function GlobalCanvas() {
     <Canvas
       shadows
       dpr={[1, 2]}
-      gl={{ powerPreference: "high-performance", antialias: true }}
+      gl={{
+        powerPreference: "high-performance",
+        antialias: true,
+        preserveDrawingBuffer: false,
+      }}
     >
       <CameraRig mode={mode} />
 

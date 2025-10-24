@@ -158,12 +158,6 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   .car-title {
     font-size: 2.6rem;
   }
-  /* .model-center {
-    width: 82vw;
-    height: 46vh;
-    transform: translate(-50%, -42%);
-    z-index: -1;
-  } */
   .stats-bottom-center {
     gap: 1.5rem;
     bottom: 8rem;
