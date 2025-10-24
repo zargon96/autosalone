@@ -63,6 +63,7 @@ html {
 
 html,
 body {
+  background-color: var(--bg-color);
   padding-bottom: env(safe-area-inset-bottom);
   font-family: "MozillaText", sans-serif !important;
 }
