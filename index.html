@@ -22,13 +22,7 @@
 
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo-car.svg" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#eef1f7" id="meta-theme-color" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
       content="Scopri auto sportive e classiche in 3D. Schede tecniche, prestazioni, dimensioni e prezzi in euro e sterline. Visualizza e confronta i modelli in un'esperienza interattiva."
@@ -52,29 +46,4 @@
     <div id="global-canvas-root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
-
-  <script>
-    (function () {
-      var LIGHT = "#eef1f7";
-      var DARK = "#0f141c";
-
-      try {
-        var stored = localStorage.getItem("theme");
-        var prefersDark =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches;
-        var isDark = stored ? stored === "dark" : prefersDark;
-        document.documentElement.classList.toggle("dark-mode", isDark);
-        var m =
-          document.querySelector('meta[name="theme-color"]') ||
-          (function () {
-            var mm = document.createElement("meta");
-            mm.setAttribute("name", "theme-color");
-            document.head.appendChild(mm);
-            return mm;
-          })();
-        m.setAttribute("content", isDark ? DARK : LIGHT);
-      } catch (e) {}
-    })();
-  </script>
 </html>
