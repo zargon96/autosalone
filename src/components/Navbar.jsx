@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLang } from "../context/langContext.jsx";
 import { Navbar, Container } from "react-bootstrap";
+import useThemeColor from "../hooks/useThemeColor";
 import Switch from "../components/Switch";
 
 export default function NavigationBar() {
@@ -33,8 +34,6 @@ export default function NavigationBar() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-
     if (isDarkMode) {
       root.classList.add("dark-mode");
       localStorage.setItem("theme", "dark");
@@ -42,16 +41,9 @@ export default function NavigationBar() {
       root.classList.remove("dark-mode");
       localStorage.setItem("theme", "light");
     }
-
-    if (metaThemeColor) {
-      const computed = getComputedStyle(root);
-      const bgColor = computed.getPropertyValue("--bg-2").trim();
-
-      const clone = metaThemeColor.cloneNode();
-      clone.setAttribute("content", bgColor);
-      document.head.replaceChild(clone, metaThemeColor);
-    }
   }, [isDarkMode]);
+
+  useThemeColor(isDarkMode);
 
   // toggle dark/light mode
   const toggleTheme = useCallback(() => {
