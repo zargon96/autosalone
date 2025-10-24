@@ -12,6 +12,25 @@ export default function NavigationBar() {
   });
 
   // apply theme class to root and persist in localstorage
+  // useEffect(() => {
+  //   const root = document.documentElement;
+  //   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+  //   if (isDarkMode) {
+  //     root.classList.add("dark-mode");
+  //     localStorage.setItem("theme", "dark");
+  //   } else {
+  //     root.classList.remove("dark-mode");
+  //     localStorage.setItem("theme", "light");
+  //   }
+
+  //   if (metaThemeColor) {
+  //     const computed = getComputedStyle(root);
+  //     const bgColor = computed.getPropertyValue("--bg-2").trim();
+  //     metaThemeColor.setAttribute("content", bgColor);
+  //   }
+  // }, [isDarkMode]);
+
   useEffect(() => {
     const root = document.documentElement;
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
@@ -27,7 +46,10 @@ export default function NavigationBar() {
     if (metaThemeColor) {
       const computed = getComputedStyle(root);
       const bgColor = computed.getPropertyValue("--bg-2").trim();
-      metaThemeColor.setAttribute("content", bgColor);
+
+      const clone = metaThemeColor.cloneNode();
+      clone.setAttribute("content", bgColor);
+      document.head.replaceChild(clone, metaThemeColor);
     }
   }, [isDarkMode]);
 
