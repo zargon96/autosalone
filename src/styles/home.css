@@ -1,15 +1,8 @@
 :root {
-  --text-color: #212529;
-  --icon-filter: invert(0);
-}
-
-.dark-mode {
-  --text-color: #f5f6fa;
+  --text-color: #fff;
   --icon-filter: invert(1);
 }
-.icon-static {
-  filter: invert(1) !important;
-}
+
 nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   position: relative;
   z-index: 999999999 !important;

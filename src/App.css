@@ -12,12 +12,8 @@ html {
 }
 
 :root {
-  --bg-color: #f5f6fa;
-  --text-color: #111111;
-  --bg-1: #f7f8fc;
-  --bg-2: #eef1f7;
-  --accent-1: rgba(142, 197, 252, 0.8);
-  --accent-2: rgba(224, 195, 252, 0.8);
+  --bg-color: #000;
+  --text-color: #fff !important;
 }
 
 .text-color {
@@ -34,19 +30,10 @@ html {
 
 .lang-btn.active {
   align-items: center;
-  background: var(--accent-1);
   border-radius: 8px;
+  background-color: #000;
   color: #fff;
   padding: 2px 6px;
-}
-
-.dark-mode {
-  --bg-color: #212529;
-  --text-color: #fff;
-  --bg-1: #1a1f29;
-  --bg-2: #0f141c;
-  --accent-1: rgba(79, 125, 248, 0.4);
-  --accent-2: rgba(165, 108, 245, 0.4);
 }
 
 .canvas-hidden {
@@ -63,101 +50,7 @@ html {
 
 body {
   font-family: "MozillaText", sans-serif !important;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  background: linear-gradient(12deg, var(--bg-1) 0 50%, var(--bg-2) 50% 100%);
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background: linear-gradient(
-    12deg,
-    transparent calc(50% - 0.5px),
-    rgba(255, 255, 255, 0.3) calc(50% - 0.5px) calc(50% + 0.5px),
-    transparent calc(50% + 0.5px)
-  );
-  mix-blend-mode: overlay;
-  opacity: 0.5;
-}
-
-.bg-blobs {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  height: 100dvh;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(50px);
-  opacity: 0.6;
-}
-
-.blob1 {
-  width: 600px;
-  height: 400px;
-  background: var(--accent-1);
-  top: 20%;
-  left: 15%;
-  animation: floatBlob1 10s ease-in-out infinite;
-}
-
-.blob2 {
-  width: 500px;
-  height: 350px;
-  background: var(--accent-2);
-  bottom: 15%;
-  right: 10%;
-  animation: floatBlob2 8s ease-in-out infinite;
-}
-
-@keyframes floatBlob1 {
-  0% {
-    transform: translate(0, 0);
-  }
-  20% {
-    transform: translate(20px, -15px);
-  }
-  40% {
-    transform: translate(-10px, 10px);
-  }
-  60% {
-    transform: translate(15px, 20px);
-  }
-  80% {
-    transform: translate(-15px, -10px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes floatBlob2 {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-15px, 20px);
-  }
-  50% {
-    transform: translate(10px, -15px);
-  }
-  75% {
-    transform: translate(-20px, -10px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
+  background: var(--bg-color);
 }
 
 .hero-canvas {

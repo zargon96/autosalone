@@ -1,11 +1,6 @@
 import { Canvas, useThree, useLoader } from "@react-three/fiber";
 import gsap from "gsap";
-import {
-  OrbitControls,
-  Environment,
-  ContactShadows,
-  Html,
-} from "@react-three/drei";
+import { OrbitControls, Environment, Html } from "@react-three/drei";
 import { Suspense, useEffect, useRef, useState, memo, useMemo } from "react";
 import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
@@ -16,28 +11,32 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
-// load and render a gltf model with optional draco compression
-const Model = memo(function Model({ car }) {
-  const gltf = useLoader(GLTFLoader, car.model, (loader) => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
-    loader.setDRACOLoader(dracoLoader);
-  });
+/* draco loader created once to avoid re-instantiation on every model load */
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+const withDraco = (loader) => loader.setDRACOLoader(dracoLoader);
 
+/* preload all car models to avoid loading stalls during scroll/model switch */
+Object.values(cars).forEach((car) => {
+  useLoader.preload(GLTFLoader, car.model, withDraco);
+});
+
+/* single car model renderer */
+const Model = memo(function Model({ car, visible }) {
+  const gltf = useLoader(GLTFLoader, car.model, withDraco);
   const { scene } = gltf;
 
-  // center the model
+  /* center the model and lift it so it sits correctly in the scene */
   useEffect(() => {
     const box = new THREE.Box3().setFromObject(scene);
     const center = new THREE.Vector3();
     box.getCenter(center);
     scene.position.sub(center);
 
-    // lift model based on its height
     const height = box.max.y - box.min.y;
     scene.position.y += height * 0.5;
 
-    // apply optional offset
+    /* apply optional per-model offset from data */
     if (car?.offset) {
       scene.position.add(new THREE.Vector3(...car.offset));
     }
@@ -46,25 +45,27 @@ const Model = memo(function Model({ car }) {
   return (
     <primitive
       object={scene}
+      visible={visible}
       scale={car.scale}
       rotation={car.rotation}
       position={car.offset}
+      dispose={null}
     />
   );
 });
 
-// shadows
-const Shadows = memo(() => (
-  <ContactShadows
-    position={[0, -0.01, 0]}
-    opacity={0.4}
-    blur={0.8}
-    scale={14}
-    far={8}
-  />
-));
+/* renders all models once and switches visibility instead of mounting/unmounting */
+const ModelsGroup = memo(function ModelsGroup({ activeCarId }) {
+  return (
+    <group>
+      {Object.entries(cars).map(([id, car]) => (
+        <Model key={id} car={car} visible={id === activeCarId} />
+      ))}
+    </group>
+  );
+});
 
-// detect device type for responsive camera configs
+/* detects device type to select responsive camera configs */
 function useDeviceType() {
   const [device, setDevice] = useState(() => {
     const w = window.innerWidth;
@@ -87,11 +88,12 @@ function useDeviceType() {
   return device;
 }
 
-// animate camera position and fov based on mode and device
+/* animates camera position and fov based on mode and device */
 function CameraRig({ mode }) {
   const { camera } = useThree();
   const device = useDeviceType();
 
+  /* pick the correct camera configuration */
   const targetCfg = useMemo(() => {
     if (device === "mobile")
       return mode === "hero"
@@ -106,6 +108,7 @@ function CameraRig({ mode }) {
       : CAMERA_CONFIGS.desktop.home;
   }, [device, mode]);
 
+  /* smooth camera transition using gsap */
   useEffect(() => {
     gsap.to(camera.position, {
       x: targetCfg.pos[0],
@@ -130,7 +133,7 @@ function CameraRig({ mode }) {
   return null;
 }
 
-// orbit controls for hero mode only
+/* orbit controls enabled only in hero mode */
 function HeroControls({ enabled }) {
   const ref = useRef(null);
 
@@ -145,7 +148,7 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
-// canvas
+/* main canvas component */
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
 
@@ -161,6 +164,7 @@ export default function GlobalCanvas() {
     >
       <CameraRig mode={mode} />
 
+      {/* suspense used only once, models are already preloaded */}
       <Suspense
         fallback={
           <Html center>
@@ -168,12 +172,10 @@ export default function GlobalCanvas() {
           </Html>
         }
       >
-        {activeCarId && <Model car={cars[activeCarId]} />}
+        <ModelsGroup activeCarId={activeCarId} />
       </Suspense>
 
-      <Shadows />
       <HeroControls enabled={mode === "hero"} />
-
       <Environment preset="sunset" background={false} />
     </Canvas>
   );

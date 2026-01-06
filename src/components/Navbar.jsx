@@ -1,32 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
 import { useLang } from "../context/langContext.jsx";
 import { Navbar, Container } from "react-bootstrap";
-import Switch from "../components/Switch";
 
 export default function NavigationBar() {
   const { lang, setLang } = useLang();
-
-  // state for dark mode
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
-
-  // apply theme class to root and persist in localstorage
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDarkMode) {
-      root.classList.add("dark-mode");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark-mode");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDarkMode]);
-
-  // toggle dark/light mode
-  const toggleTheme = useCallback(() => {
-    setIsDarkMode((prev) => !prev);
-  }, []);
 
   return (
     <Navbar variant="dark" expand="lg" className="pt-4">
@@ -50,8 +26,6 @@ export default function NavigationBar() {
             EN
           </button>
         </div>
-
-        <Switch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       </Container>
     </Navbar>
   );

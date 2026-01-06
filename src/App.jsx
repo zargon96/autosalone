@@ -7,18 +7,14 @@ import Home from "./pages/Home";
 const Credits = lazy(() => import("./pages/Credits"));
 const Hero = lazy(() => import("./components/hero/Hero"));
 import GlobalCanvas from "./components/GlobalCanvas";
+import LightPillar from "./components/LightPillar";
 
 export default function App() {
   return (
     <Router>
       <CanvasProvider>
         <LangProvider>
-          {/* background blobs */}
-          <div className="bg-blobs">
-            <div className="blob blob1"></div>
-            <div className="blob blob2"></div>
-          </div>
-
+          <LightPillar />
           {/* global canvas wrapper */}
           <CanvasWrapper />
 

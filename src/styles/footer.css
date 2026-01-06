@@ -1,15 +1,3 @@
-:root {
-  --icon-footer-color: #000;
-  --icon-github-hover: #000;
-  --icon-linkedin-hover: #0a66c2;
-}
-
-.dark-mode {
-  --icon-footer-color: #fff;
-  --icon-github-hover: #000;
-  --icon-linkedin-hover: #0a66c2;
-}
-
 .footer-text {
   text-align: center;
 }
