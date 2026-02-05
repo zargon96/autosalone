@@ -7,40 +7,52 @@ import { cars } from "./hero/carsData";
 import Loader3D from "./Loader3D";
 import { CAMERA_CONFIGS } from "./cameraConfigs";
 import * as THREE from "three";
-
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
-/* draco loader created once to avoid re-instantiation on every model load */
+gsap.ticker.lagSmoothing(0);
+
+/* draco loader is created once to avoid re-instantiation */
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 const withDraco = (loader) => loader.setDRACOLoader(dracoLoader);
 
-/* preload all car models to avoid loading stalls during scroll/model switch */
-Object.values(cars).forEach((car) => {
-  useLoader.preload(GLTFLoader, car.model, withDraco);
-});
-
-/* single car model renderer */
+/* renders a single car model */
 const Model = memo(function Model({ car, visible }) {
   const gltf = useLoader(GLTFLoader, car.model, withDraco);
   const { scene } = gltf;
 
-  /* center the model and lift it so it sits correctly in the scene */
+  /* ensure expensive setup runs only once */
+  const initialized = useRef(false);
+
   useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+
+    /* center model geometry */
     const box = new THREE.Box3().setFromObject(scene);
     const center = new THREE.Vector3();
     box.getCenter(center);
     scene.position.sub(center);
 
+    /* lift model so it sits correctly on the ground */
     const height = box.max.y - box.min.y;
     scene.position.y += height * 0.5;
 
-    /* apply optional per-model offset from data */
+    /* optional per-model offset from data */
     if (car?.offset) {
       scene.position.add(new THREE.Vector3(...car.offset));
     }
-  }, [scene, car?.offset]);
+
+    /* micro-optimizations: static meshes */
+    scene.traverse((obj) => {
+      if (obj.isMesh) {
+        obj.frustumCulled = true;
+        obj.matrixAutoUpdate = false;
+        obj.updateMatrix();
+      }
+    });
+  }, [scene, car]);
 
   return (
     <primitive
@@ -48,13 +60,12 @@ const Model = memo(function Model({ car, visible }) {
       visible={visible}
       scale={car.scale}
       rotation={car.rotation}
-      position={car.offset}
       dispose={null}
     />
   );
 });
 
-/* renders all models once and switches visibility instead of mounting/unmounting */
+/* all models are mounted once, only visibility changes */
 const ModelsGroup = memo(function ModelsGroup({ activeCarId }) {
   return (
     <group>
@@ -65,7 +76,7 @@ const ModelsGroup = memo(function ModelsGroup({ activeCarId }) {
   );
 });
 
-/* detects device type to select responsive camera configs */
+/* detect device type to select responsive camera configs */
 function useDeviceType() {
   const [device, setDevice] = useState(() => {
     const w = window.innerWidth;
@@ -75,25 +86,37 @@ function useDeviceType() {
   });
 
   useEffect(() => {
+    let ticking = false;
+
     const onResize = () => {
-      const w = window.innerWidth;
-      if (w <= 768) setDevice("mobile");
-      else if (w <= 1536) setDevice("smallLaptop");
-      else setDevice("desktop");
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const w = window.innerWidth;
+        if (w <= 768) setDevice("mobile");
+        else if (w <= 1536) setDevice("smallLaptop");
+        else setDevice("desktop");
+        ticking = false;
+      });
     };
-    window.addEventListener("resize", onResize);
+
+    window.addEventListener("resize", onResize, { passive: true });
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return device;
 }
 
-/* animates camera position and fov based on mode and device */
+/* animates camera position and FOV based on mode and device */
 function CameraRig({ mode }) {
   const { camera } = useThree();
   const device = useDeviceType();
 
-  /* pick the correct camera configuration */
+  /* reuse lookAt vector to avoid allocations */
+  const lookTarget = useMemo(() => new THREE.Vector3(0, 0, 0), []);
+
+  /* select correct camera configuration */
   const targetCfg = useMemo(() => {
     if (device === "mobile")
       return mode === "hero"
@@ -108,32 +131,34 @@ function CameraRig({ mode }) {
       : CAMERA_CONFIGS.desktop.home;
   }, [device, mode]);
 
-  /* smooth camera transition using gsap */
   useEffect(() => {
+    /* kill previous tweens to avoid accumulation */
+    gsap.killTweensOf(camera.position);
+    gsap.killTweensOf(camera);
+
+    /* animate camera position */
     gsap.to(camera.position, {
       x: targetCfg.pos[0],
       y: targetCfg.pos[1],
       z: targetCfg.pos[2],
       duration: 0.5,
       ease: "power2.out",
-      onUpdate: () => {
-        camera.lookAt(0, 0, 0);
-        camera.updateProjectionMatrix();
-      },
+      onUpdate: () => camera.lookAt(lookTarget),
     });
 
+    /* animate FOV and update projection once */
     gsap.to(camera, {
       fov: targetCfg.fov,
       duration: 0.5,
       ease: "power2.out",
-      onUpdate: () => camera.updateProjectionMatrix(),
+      onComplete: () => camera.updateProjectionMatrix(),
     });
-  }, [camera, targetCfg]);
+  }, [camera, targetCfg, lookTarget]);
 
   return null;
 }
 
-/* orbit controls enabled only in hero mode */
+/* orbitControls enabled only in hero mode */
 function HeroControls({ enabled }) {
   const ref = useRef(null);
 
@@ -148,14 +173,31 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
-/* main canvas component */
 export default function GlobalCanvas() {
   const { activeCarId, mode } = useCanvas();
 
+  /* preload NEXT model only, executed when browser is idle */
+  useEffect(() => {
+    if (!activeCarId) return;
+
+    const ids = Object.keys(cars);
+    const index = ids.indexOf(activeCarId);
+    if (index === -1) return;
+
+    const nextId = ids[index + 1];
+    if (!nextId) return;
+
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
+
+    idle(() => {
+      useLoader.preload(GLTFLoader, cars[nextId].model, withDraco);
+    });
+  }, [activeCarId]);
+
   return (
     <Canvas
-      shadows
-      dpr={[1, 2]}
+      shadows={false}
+      dpr={[1, 1.5]}
       gl={{
         powerPreference: "high-performance",
         antialias: true,
@@ -164,7 +206,7 @@ export default function GlobalCanvas() {
     >
       <CameraRig mode={mode} />
 
-      {/* suspense used only once, models are already preloaded */}
+      {/* suspense used once, models are mounted persistently */}
       <Suspense
         fallback={
           <Html center>
