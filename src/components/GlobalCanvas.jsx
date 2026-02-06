@@ -1,82 +1,22 @@
 import { Canvas, useThree, useLoader } from "@react-three/fiber";
 import gsap from "gsap";
-import { OrbitControls, Environment, Html } from "@react-three/drei";
-import { Suspense, useEffect, useRef, useState, memo, useMemo } from "react";
+import { OrbitControls, Environment } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
+import * as THREE from "three";
+
 import { useCanvas } from "../context/CanvasContext";
 import { cars } from "./hero/carsData";
-import Loader3D from "./Loader3D";
 import { CAMERA_CONFIGS } from "./cameraConfigs";
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 
 gsap.ticker.lagSmoothing(0);
 
-/* draco loader is created once to avoid re-instantiation */
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 const withDraco = (loader) => loader.setDRACOLoader(dracoLoader);
 
-/* renders a single car model */
-const Model = memo(function Model({ car, visible }) {
-  const gltf = useLoader(GLTFLoader, car.model, withDraco);
-  const { scene } = gltf;
-
-  /* ensure expensive setup runs only once */
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-
-    /* center model geometry */
-    const box = new THREE.Box3().setFromObject(scene);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    scene.position.sub(center);
-
-    /* lift model so it sits correctly on the ground */
-    const height = box.max.y - box.min.y;
-    scene.position.y += height * 0.5;
-
-    /* optional per-model offset from data */
-    if (car?.offset) {
-      scene.position.add(new THREE.Vector3(...car.offset));
-    }
-
-    /* micro-optimizations: static meshes */
-    scene.traverse((obj) => {
-      if (obj.isMesh) {
-        obj.frustumCulled = true;
-        obj.matrixAutoUpdate = false;
-        obj.updateMatrix();
-      }
-    });
-  }, [scene, car]);
-
-  return (
-    <primitive
-      object={scene}
-      visible={visible}
-      scale={car.scale}
-      rotation={car.rotation}
-      dispose={null}
-    />
-  );
-});
-
-/* all models are mounted once, only visibility changes */
-const ModelsGroup = memo(function ModelsGroup({ activeCarId }) {
-  return (
-    <group>
-      {Object.entries(cars).map(([id, car]) => (
-        <Model key={id} car={car} visible={id === activeCarId} />
-      ))}
-    </group>
-  );
-});
-
-/* detect device type to select responsive camera configs */
 function useDeviceType() {
   const [device, setDevice] = useState(() => {
     const w = window.innerWidth;
@@ -108,35 +48,21 @@ function useDeviceType() {
   return device;
 }
 
-/* animates camera position and FOV based on mode and device */
 function CameraRig({ mode }) {
   const { camera } = useThree();
   const device = useDeviceType();
-
-  /* reuse lookAt vector to avoid allocations */
   const lookTarget = useMemo(() => new THREE.Vector3(0, 0, 0), []);
 
-  /* select correct camera configuration */
   const targetCfg = useMemo(() => {
-    if (device === "mobile")
-      return mode === "hero"
-        ? CAMERA_CONFIGS.mobile.hero
-        : CAMERA_CONFIGS.mobile.home;
-    if (device === "smallLaptop")
-      return mode === "hero"
-        ? CAMERA_CONFIGS.smallLaptop.hero
-        : CAMERA_CONFIGS.smallLaptop.home;
-    return mode === "hero"
-      ? CAMERA_CONFIGS.desktop.hero
-      : CAMERA_CONFIGS.desktop.home;
+    const byDevice = CAMERA_CONFIGS?.[device] ?? CAMERA_CONFIGS?.desktop;
+    const cfg = byDevice?.[mode] ?? byDevice?.home;
+    return cfg ?? { pos: [12, 8, 5.5], fov: 12 };
   }, [device, mode]);
 
   useEffect(() => {
-    /* kill previous tweens to avoid accumulation */
     gsap.killTweensOf(camera.position);
     gsap.killTweensOf(camera);
 
-    /* animate camera position */
     gsap.to(camera.position, {
       x: targetCfg.pos[0],
       y: targetCfg.pos[1],
@@ -146,7 +72,6 @@ function CameraRig({ mode }) {
       onUpdate: () => camera.lookAt(lookTarget),
     });
 
-    /* animate FOV and update projection once */
     gsap.to(camera, {
       fov: targetCfg.fov,
       duration: 0.5,
@@ -158,7 +83,6 @@ function CameraRig({ mode }) {
   return null;
 }
 
-/* orbitControls enabled only in hero mode */
 function HeroControls({ enabled }) {
   const ref = useRef(null);
 
@@ -173,26 +97,102 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
-export default function GlobalCanvas() {
+const ModelsGroup = memo(function ModelsGroup({ activeCarId, warmupAll }) {
+  const entries = useMemo(() => Object.entries(cars), []);
+  const urls = useMemo(() => entries.map(([, car]) => car.model), [entries]);
+
+  const gltfs = useLoader(GLTFLoader, urls, withDraco);
+  const list = Array.isArray(gltfs) ? gltfs : [gltfs];
+
+  const setupDone = useRef(false);
+
+  useEffect(() => {
+    if (setupDone.current) return;
+    setupDone.current = true;
+
+    list.forEach((gltf, idx) => {
+      const car = entries[idx][1];
+      const scene = gltf.scene;
+
+      const box = new THREE.Box3().setFromObject(scene);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      scene.position.sub(center);
+
+      const height = box.max.y - box.min.y;
+      scene.position.y += height * 0.5;
+
+      if (car?.offset) {
+        scene.position.add(new THREE.Vector3(...car.offset));
+      }
+
+      scene.traverse((obj) => {
+        if (obj.isMesh) {
+          obj.frustumCulled = true;
+          obj.matrixAutoUpdate = false;
+          obj.updateMatrix();
+        }
+      });
+    });
+  }, [list, entries]);
+
+  return (
+    <group>
+      {entries.map(([id, car], idx) => (
+        <primitive
+          key={id}
+          object={list[idx].scene}
+          visible={warmupAll ? true : id === activeCarId}
+          scale={car.scale}
+          rotation={car.rotation}
+          dispose={null}
+        />
+      ))}
+    </group>
+  );
+});
+
+function Warmup({ onDone }) {
+  const { gl, scene, camera } = useThree();
+
+  useEffect(() => {
+    let raf1 = 0;
+    let raf2 = 0;
+
+    raf1 = requestAnimationFrame(() => {
+      try {
+        gl.compile(scene, camera);
+      } catch {}
+
+      raf2 = requestAnimationFrame(() => {
+        onDone?.();
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [gl, scene, camera, onDone]);
+
+  return null;
+}
+
+export default function GlobalCanvas({ onReady }) {
   const { activeCarId, mode } = useCanvas();
 
-  /* preload NEXT model only, executed when browser is idle */
-  useEffect(() => {
-    if (!activeCarId) return;
+  const firstId = useMemo(() => Object.keys(cars)[0], []);
+  const currentId = activeCarId || firstId;
 
-    const ids = Object.keys(cars);
-    const index = ids.indexOf(activeCarId);
-    if (index === -1) return;
+  const [warmupAll, setWarmupAll] = useState(true);
+  const readyOnce = useRef(false);
 
-    const nextId = ids[index + 1];
-    if (!nextId) return;
-
-    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
-
-    idle(() => {
-      useLoader.preload(GLTFLoader, cars[nextId].model, withDraco);
-    });
-  }, [activeCarId]);
+  const finish = () => {
+    if (readyOnce.current) return;
+    readyOnce.current = true;
+    setWarmupAll(false);
+    if (typeof onReady === "function") onReady();
+  };
 
   return (
     <Canvas
@@ -206,19 +206,13 @@ export default function GlobalCanvas() {
     >
       <CameraRig mode={mode} />
 
-      {/* suspense used once, models are mounted persistently */}
-      <Suspense
-        fallback={
-          <Html center>
-            <Loader3D />
-          </Html>
-        }
-      >
-        <ModelsGroup activeCarId={activeCarId} />
+      <Suspense fallback={null}>
+        <ModelsGroup activeCarId={currentId} warmupAll={warmupAll} />
+        <Environment preset="sunset" background={false} />
+        <Warmup onDone={finish} />
       </Suspense>
 
       <HeroControls enabled={mode === "hero"} />
-      <Environment preset="sunset" background={false} />
     </Canvas>
   );
 }

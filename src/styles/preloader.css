@@ -1,0 +1,68 @@
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.preloader-box {
+  width: 340px;
+  text-align: center;
+  color: #fff;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+}
+
+.preloader-title {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  opacity: 0.85;
+}
+
+.preloader-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.preloader-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #5227ff, #ff9ffc);
+  transition: width 0.25s ease;
+}
+
+.preloader-meta {
+  margin-top: 12px;
+  font-size: 12px;
+  opacity: 0.75;
+  display: flex;
+  justify-content: space-between;
+}
+
+.preloader-item {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.55;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preloader-overlay.done {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  z-index: 9999 !important;
+}

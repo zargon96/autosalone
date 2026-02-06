@@ -5,7 +5,7 @@
 
 nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   position: relative;
-  z-index: 999999999 !important;
+  z-index: 9 !important;
 }
 
 .scroll-right {
@@ -22,7 +22,9 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .btn-back-to-top:hover {
@@ -210,6 +212,10 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 
 .social-vertical a:hover {
   color: var(--text-color);
+}
+
+.icon-static {
+  filter: var(--icon-filter);
 }
 
 .footer2 {
