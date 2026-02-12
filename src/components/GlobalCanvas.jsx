@@ -180,6 +180,7 @@ function Warmup({ onDone }) {
 
 export default function GlobalCanvas({ onReady }) {
   const { activeCarId, mode } = useCanvas();
+  const [envReady, setEnvReady] = useState(false);
 
   const firstId = useMemo(() => Object.keys(cars)[0], []);
   const currentId = activeCarId || firstId;
@@ -190,7 +191,10 @@ export default function GlobalCanvas({ onReady }) {
   const finish = () => {
     if (readyOnce.current) return;
     readyOnce.current = true;
+
+    setEnvReady(true);
     setWarmupAll(false);
+
     if (typeof onReady === "function") onReady();
   };
 
@@ -208,7 +212,7 @@ export default function GlobalCanvas({ onReady }) {
 
       <Suspense fallback={null}>
         <ModelsGroup activeCarId={currentId} warmupAll={warmupAll} />
-        <Environment preset="sunset" background={false} />
+        {envReady && <Environment preset="sunset" background={false} />}
         <Warmup onDone={finish} />
       </Suspense>
 
