@@ -12,7 +12,7 @@ function HeroStats({ children, active }) {
       gsap.fromTo(
         statsRef.current.querySelectorAll("p, h1, h2"),
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" }
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out" },
       );
     }, statsRef);
 

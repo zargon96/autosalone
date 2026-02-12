@@ -242,7 +242,7 @@ export default function Hero() {
                       width_mm: s.width_mm,
                       height_mm: s.height_mm,
                     },
-                    lang
+                    lang,
                   )}
                   fullWidth
                 />

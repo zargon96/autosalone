@@ -20,6 +20,13 @@ const creditsData = [
     licenseLink: "http://creativecommons.org/licenses/by/4.0/",
   },
   {
+    title: "1992 Lancia Delta HF Integrale Evoluzione",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/pCAGE",
+    license: "Creative Commons Attribution-NonCommercial-ShareAlike",
+    licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  },
+  {
     title: "2015 Ferrari FXX K | www.vecarz.com",
     author: "vecarz",
     link: "https://skfb.ly/p8I9T",
@@ -89,6 +96,27 @@ const creditsData = [
     license: "CC Attribution-NonCommercial-ShareAlike",
     licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
   },
+  {
+    title: "2018 Honda S2000 Pandem Widebody Kit",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/ptQCV",
+    license: "Creative Commons Attribution-NonCommercial-ShareAlike",
+    licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  },
+  {
+    title: "2020 Honda NSX (NA1) LB★WORKS",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/pEKPv",
+    license: "Creative Commons Attribution-NonCommercial-ShareAlike",
+    licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  },
+  {
+    title: "2023 BMW M2 G87 Coupé",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/psZpv",
+    license: "Creative Commons Attribution-NonCommercial-ShareAlike",
+    licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  },
 ];
 
 const Credits = () => {
@@ -102,7 +130,7 @@ const Credits = () => {
   }, []);
 
   const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
+    localStorage.getItem("theme") === "dark",
   );
 
   useEffect(() => {
@@ -119,7 +147,7 @@ const Credits = () => {
   }, []);
 
   return (
-    <div className="container mt-5 section-shadow p-4 rounded">
+    <div className="container section-shadow p-4 rounded">
       <h1 className="text-center mb-4 text-color">Credits & Licenses</h1>
       <p className="text-center text-color">
         All 3D models used on this website belong to their respective authors
