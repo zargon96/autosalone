@@ -25,6 +25,7 @@
 
   footer.footer {
     margin-top: 48px;
+    font-size: 12px !important;
     bottom: 30px;
     left: 0;
     transform: translateX(0);

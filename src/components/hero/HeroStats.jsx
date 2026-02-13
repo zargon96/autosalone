@@ -40,7 +40,7 @@ function Row({ children }) {
 // single stat item
 const Item = memo(function Item({ label, value, fullWidth = false }) {
   return (
-    <div className={fullWidth ? "col-12" : "col-md-6"}>
+    <div className={fullWidth ? "col-12" : "col-6 col-md-6"}>
       <p>
         <strong>{label}:</strong> {value}
       </p>

@@ -1,4 +1,4 @@
-import { Canvas, useThree, useLoader } from "@react-three/fiber";
+import { Canvas, useThree, useLoader, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { OrbitControls, Environment } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
@@ -97,7 +97,11 @@ function HeroControls({ enabled }) {
   return <OrbitControls ref={ref} makeDefault enableZoom enablePan={false} />;
 }
 
-const ModelsGroup = memo(function ModelsGroup({ activeCarId, warmupAll }) {
+const ModelsGroup = memo(function ModelsGroup({
+  activeCarId,
+  warmupAll,
+  autoRotate,
+}) {
   const entries = useMemo(() => Object.entries(cars), []);
   const urls = useMemo(() => entries.map(([, car]) => car.model), [entries]);
 
@@ -105,6 +109,34 @@ const ModelsGroup = memo(function ModelsGroup({ activeCarId, warmupAll }) {
   const list = Array.isArray(gltfs) ? gltfs : [gltfs];
 
   const setupDone = useRef(false);
+
+  const groupRef = useRef(null);
+
+  const targetY = useRef(0);
+
+  useEffect(() => {
+    if (!groupRef.current) return;
+
+    if (!autoRotate) {
+      targetY.current = 0;
+      groupRef.current.rotation.y = 0;
+    }
+  }, [autoRotate]);
+
+  useFrame((_, delta) => {
+    if (!groupRef.current) return;
+    if (!autoRotate) return;
+
+    const speed = 0.12;
+    targetY.current = (targetY.current + delta * speed) % (Math.PI * 2);
+
+    const t = 1 - Math.exp(-10 * delta);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(
+      groupRef.current.rotation.y,
+      targetY.current,
+      t,
+    );
+  });
 
   useEffect(() => {
     if (setupDone.current) return;
@@ -137,7 +169,7 @@ const ModelsGroup = memo(function ModelsGroup({ activeCarId, warmupAll }) {
   }, [list, entries]);
 
   return (
-    <group>
+    <group ref={groupRef}>
       {entries.map(([id, car], idx) => (
         <primitive
           key={id}
@@ -209,7 +241,11 @@ export default function GlobalCanvas({ onReady }) {
       <CameraRig mode={mode} />
 
       <Suspense fallback={null}>
-        <ModelsGroup activeCarId={currentId} warmupAll={warmupAll} />
+        <ModelsGroup
+          activeCarId={currentId}
+          warmupAll={warmupAll}
+          autoRotate={mode === "hero"}
+        />
         <Environment preset="sunset" background={false} />
         <Warmup onDone={finish} />
       </Suspense>
