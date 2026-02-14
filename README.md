@@ -12,9 +12,7 @@ Supporto multilingua: italiano e inglese, con traduzioni dinamiche.
 
 Conversione automatica: unità di misura (CV↔HP, kg↔lb, mm↔in) e valuta (EUR↔GBP) in base alla lingua selezionata.
 
-Esperienza immersiva: animazioni di transizione tra auto, ombre realistiche e controlli interattivi della telecamera.
-
-Dark mode con toggle personalizzato.
+Esperienza immersiva: animazioni di transizione tra auto, controlli interattivi della telecamera.
 
 ---
 
@@ -28,4 +26,4 @@ Dark mode con toggle personalizzato.
 - [GSAP]
 - [Bootstrap]
 - API **Frankfurter.app** per i tassi di cambio
-- Context per gestione lingua e tema
+- Context per gestione lingua
