@@ -231,7 +231,7 @@ export default function GlobalCanvas({ onReady }) {
   return (
     <Canvas
       shadows={false}
-      dpr={[1, 1.5]}
+      dpr={1}
       gl={{
         powerPreference: "high-performance",
         antialias: true,
