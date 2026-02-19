@@ -28,6 +28,13 @@ html {
   padding-top: 80px;
 }
 
+@media (max-width: 768px) {
+  .canvas-hero {
+    transform: none;
+    padding-top: 0;
+  }
+}
+
 .text-color {
   color: var(--text-color);
 }
