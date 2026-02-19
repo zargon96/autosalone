@@ -49,6 +49,28 @@
         "text": "L’abitacolo della F40 è essenziale, privo di ogni comfort superfluo. Fibra di carbonio a vista, pannelli alleggeriti, sedili avvolgenti e superfici ridotte al minimo indispensabile raccontano una sola priorità: la performance. Ogni elemento è pensato per ridurre il peso e aumentare il coinvolgimento del pilota. Non è un interno lussuoso, ma un ambiente tecnico e puro, dove ogni vibrazione e ogni suono fanno parte dell’esperienza di guida."
       }
     },
+    "lancia_delta_integrale": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Lancia Delta HF Integrale mantengono il design squadrato tipico della Delta, enfatizzato dai parafanghi allargati dell’Evoluzione. Il frontale è aggressivo e funzionale, progettato per offrire visibilità anche nelle condizioni più estreme delle prove speciali. È un look iconico che ha segnato un’epoca nel mondiale rally."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della Delta HF Integrale è sviluppato per affrontare staccate violente su asfalto, terra e neve. I dischi ventilati e le pinze ad alte prestazioni garantiscono potenza e resistenza allo stress termico. La modulabilità del pedale era fondamentale in ambito rally, dove precisione e controllo facevano la differenza tra vittoria e ritiro."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Delta HF Integrale 1992 è un 2.0 litri quattro cilindri turbo, capace di erogare oltre 210 cavalli nella versione stradale. L’erogazione è vigorosa e progressiva, con una spinta decisa ai medi regimi grazie al turbocompressore. Abbinato alla trazione integrale permanente, il motore offre accelerazioni rapide e grande motricità in ogni condizione."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della Delta Integrale produce un suono pieno e metallico, arricchito dal tipico sibilo del turbo in pressione. Il quattro cilindri turbo offre una tonalità ruvida e coinvolgente, che richiama immediatamente l’atmosfera delle prove speciali del mondiale rally."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Delta HF Integrale unisce sportività e funzionalità. Sedili avvolgenti, strumentazione analogica completa e dettagli specifici HF creano un ambiente tecnico ma utilizzabile quotidianamente. È un interno che trasmette controllo e solidità, fedele alla filosofia rally della vettura."
+      }
+    },
     "bmw_m2_g87": {
       "headlights": {
         "title": "Fari",

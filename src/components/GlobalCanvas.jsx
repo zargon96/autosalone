@@ -275,66 +275,66 @@ function HotspotTracker({ steps, active }) {
 
 /* ================= DEBUG CAMERA ================= */
 
-// function DebugCamera() {
-//   const { camera, scene } = useThree();
-//   const raycaster = useRef(new THREE.Raycaster());
-//   const mouse = useRef(new THREE.Vector2());
-//   const DISTANCE = 1.2;
+function DebugCamera() {
+  const { camera, scene } = useThree();
+  const raycaster = useRef(new THREE.Raycaster());
+  const mouse = useRef(new THREE.Vector2());
+  const DISTANCE = 1.2;
 
-//   useEffect(() => {
-//     const handleClick = (event) => {
-//       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-//       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  useEffect(() => {
+    const handleClick = (event) => {
+      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-//       raycaster.current.setFromCamera(mouse.current, camera);
-//       const intersects = raycaster.current.intersectObjects(
-//         scene.children,
-//         true,
-//       );
+      raycaster.current.setFromCamera(mouse.current, camera);
+      const intersects = raycaster.current.intersectObjects(
+        scene.children,
+        true,
+      );
 
-//       if (intersects.length > 0) {
-//         const point = intersects[0].point;
-//         const direction = new THREE.Vector3()
-//           .subVectors(camera.position, point)
-//           .normalize();
-//         const camPos = new THREE.Vector3()
-//           .copy(point)
-//           .add(direction.multiplyScalar(DISTANCE));
+      if (intersects.length > 0) {
+        const point = intersects[0].point;
+        const direction = new THREE.Vector3()
+          .subVectors(camera.position, point)
+          .normalize();
+        const camPos = new THREE.Vector3()
+          .copy(point)
+          .add(direction.multiplyScalar(DISTANCE));
 
-//         console.log(
-//           JSON.stringify(
-//             {
-//               camera: {
-//                 pos: [
-//                   Number(camPos.x.toFixed(3)),
-//                   Number(camPos.y.toFixed(3)),
-//                   Number(camPos.z.toFixed(3)),
-//                 ],
-//                 target: [
-//                   Number(point.x.toFixed(3)),
-//                   Number(point.y.toFixed(3)),
-//                   Number(point.z.toFixed(3)),
-//                 ],
-//               },
-//               hotspot3D: [
-//                 Number(point.x.toFixed(3)),
-//                 Number(point.y.toFixed(3)),
-//                 Number(point.z.toFixed(3)),
-//               ],
-//             },
-//             null,
-//             2,
-//           ),
-//         );
-//       }
-//     };
+        console.log(
+          JSON.stringify(
+            {
+              camera: {
+                pos: [
+                  Number(camPos.x.toFixed(3)),
+                  Number(camPos.y.toFixed(3)),
+                  Number(camPos.z.toFixed(3)),
+                ],
+                target: [
+                  Number(point.x.toFixed(3)),
+                  Number(point.y.toFixed(3)),
+                  Number(point.z.toFixed(3)),
+                ],
+              },
+              hotspot3D: [
+                Number(point.x.toFixed(3)),
+                Number(point.y.toFixed(3)),
+                Number(point.z.toFixed(3)),
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+      }
+    };
 
-//     window.addEventListener("click", handleClick);
-//     return () => window.removeEventListener("click", handleClick);
-//   }, [camera, scene]);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
+  }, [camera, scene]);
 
-//   return null;
-// }
+  return null;
+}
 
 /* ================= HOTSPOT OVERLAY HTML ================= */
 
@@ -405,7 +405,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
     <>
       <Canvas
         shadows={false}
-        dpr={[1, isMobile ? 1 : 1.5]}
+        dpr={1.5}
         gl={{
           powerPreference: "high-performance",
           antialias: true,
@@ -430,7 +430,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
             <HotspotTracker steps={experienceSteps} active={!activeStep} />
           )}
         </Suspense>
-        {/* {import.meta.env.DEV && mode === "experience" && <DebugCamera />} */}
+        {import.meta.env.DEV && mode === "experience" && <DebugCamera />}
       </Canvas>
       {showHotspots && <HotspotOverlayHTML activeStep={activeStep} />}
     </>
