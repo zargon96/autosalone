@@ -1,11 +1,6 @@
 import "./App.css";
-import { useState, lazy, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { useState, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CanvasProvider, useCanvas } from "./context/CanvasContext";
 import { LangProvider } from "./context/langContext";
 import Home from "./pages/Home";
@@ -17,21 +12,12 @@ import CarExperience from "./pages/CarExperience";
 
 const Credits = lazy(() => import("./pages/Credits"));
 
-function ScrollReset() {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-}
-
 export default function App() {
   const [ready, setReady] = useState(false);
   return (
     <Router>
       <CanvasProvider>
         <LangProvider>
-          <ScrollReset />
           <Preloader done={ready} />
           <CanvasLayer onReady={() => setReady(true)} />
           <LightPillar />
