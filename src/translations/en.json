@@ -118,24 +118,24 @@
     },
     "honda_nsx": {
       "headlights": {
-        "title": "Fari",
-        "text": "I fari a scomparsa della prima generazione della Honda NSX rappresentano uno degli elementi più iconici del design anni ’90. Quando chiusi, preservano la linea aerodinamica e pulita del frontale; quando aperti, donano alla vettura un carattere deciso e sportivo. Una soluzione che unisce estetica e funzionalità, contribuendo al fascino senza tempo della supercar giapponese."
+        "title": "Headlights",
+        "text": "The pop-up headlights of the first-generation Honda NSX represent one of the most iconic elements of 1990s design. When closed, they preserve the clean, aerodynamic lines of the front end; when raised, they give the car a bold and sporty character. A solution that blends aesthetics and functionality, contributing to the timeless appeal of this Japanese supercar."
       },
       "brake": {
-        "title": "Freni",
-        "text": "L’impianto frenante della NSX è stato progettato per garantire equilibrio e controllo anche nelle condizioni più impegnative. I dischi ventilati e la distribuzione dei pesi quasi perfetta permettono staccate precise e progressive. La risposta del pedale è comunicativa, riflettendo la filosofia Honda: prestazioni elevate, ma sempre con controllo totale del pilota."
+        "title": "Brakes",
+        "text": "The NSX braking system was engineered to ensure balance and control even under the most demanding conditions. Ventilated discs and an almost perfect weight distribution allow for precise and progressive braking. The pedal response is communicative, reflecting Honda’s philosophy: high performance, always with total driver control."
       },
       "engine": {
-        "title": "Motore",
-        "text": "Il cuore della Honda NSX è un V6 3.0 litri aspirato con sistema VTEC, capace di girare alto e offrire un’erogazione fluida ma energica. Montato in posizione centrale, garantisce un bilanciamento ideale e una risposta immediata all’acceleratore. Sviluppato con il contributo diretto di Ayrton Senna, questo propulsore combina affidabilità giapponese e anima da supercar pura."
+        "title": "Engine",
+        "text": "The heart of the Honda NSX is a naturally aspirated 3.0-liter V6 with VTEC technology, capable of revving high while delivering smooth yet energetic power. Mounted in a mid-engine position, it ensures ideal balance and immediate throttle response. Developed with direct input from Ayrton Senna, this power unit combines Japanese reliability with the soul of a pure supercar."
       },
       "exhaust": {
-        "title": "Scarico",
-        "text": "Lo scarico della NSX emette un suono raffinato ma deciso, che cresce progressivamente con l’aumentare dei giri. Non è un ruggito brutale, ma una sinfonia meccanica precisa e armoniosa, tipica dei motori aspirati ad alto regime. Ogni accelerazione è accompagnata da una tonalità metallica pulita e coinvolgente."
+        "title": "Exhaust",
+        "text": "The NSX exhaust produces a refined yet assertive sound that grows progressively as the revs rise. It is not a brutal roar, but a precise and harmonious mechanical symphony, typical of high-revving naturally aspirated engines. Every acceleration is accompanied by a clean, metallic, and engaging tone."
       },
       "interior": {
-        "title": "Interni",
-        "text": "L’abitacolo della NSX è progettato con un’attenzione maniacale all’ergonomia. La posizione di guida è bassa e centrata, con comandi orientati verso il pilota. Materiali di qualità e visibilità eccellente rendono l’esperienza di guida immersiva ma confortevole. È una supercar pensata per essere guidata ogni giorno, senza rinunciare alle emozioni."
+        "title": "Interior",
+        "text": "The NSX cabin is designed with meticulous attention to ergonomics. The driving position is low and centered, with controls oriented toward the driver. High-quality materials and excellent visibility make the driving experience immersive yet comfortable. It is a supercar built to be driven every day, without sacrificing emotion."
       }
     },
     "fxxk": {
