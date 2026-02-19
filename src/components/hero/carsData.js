@@ -7,7 +7,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_f40_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V8 biturbo",
       displacement: "2936 cc",
@@ -27,6 +27,58 @@ export const cars = {
       height_mm: 1120,
       wheelbase_mm: 2450,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-2.742, 0.229, 2.475],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.198, 0.588, -0.171],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-1.148, 0.51, 0.951],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
   lancia_delta_integrale: {
     id: "lancia_delta_integrale",
@@ -34,7 +86,7 @@ export const cars = {
     model: `${BASE_URL}/lancia_delta_draco.glb`,
     scale: 110,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2.0L Turbo I4",
       displacement: "1995 cc",
@@ -54,6 +106,57 @@ export const cars = {
       height_mm: 1365,
       wheelbase_mm: 2475,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.631, 0.239, 1.838],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.049, 0.429, 1.778],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.7, -0.201, 3.435],
+          target: [-0.96, -0.204, 2.263],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.634, 0.595, 0.617],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   bmw_m2_g87: {
@@ -62,7 +165,7 @@ export const cars = {
     model: `${BASE_URL}/bmw_m2_draco.glb`,
     scale: 110,
     rotation: [0, -0.5, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "3.0L Twin-Turbo Inline-6 (S58)",
       displacement: "2993 cc",
@@ -82,6 +185,57 @@ export const cars = {
       height_mm: 1403,
       wheelbase_mm: 2747,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.776, 0.226, 1.528],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.049, 0.429, 1.778],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.352, 0.73, 0.535],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   honda_s2000: {
@@ -90,7 +244,7 @@ export const cars = {
     model: `${BASE_URL}/honda_s2000_draco.glb`,
     scale: 110,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2.0L DOHC VTEC Inline-4 (F20C)",
       displacement: "1997 cc",
@@ -110,6 +264,57 @@ export const cars = {
       height_mm: 1285,
       wheelbase_mm: 2400,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.647, 0.166, 1.777],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.884, -0.018, 1.369],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   honda_nsx: {
@@ -118,7 +323,7 @@ export const cars = {
     model: `${BASE_URL}/honda_nsx_draco.glb`,
     scale: 110,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "3.0L DOHC VTEC V6 (C30A)",
       displacement: "2977 cc",
@@ -138,6 +343,58 @@ export const cars = {
       height_mm: 1170,
       wheelbase_mm: 2530,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.698, 0.221, 1.685],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.884, -0.018, 1.369],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        rotation: [0, Math.PI + 0.2, 0],
+        hotspot3D: [-0.622, 0.434, -0.863],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   fxxk: {
@@ -146,7 +403,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_fxx_k_2015_draco.glb`,
     scale: 40,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 6.3L + KERS",
       displacement: "6262 cc",
@@ -166,6 +423,58 @@ export const cars = {
       height_mm: 1116,
       wheelbase_mm: 2650,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.698, 0.221, 1.685],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.593, -0.039, 0.892],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        rotation: [0, Math.PI + 0.2, 0],
+        hotspot3D: [-0.622, 0.434, -0.863],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
   zonda_cinque: {
     id: "zonda_cinque",
@@ -173,7 +482,7 @@ export const cars = {
     model: `${BASE_URL}/pagani_zonda_cinque_draco.glb`,
     scale: 1.1,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 AMG 6.0L",
       displacement: "5987 cc",
@@ -193,6 +502,58 @@ export const cars = {
       height_mm: 1141,
       wheelbase_mm: 2730,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.698, 0.221, 1.685],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.593, -0.039, 0.892],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        rotation: [0, Math.PI + 0.2, 0],
+        hotspot3D: [-0.622, 0.434, -0.863],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, 0.8, 3.621],
+          target: [-0.481, 0, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   porsche_911_turbo_1975: {
@@ -201,7 +562,7 @@ export const cars = {
     model: `${BASE_URL}/porsche_911_turbo_1975_draco.glb`,
     scale: 1.5,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "Flat-6 Turbo 3.0L",
       displacement: "2994 cc",
@@ -221,6 +582,58 @@ export const cars = {
       height_mm: 1310,
       wheelbase_mm: 2271,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.575, 0.303, 1.706],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.877, -0.027, 1.331],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        rotation: [0, Math.PI + 0.2, 0],
+        hotspot3D: [-0.622, 0.434, -0.863],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.421, 0.727, 0.5],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   f12: {
@@ -229,7 +642,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_f12_berlinetta_draco.glb`,
     scale: 100,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V12 aspirato 6.3L",
       displacement: "6262 cc",
@@ -249,6 +662,57 @@ export const cars = {
       height_mm: 1273,
       wheelbase_mm: 2720,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.647, 0.166, 1.777],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.816, -0.017, 1.189],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   f488: {
@@ -257,7 +721,7 @@ export const cars = {
     model: `${BASE_URL}/ferrari_488_pista_draco.glb`,
     scale: 65,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "V8 biturbo 3.9L",
       displacement: "3902 cc",
@@ -277,6 +741,58 @@ export const cars = {
       height_mm: 1206,
       wheelbase_mm: 2650,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.709, 0.135, 1.693],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.573, -0.1, 0.923],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        rotation: [0, Math.PI + 0.2, 0],
+        hotspot3D: [-0.622, 0.434, -0.863],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-1.185, 0.502, 1.014],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   m3_e30: {
@@ -285,7 +801,7 @@ export const cars = {
     model: `${BASE_URL}/bmw_m3_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "S14 I4", displacement: "2302 cc", price_eur: 55000 },
     specs: {
       year: 1990,
@@ -301,6 +817,57 @@ export const cars = {
       height_mm: 1370,
       wheelbase_mm: 2565,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.577, 0.166, 1.926],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.9, -0.025, 1.543],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.534, 0.604, 0.729],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   charger69: {
@@ -309,7 +876,7 @@ export const cars = {
     model: `${BASE_URL}/dodge_charger_draco.glb`,
     scale: 0.9,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "426 HEMI V8", displacement: "6997 cc", price_eur: 40000 },
     specs: {
       year: 1969,
@@ -325,6 +892,57 @@ export const cars = {
       height_mm: 1360,
       wheelbase_mm: 2970,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.439, 0.108, 2.034],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.904, -0.104, 1.498],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.572, 0.111, -1.402],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.896, 0.54, 0.876],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   supra_mk4: {
@@ -333,7 +951,7 @@ export const cars = {
     model: `${BASE_URL}/toyota_supra_draco.glb`,
     scale: 0.3,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2JZ 3.0L biturbo",
       displacement: "2997 cc",
@@ -353,6 +971,57 @@ export const cars = {
       height_mm: 1275,
       wheelbase_mm: 2550,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.635, 0.155, 1.82],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.857, -0.058, 1.266],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.685, 0.116, -0.926],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.896, 0.54, 0.876],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   skyline_r33: {
@@ -361,7 +1030,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_skyline_r33_draco.glb`,
     scale: 0.3,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "RB26DETT", displacement: "2568 cc", price_eur: 80000 },
     specs: {
       year: 1995,
@@ -377,6 +1046,57 @@ export const cars = {
       height_mm: 1360,
       wheelbase_mm: 2720,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.635, 0.155, 1.82],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.885, -0.039, 1.375],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.685, 0.116, -0.926],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.896, 0.54, 0.876],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   skyline_r34: {
@@ -385,7 +1105,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_skyline_r34_draco.glb`,
     scale: 104,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "RB26DETT", displacement: "2568 cc", price_eur: 120000 },
     specs: {
       year: 1999,
@@ -401,6 +1121,57 @@ export const cars = {
       height_mm: 1360,
       wheelbase_mm: 2665,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.55, 0.275, 1.841],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.869, 0.06, 1.325],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-0.992, 0.462, 1.694],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.508, 0.273, -1.603],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.416, 0.727, 0.503],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   z350: {
@@ -409,7 +1180,7 @@ export const cars = {
     model: `${BASE_URL}/nissan_350z_draco.glb`,
     scale: 104,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: { engine: "VQ35DE V6", displacement: "3498 cc", price_eur: 20000 },
     specs: {
       year: 2003,
@@ -425,6 +1196,57 @@ export const cars = {
       height_mm: 1315,
       wheelbase_mm: 2650,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.657, 0.298, 1.588],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.869, 0.06, 1.325],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-0.992, 0.462, 1.694],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.508, 0.273, -1.603],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.6, 0.623, 0.585],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   rx7_fd: {
@@ -433,7 +1255,7 @@ export const cars = {
     model: `${BASE_URL}/mazda_rx-7_draco.glb`,
     scale: 0.4,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "twin-turbo rotary",
       displacement: "1308 cc",
@@ -453,6 +1275,57 @@ export const cars = {
       height_mm: 1230,
       wheelbase_mm: 2425,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.672, 0.18, 1.704],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.869, 0.06, 1.325],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.312, 0.351, 1.85],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.508, 0.273, -1.603],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.6, 0.623, 0.585],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 
   tt_rs: {
@@ -461,7 +1334,7 @@ export const cars = {
     model: `${BASE_URL}/audi_tt_rs_draco.glb`,
     scale: 1,
     rotation: [0, -0.4, 0],
-    offset: window.innerWidth <= 768 ? [0, 0, 0] : [0, -0.5, 0],
+    offset: [0, -0.5, 0],
     stats: {
       engine: "2.5 L TFSI turbo I-5",
       displacement: "2480 cc",
@@ -481,5 +1354,56 @@ export const cars = {
       height_mm: 1343,
       wheelbase_mm: 2505,
     },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.711, 0.233, 1.652],
+        camera: {
+          pos: [-2.2, 0.098, 2.433],
+          target: [-1.742, 0.098, 1.769],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.805, -0.052, 1.163],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.55, 0.01, 1.162],
+          target: [-0.384, -0.131, 1.407],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.167, 0.372, 1.887],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.601, 0.29, -1.184],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.6, 0.623, 0.585],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
   },
 };

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
   <head>
     <link
@@ -31,19 +31,23 @@
       name="keywords"
       content="auto sportive, auto classiche, 3D, scheda tecnica auto, dimensioni auto, prestazioni auto, prezzo auto"
     />
+    <meta name="theme-color" content="#000000" />
     <title>Autosalone</title>
 
     <link
       rel="preload"
       href="/css/bootstrap.min.css"
       as="style"
-      onload="this.onload=null;this.rel='stylesheet'"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
     <noscript><link rel="stylesheet" href="/css/bootstrap.min.css" /></noscript>
   </head>
   <body>
     <div id="root"></div>
-    <div id="global-canvas-root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

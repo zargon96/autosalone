@@ -28,14 +28,13 @@ function HeroStats({ children, active }) {
 }
 
 // section title
-function Title({ children }) {
+const Title = memo(function Title({ children }) {
   return <h2>{children}</h2>;
-}
+});
 
-// row wrapper for items
-function Row({ children }) {
+const Row = memo(function Row({ children }) {
   return <div className="row mb-2">{children}</div>;
-}
+});
 
 // single stat item
 const Item = memo(function Item({ label, value, fullWidth = false }) {

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCanvas } from "../context/CanvasContext";
 import ButtonGlobal from "../components/ButtonGlobal";
@@ -129,22 +129,7 @@ const Credits = () => {
     };
   }, []);
 
-  const [isDarkMode, setIsDarkMode] = useState(
-    localStorage.getItem("theme") === "dark",
-  );
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDarkMode(document.documentElement.classList.contains("dark-mode"));
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const navigate = useNavigate();
 
   return (
     <div className="container section-shadow p-4 rounded">
@@ -187,20 +172,14 @@ const Credits = () => {
       </div>
 
       <div className="text-center mt-4">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <ButtonGlobal
-            onClick={() => {
-              window.location.href = "/";
-            }}
-          >
-            <img
-              src={caretLeft}
-              alt="Back to Home"
-              className="icon-static me-2"
-            />
-            Back to Home
-          </ButtonGlobal>
-        </Link>
+        <ButtonGlobal onClick={() => navigate("/")}>
+          <img
+            src={caretLeft}
+            alt="Back to Home"
+            className="icon-static me-2"
+          />
+          Back to Home
+        </ButtonGlobal>
       </div>
     </div>
   );

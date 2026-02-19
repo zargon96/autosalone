@@ -16,20 +16,15 @@ import caretUp from "../assets/caret-up-fill.svg";
 import caretRight from "../assets/caret-right-fill.svg";
 import ButtonGlobal from "../components/ButtonGlobal";
 
+const currentYear = new Date().getFullYear();
+
 export default function Home() {
-  const {
-    setActiveCarId,
-    setMode,
-    setContainerClass,
-    homeIndex,
-    setHomeIndex,
-  } = useCanvas();
+  const { setActiveCarId, setMode, homeIndex, setHomeIndex } = useCanvas();
 
   const { t, lang } = useLang();
   const rates = useFxRates();
   const navigate = useNavigate();
   const carKeys = useMemo(() => Object.keys(cars), []);
-  const currentYear = new Date().getFullYear();
 
   // refs for scrolling and navigation
   const containerRef = useRef(null);
@@ -54,7 +49,7 @@ export default function Home() {
       }
       return `${nf0("en").format(hp)} hp`;
     },
-    [lang]
+    [lang],
   );
 
   // format price depending on locale and fx rates
@@ -83,7 +78,7 @@ export default function Home() {
         maximumFractionDigits: 0,
       }).format(eur);
     },
-    [lang, rates]
+    [lang, rates],
   );
 
   // lock body scroll
@@ -113,8 +108,7 @@ export default function Home() {
 
     setMode("static");
     setActiveCarId(carKeys[currentIndex]);
-    setContainerClass?.("model-center");
-  }, [carKeys, currentIndex, setActiveCarId, setMode, setContainerClass]);
+  }, [carKeys, currentIndex, setActiveCarId, setMode]);
 
   // animate transition between sections
   const gotoSection = useCallback(
@@ -147,10 +141,10 @@ export default function Home() {
           to,
           { yPercent: dir > 0 ? 100 : -100, autoAlpha: 0 },
           { yPercent: 0, autoAlpha: 1 },
-          0
+          0,
         );
     },
-    [carKeys, setActiveCarId, setHomeIndex]
+    [carKeys, setActiveCarId, setHomeIndex],
   );
 
   useEffect(() => {
@@ -219,12 +213,12 @@ export default function Home() {
   // current active car and price
   const activeCar = useMemo(
     () => cars[carKeys[currentIndex]],
-    [carKeys, currentIndex]
+    [carKeys, currentIndex],
   );
 
   const activePrice = useMemo(
     () => formatPrice(activeCar.stats.price_eur),
-    [activeCar, formatPrice]
+    [activeCar, formatPrice],
   );
 
   return (
@@ -273,7 +267,7 @@ export default function Home() {
               <div className="title-top-left">
                 <BlurText
                   key={`${currentIndex}-${car.id}-title`}
-                  text={car.name}
+                  text={isActive ? car.name : " "}
                   delay={50}
                   animateBy="letters"
                   direction="top"
@@ -284,9 +278,7 @@ export default function Home() {
               <div className="price-top-right text-end">
                 <BlurText
                   key={`${currentIndex}-${car.id}-price`}
-                  text={
-                    isActive ? activePrice : formatPrice(car.stats.price_eur)
-                  }
+                  text={isActive ? activePrice : " "}
                   delay={40}
                   animateBy="letters"
                   direction="top"
@@ -298,7 +290,7 @@ export default function Home() {
                 <div className="stat-item">
                   <BlurText
                     key={`${currentIndex}-${car.id}-year`}
-                    text={String(car.specs?.year)}
+                    text={isActive ? String(car.specs?.year) : " "}
                     delay={20}
                     animateBy="letters"
                     direction="top"
@@ -310,7 +302,7 @@ export default function Home() {
                 <div className="stat-item">
                   <BlurText
                     key={`${currentIndex}-${car.id}-disp`}
-                    text={String(car.stats?.displacement)}
+                    text={isActive ? String(car.stats?.displacement) : " "}
                     delay={30}
                     animateBy="letters"
                     direction="top"
@@ -322,7 +314,7 @@ export default function Home() {
                 <div className="stat-item">
                   <BlurText
                     key={`${currentIndex}-${car.id}-power`}
-                    text={formatPower(car.specs)}
+                    text={isActive ? formatPower(car.specs) : " "}
                     delay={40}
                     animateBy="letters"
                     direction="top"

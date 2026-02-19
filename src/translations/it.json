@@ -19,8 +19,390 @@
     "prev": "precedente",
     "next": "successivo",
     "back_to_top": "Torna in cima",
-    "scroll_down": "Scorri in basso"
+    "scroll_down": "Scorri in basso",
+    "experience": " Scopri di più su quest'auto"
   },
+  "experience": {
+    "back": "Torna alla scheda",
+    "readMore": "Continua a leggere",
+    "readLess": "Mostra meno",
+    "close": "Chiudi",
+    "f40": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I proiettori pop-up della Ferrari F40 rappresentano uno degli elementi più iconici del design automobilistico degli anni ’80. Integrati nel cofano per preservare l’aerodinamica quando chiusi, si sollevano verticalmente rivelando una firma luminosa inconfondibile. Questa soluzione non era solo estetica, ma funzionale: riduceva la resistenza all’aria alle alte velocità, contribuendo alle straordinarie prestazioni della vettura. Un dettaglio che unisce ingegneria pura e carattere racing, diventando simbolo di un’epoca irripetibile."
+      },
+      "brake": {
+        "title": "freni",
+        "text": "L’impianto frenante della F40 è progettato per domare una potenza brutale senza compromessi. I dischi ventilati ad alte prestazioni, abbinati a pinze racing, garantiscono una risposta immediata e modulabile anche alle velocità più elevate. In un’epoca in cui l’elettronica era quasi assente, tutto dipendeva dalla meccanica pura e dalla sensibilità del pilota. Frenare una F40 non è solo un’azione tecnica, ma un’esperienza fisica e diretta, degna di una vera vettura da competizione stradale."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Ferrari F40 è un V8 biturbo da 2.9 litri capace di erogare 478 cavalli in modo brutale e senza filtri. Derivato dall’esperienza nelle competizioni, questo propulsore combina leggerezza, sovralimentazione e risposta immediata, offrendo un’accelerazione devastante per l’epoca. Nessun controllo di trazione, nessuna assistenza elettronica avanzata: solo il rapporto diretto tra piede destro e potenza pura. È l’espressione più autentica della filosofia Ferrari degli anni ’80."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il triplo terminale centrale è uno dei dettagli più riconoscibili della F40. Posizionato in alto, sotto la griglia posteriore, non è solo una scelta estetica ma anche funzionale, studiata per ottimizzare flussi e temperature. Il suono che ne deriva è crudo, metallico, inconfondibile: un ruggito che cresce con l’aumentare dei giri e che trasforma ogni accelerazione in un evento. Un elemento che racconta l’anima racing della vettura ancora prima di mettersi al volante."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della F40 è essenziale, privo di ogni comfort superfluo. Fibra di carbonio a vista, pannelli alleggeriti, sedili avvolgenti e superfici ridotte al minimo indispensabile raccontano una sola priorità: la performance. Ogni elemento è pensato per ridurre il peso e aumentare il coinvolgimento del pilota. Non è un interno lussuoso, ma un ambiente tecnico e puro, dove ogni vibrazione e ogni suono fanno parte dell’esperienza di guida."
+      }
+    },
+    "bmw_m2_g87": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I gruppi ottici della BMW M2 G87 adottano una firma luminosa moderna e aggressiva, con tecnologia LED adattiva che garantisce visibilità ottimale in ogni condizione. Il design compatto e orizzontale enfatizza la larghezza del frontale, rendendo l’auto immediatamente riconoscibile anche di notte. Non è solo estetica: l’illuminazione intelligente adatta il fascio luminoso in base alla velocità e alla direzione, migliorando sicurezza e precisione di guida."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della M2 G87 è progettato per l’uso sportivo intensivo. I dischi maggiorati e le pinze M ad alte prestazioni garantiscono potenza frenante costante anche nelle sessioni in pista. La risposta del pedale è immediata e modulabile, offrendo al pilota pieno controllo nelle staccate più impegnative. È un sistema pensato per sostenere l’anima racing del modello senza compromessi."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Sotto il cofano troviamo il sei cilindri in linea 3.0 litri biturbo S58, capace di erogare oltre 460 cavalli in modo progressivo e brutale allo stesso tempo. La trazione posteriore, unita al cambio manuale o automatico M Steptronic, offre un’esperienza di guida pura e coinvolgente. Il sound è pieno e deciso, tipico dei sei cilindri BMW, con una spinta che cresce costantemente fino alla zona rossa."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il sistema di scarico M con valvole attive permette di modulare il carattere sonoro della vettura. In modalità comfort è discreto e raffinato, mentre in modalità sport sprigiona un tono profondo e aggressivo, accompagnato da scoppiettii in rilascio. I quattro terminali posteriori rappresentano un segno distintivo delle versioni M, enfatizzando il DNA sportivo della M2."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della M2 G87 combina tecnologia avanzata e spirito racing. Il BMW Curved Display integra quadro strumenti digitale e infotainment in un unico elemento moderno, mentre i sedili sportivi M garantiscono contenimento e comfort. Materiali come fibra di carbonio e Alcantara rafforzano l’atmosfera dinamica. È un ambiente che unisce quotidianità e pista senza compromessi."
+      }
+    },
+    "honda_s2000": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari della Honda S2000 presentano un design affilato e pulito, perfettamente integrato nelle linee compatte della carrozzeria. L’illuminazione chiara e diretta riflette la filosofia essenziale del modello: leggerezza, precisione e funzionalità. Ogni dettaglio è studiato per mantenere un frontale equilibrato e aerodinamico, enfatizzando l’indole sportiva della roadster giapponese."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della S2000 è progettato per sostenere uno stile di guida dinamico e coinvolgente. I dischi ventilati garantiscono resistenza allo stress termico anche nelle sessioni più impegnative. La risposta del pedale è precisa e comunicativa, offrendo al pilota la fiducia necessaria per sfruttare al massimo il telaio bilanciato e la trazione posteriore."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Honda S2000 è il leggendario quattro cilindri 2.0 litri VTEC aspirato (F20C), capace di raggiungere i 9.000 giri al minuto. Con oltre 240 cavalli senza l’ausilio del turbo, rappresenta uno dei motori aspirati più potenti mai prodotti in serie per cilindrata. L’erogazione cambia radicalmente entrando nella zona VTEC, regalando un’esplosione sonora e una progressione entusiasmante fino al limitatore."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della S2000 emette un suono metallico e crescente, che accompagna l’aumento dei giri con una tonalità sempre più acuta. È un sound puro, tipico di un motore aspirato ad altissimo regime, privo di filtri artificiali. Ogni cambiata vicino alla zona rossa diventa un’esperienza sonora intensa e coinvolgente."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Honda S2000 è minimalista e orientato al pilota. La strumentazione digitale centrale richiama il mondo delle moto sportive, mentre la posizione di guida bassa e compatta rafforza il feeling con l’auto. Nessun elemento superfluo: tutto è pensato per ridurre distrazioni e massimizzare il piacere di guida."
+      }
+    },
+    "honda_nsx": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari a scomparsa della prima generazione della Honda NSX rappresentano uno degli elementi più iconici del design anni ’90. Quando chiusi, preservano la linea aerodinamica e pulita del frontale; quando aperti, donano alla vettura un carattere deciso e sportivo. Una soluzione che unisce estetica e funzionalità, contribuendo al fascino senza tempo della supercar giapponese."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della NSX è stato progettato per garantire equilibrio e controllo anche nelle condizioni più impegnative. I dischi ventilati e la distribuzione dei pesi quasi perfetta permettono staccate precise e progressive. La risposta del pedale è comunicativa, riflettendo la filosofia Honda: prestazioni elevate, ma sempre con controllo totale del pilota."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Honda NSX è un V6 3.0 litri aspirato con sistema VTEC, capace di girare alto e offrire un’erogazione fluida ma energica. Montato in posizione centrale, garantisce un bilanciamento ideale e una risposta immediata all’acceleratore. Sviluppato con il contributo diretto di Ayrton Senna, questo propulsore combina affidabilità giapponese e anima da supercar pura."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della NSX emette un suono raffinato ma deciso, che cresce progressivamente con l’aumentare dei giri. Non è un ruggito brutale, ma una sinfonia meccanica precisa e armoniosa, tipica dei motori aspirati ad alto regime. Ogni accelerazione è accompagnata da una tonalità metallica pulita e coinvolgente."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della NSX è progettato con un’attenzione maniacale all’ergonomia. La posizione di guida è bassa e centrata, con comandi orientati verso il pilota. Materiali di qualità e visibilità eccellente rendono l’esperienza di guida immersiva ma confortevole. È una supercar pensata per essere guidata ogni giorno, senza rinunciare alle emozioni."
+      }
+    },
+    "fxxk": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I gruppi ottici della Ferrari FXX-K mantengono l’impostazione aggressiva della LaFerrari, ma sono integrati in un frontale ancora più estremo e funzionale. Ogni elemento è studiato per migliorare i flussi aerodinamici e raffreddare i componenti meccanici. Non si tratta solo di illuminazione, ma di un’estensione dell’ingegneria aerodinamica sviluppata direttamente per l’uso in pista."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante carboceramico della FXX-K è progettato per sopportare stress estremi durante l’utilizzo in circuito. Le pinze ad alte prestazioni e i dischi maggiorati garantiscono una potenza frenante devastante e una resistenza termica eccezionale. Ogni staccata è precisa e violenta, degna di una vettura sviluppata senza compromessi per la pista."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Ferrari FXX-K è un V12 aspirato da 6.3 litri abbinato al sistema ibrido HY-KERS, capace di sviluppare oltre 1.000 cavalli complessivi. La parte endotermica eroga più di 860 CV, mentre il motore elettrico aggiunge potenza istantanea in uscita di curva. Il risultato è una risposta brutale e immediata, con un sound V12 che cresce fino a regimi altissimi, trasformando ogni accelerazione in un’esperienza estrema."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il sistema di scarico centrale ad alte prestazioni produce un suono profondo, metallico e rabbioso. Il V12 aspirato esprime tutta la sua natura racing, con una progressione sonora che diventa sempre più intensa avvicinandosi al limitatore. Non è un semplice rumore: è la colonna sonora di una hypercar da pista sviluppata direttamente dal reparto corse Ferrari."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della FXX-K è completamente orientato alla performance. Fibra di carbonio a vista, volante multifunzione derivato dalla Formula 1 e sedili racing ultraleggeri creano un ambiente tecnico e radicale. Ogni comando è studiato per massimizzare il controllo del pilota durante la guida in circuito. È un cockpit da competizione, non un interno stradale."
+      }
+    },
+    "zonda_cinque": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari della Pagani Zonda Cinque sono integrati in un frontale scolpito e ricco di dettagli aerodinamici. Il design verticale dei gruppi ottici anteriori enfatizza l’unicità stilistica del modello, combinando eleganza e aggressività. Ogni elemento è studiato per ottimizzare il flusso d’aria, contribuendo alla stabilità alle alte velocità senza sacrificare l’estetica artigianale tipica di Pagani."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante carboceramico della Zonda Cinque è progettato per garantire prestazioni estreme su strada e in pista. I dischi maggiorati e le pinze ad alte prestazioni assicurano decelerazioni potenti e costanti anche nelle condizioni più impegnative. La risposta è immediata e precisa, riflettendo l’equilibrio tra potenza e controllo che caratterizza questa hypercar."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Zonda Cinque è un V12 AMG da 7.3 litri aspirato, capace di erogare oltre 670 cavalli con un carattere brutale ma raffinato. La risposta all’acceleratore è immediata e lineare, accompagnata da una progressione sonora crescente e inconfondibile. Posizionato centralmente, il motore garantisce un bilanciamento perfetto e una dinamica di guida pura e coinvolgente."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il celebre scarico centrale a quattro terminali rappresenta uno dei tratti distintivi della Zonda. Oltre a essere un elemento estetico iconico, produce un suono metallico, potente e cristallino, tipico dei V12 aspirati AMG. Ogni accelerazione si trasforma in una sinfonia meccanica che amplifica il carattere esclusivo della vettura."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Zonda Cinque è un capolavoro di artigianato e tecnologia. Fibra di carbonio a vista, alluminio lavorato dal pieno e dettagli su misura creano un ambiente esclusivo e raffinato. Ogni comando è realizzato con cura maniacale, unendo lusso e spirito racing in un equilibrio perfetto tra arte e ingegneria."
+      }
+    },
+    "porsche_911_turbo_1975": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari rotondi della Porsche 911 Turbo 1975 rappresentano uno degli elementi più iconici nella storia dell’automobile. Integrati nei parafanghi anteriori pronunciati, mantengono la tradizione stilistica della 911, contribuendo a un frontale pulito ma aggressivo. È un design senza tempo, riconoscibile a chilometri di distanza."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della 911 Turbo 3.0 deriva direttamente dall’esperienza Porsche nelle competizioni. I dischi maggiorati garantiscono potenza frenante adeguata alle prestazioni elevate della vettura. In un’epoca priva di assistenze elettroniche moderne, tutto dipendeva dalla sensibilità del pilota e dalla precisione meccanica."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Porsche 911 Turbo del 1975 è un sei cilindri boxer 3.0 litri sovralimentato da turbocompressore, capace di erogare circa 260 cavalli. È stata la prima 911 di serie dotata di turbo, introducendo un’erogazione potente ma imprevedibile. Il celebre turbo lag rendeva la spinta improvvisa e brutale, trasformando ogni accelerazione in un’esperienza intensa e impegnativa."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della 911 Turbo produce un suono profondo e metallico, tipico dei motori boxer Porsche. Il sibilo del turbocompressore si unisce alla tonalità meccanica del sei cilindri, creando una combinazione unica per l’epoca. Ogni accelerazione è accompagnata da un crescendo deciso e caratteristico."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della 911 Turbo 1975 è essenziale e orientato alla guida. Strumentazione analogica completa, volante sportivo e posizione di guida bassa trasmettono immediatamente il carattere della vettura. Non ci sono distrazioni moderne: solo il pilota, il motore e la strada."
+      }
+    },
+    "f12": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I gruppi ottici della Ferrari F12 Berlinetta presentano una firma luminosa affilata e moderna, perfettamente integrata nelle linee scolpite del frontale. Le prese d’aria e i canali aerodinamici attorno ai fari non sono solo un elemento estetico, ma contribuiscono alla gestione dei flussi d’aria, migliorando raffreddamento e stabilità ad alte velocità."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante carboceramico della F12 deriva direttamente dall’esperienza Ferrari in Formula 1. I dischi maggiorati e le pinze ad alte prestazioni garantiscono decelerazioni potenti e costanti anche durante l’uso intensivo in pista. La risposta del pedale è immediata e precisa, offrendo al pilota totale controllo anche oltre i 300 km/h."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Ferrari F12 Berlinetta è un V12 aspirato da 6.3 litri capace di erogare 740 cavalli. È uno dei V12 più potenti mai montati su una Ferrari stradale aspirata. L’erogazione è lineare ma esplosiva agli alti regimi, con un allungo impressionante fino alla zona rossa. È un motore che combina brutalità e raffinatezza in perfetto stile Ferrari."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il sistema di scarico della F12 produce un suono pieno, metallico e crescente, tipico dei V12 aspirati di Maranello. Ai bassi regimi è profondo e controllato, mentre agli alti si trasforma in una sinfonia meccanica intensa e coinvolgente. Ogni accelerazione diventa un’esperienza sonora indimenticabile."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della F12 Berlinetta unisce lusso e sportività. Pelle di alta qualità, inserti in fibra di carbonio e un volante multifunzione derivato dalla Formula 1 creano un ambiente raffinato ma orientato alla performance. La disposizione dei comandi è studiata per mantenere il pilota sempre al centro dell’esperienza di guida."
+      }
+    },
+    "f488": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I gruppi ottici della Ferrari 488 Pista mantengono il design affilato della 488 GTB, ma sono integrati in un frontale ancora più estremo dal punto di vista aerodinamico. Le prese d’aria e i canali S-Duct migliorano il carico sull’avantreno, aumentando stabilità e precisione alle alte velocità. Ogni dettaglio del frontale è studiato per massimizzare le prestazioni in pista."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante carboceramico della 488 Pista deriva direttamente dall’esperienza Ferrari nelle competizioni. I dischi maggiorati e le pinze ad alte prestazioni garantiscono decelerazioni potenti e costanti anche nelle sessioni più impegnative in circuito. La risposta del pedale è immediata e modulabile, offrendo controllo totale anche nelle staccate più violente."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della 488 Pista è un V8 3.9 litri biturbo capace di erogare 720 cavalli, rendendolo uno dei V8 più potenti mai prodotti da Ferrari per una vettura stradale. La risposta è immediata grazie alla riduzione delle masse rotanti e all’ottimizzazione del turbo. L’accelerazione è brutale ma controllabile, con una progressione che non lascia respiro fino alla zona rossa."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Il sistema di scarico della 488 Pista è stato ottimizzato per offrire un sound più intenso e coinvolgente rispetto alla versione standard. Il V8 turbo produce un tono profondo e aggressivo, accompagnato da scoppiettii in rilascio e un crescendo deciso agli alti regimi. È una colonna sonora che sottolinea il carattere radicale della vettura."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della 488 Pista è orientato alla performance pura. Ampio utilizzo di fibra di carbonio, Alcantara e componenti alleggeriti riduce il peso complessivo, creando un ambiente tecnico e minimalista. Ogni comando è studiato per garantire concentrazione e controllo totale durante la guida sportiva."
+      }
+    },
+    "m3_e30": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della BMW M3 E30 mantengono l’iconico doppio proiettore circolare tipico della Serie 3 dell’epoca. Integrati in un frontale squadrato e funzionale, trasmettono immediatamente il carattere deciso della vettura. Il design è semplice ma aggressivo, simbolo delle sportive tedesche di fine anni ’80 e inizio ’90."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della M3 E30 è progettato per sostenere una guida sportiva intensa, sia su strada che in pista. I dischi ventilati garantiscono potenza frenante adeguata alle prestazioni del modello, mentre la risposta del pedale è diretta e comunicativa. In un’epoca priva di sofisticate assistenze elettroniche, tutto dipendeva dalla sensibilità del pilota."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della M3 E30 è il celebre quattro cilindri 2.3 litri aspirato (S14), sviluppato per l’omologazione nelle competizioni DTM. Capace di girare ad alti regimi e offrire un’erogazione progressiva ma aggressiva, rappresenta uno dei motori più iconici della storia BMW M. La risposta è pronta e meccanica, con un sound metallico che cresce fino alla zona rossa."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della M3 E30 produce un suono ruvido e deciso, tipico dei motori aspirati ad alto regime. Il quattro cilindri S14 emette una tonalità metallica e progressiva che diventa più intensa con l’aumentare dei giri. È un sound puro, analogico, privo di filtri artificiali."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della M3 E30 è essenziale e orientato al pilota. Sedili sportivi avvolgenti, strumentazione analogica completa e volante a tre razze creano un ambiente semplice ma coinvolgente. Non ci sono distrazioni moderne: solo meccanica pura e connessione diretta tra uomo e macchina."
+      }
+    },
+    "charger69": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Dodge Charger 1969 sono nascosti dietro una griglia a tutta larghezza che si apre elettricamente, creando un frontale pulito e minaccioso quando chiusi. Questa soluzione conferisce alla vettura un aspetto aggressivo e distintivo, rendendola immediatamente riconoscibile tra le muscle car dell’epoca."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della Charger 1969 riflette la filosofia delle muscle car dell’epoca: potenza prima di tutto. I freni a disco anteriori (nelle versioni equipaggiate) garantiscono una frenata adeguata alla massa e alla potenza del V8, ma richiedono sempre rispetto e sensibilità nella guida."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Dodge Charger 1969 è il leggendario V8 americano, disponibile in diverse configurazioni, tra cui il celebre 440 Magnum e il potente 426 HEMI. Con cilindrate elevate e coppia abbondante fin dai bassi regimi, l’erogazione è brutale e immediata. È un motore che non cerca finezza, ma pura forza meccanica."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della Charger 1969 produce un rombo profondo e cavernoso tipico dei V8 americani. Ogni accelerazione è accompagnata da un suono pieno e vibrante che scuote l’asfalto e cattura l’attenzione. È una colonna sonora che incarna lo spirito delle muscle car degli anni ’60."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Charger 1969 combina sportività e comfort in stile americano. La plancia con strumentazione analogica, il volante ampio e i sedili imbottiti creano un ambiente tipico delle grandi coupé dell’epoca. È un interno che trasmette potenza e carattere, più orientato al cruising che alla pista."
+      }
+    },
+    "supra_mk4": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Toyota Supra MK4 presentano un design affilato e arrotondato, perfettamente integrato nella carrozzeria fluida della A80. Il frontale basso e largo enfatizza l’aerodinamica e il carattere sportivo della vettura, rendendola immediatamente riconoscibile tra le sportive giapponesi degli anni ’90."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "La Supra MK4 è dotata di un impianto frenante potente e affidabile, con dischi maggiorati e pinze ad alte prestazioni nelle versioni turbo. Progettata per sostenere velocità elevate e utilizzo sportivo, offre una risposta solida e modulabile. L’equilibrio del telaio e la trazione posteriore garantiscono controllo anche nelle situazioni più impegnative."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Supra MK4 è il leggendario 3.0 litri sei cilindri in linea 2JZ-GTE biturbo. Con circa 280 cavalli dichiarati nella versione giapponese e oltre 320 nei mercati internazionali, è famoso per la sua straordinaria robustezza e capacità di sopportare potenze molto superiori con modifiche. L’erogazione è fluida ma potente, con una spinta decisa che cresce con l’attivazione dei turbo."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della Supra MK4 produce un sound profondo e crescente, accompagnato dal tipico sibilo dei turbocompressori. Il sei cilindri in linea regala una tonalità piena e metallica, che diventa ancora più intensa con impianti aftermarket. È una colonna sonora iconica nel mondo del tuning e delle competizioni street."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Supra MK4 è orientato al pilota, con una plancia avvolgente che inclina i comandi verso il conducente. La strumentazione analogica completa e la posizione di guida bassa creano un ambiente sportivo ma confortevole. È un interno tipico delle sportive giapponesi anni ’90, funzionale e senza eccessi."
+      }
+    },
+    "skyline_r33": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Nissan Skyline GT-R R33 presentano un design più affilato e aerodinamico rispetto alla generazione precedente. Integrati in un frontale ampio e aggressivo, contribuiscono a migliorare la penetrazione aerodinamica e la stabilità alle alte velocità. Il look è moderno per l’epoca, ma mantiene il carattere deciso tipico della famiglia GT-R."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della R33 GT-R è sviluppato per gestire prestazioni elevate sia su strada che in pista. I dischi ventilati e le pinze ad alte prestazioni garantiscono frenate potenti e costanti. La stabilità è ulteriormente supportata dalla trazione integrale ATTESA E-TS e dal sistema di sterzo posteriore Super HICAS."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Skyline GT-R R33 è il leggendario 2.6 litri sei cilindri in linea biturbo RB26DETT. Ufficialmente dichiarato a 280 cavalli secondo l’accordo giapponese dell’epoca, in realtà offriva prestazioni ben superiori. Il motore è celebre per la sua robustezza e per l’enorme potenziale di elaborazione, diventando un’icona nel mondo delle performance e del tuning."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della R33 GT-R produce un suono profondo e metallico, accompagnato dal caratteristico sibilo dei turbocompressori. Il sei cilindri in linea regala una tonalità piena e progressiva, che diventa ancora più aggressiva con modifiche aftermarket. È una colonna sonora inconfondibile per gli appassionati JDM."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della R33 GT-R combina sportività e tecnologia anni ’90. Strumentazione analogica completa, sedili sportivi e una disposizione orientata al pilota creano un ambiente tecnico ma funzionale. Non è lussuoso, ma è progettato per offrire controllo e precisione durante la guida sportiva."
+      }
+    },
+    "skyline_r34": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Nissan Skyline GT-R R34 presentano un design affilato e compatto, perfettamente integrato nel frontale aggressivo e aerodinamico. La linea più squadrata rispetto alla R33 enfatizza il carattere tecnico e deciso della vettura, migliorando al tempo stesso stabilità e penetrazione aerodinamica."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della R34 GT-R è progettato per sostenere prestazioni elevate su strada e in pista. I dischi ventilati e le pinze Brembo ad alte prestazioni garantiscono potenza frenante costante e modulabile. La combinazione con la trazione integrale ATTESA E-TS Pro offre stabilità anche nelle staccate più aggressive."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Skyline GT-R R34 è il leggendario 2.6 litri sei cilindri in linea biturbo RB26DETT. Ufficialmente dichiarato a 280 cavalli, secondo l’accordo giapponese dell’epoca, offriva in realtà prestazioni superiori. Celebre per la sua robustezza e il potenziale di elaborazione estremo, è diventato uno dei motori più iconici nella storia delle auto sportive."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della R34 GT-R produce un suono profondo e metallico, accompagnato dal tipico sibilo dei turbocompressori. Il sei cilindri in linea regala una progressione sonora piena e coinvolgente, che diventa ancora più aggressiva con modifiche aftermarket. È un sound immediatamente riconoscibile nel mondo JDM."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della R34 GT-R combina sportività e tecnologia avanzata per l’epoca. Il celebre display multifunzione centrale mostra dati in tempo reale su pressione turbo, temperature e forze G, creando un ambiente tecnico e futuristico. Sedili sportivi, strumentazione analogica e layout orientato al pilota completano l’esperienza di guida."
+      }
+    },
+    "z350": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari anteriori della Nissan 350Z presentano un design affilato e inclinato verso l’alto, che enfatizza il carattere aggressivo della vettura. Integrati in un frontale corto e muscoloso, contribuiscono a un look moderno e sportivo. La linea compatta e larga richiama la tradizione delle sportive Z, reinterpretata in chiave contemporanea."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della 350Z è progettato per sostenere una guida dinamica e sportiva. Nelle versioni più prestazionali troviamo pinze Brembo e dischi maggiorati, capaci di garantire frenate potenti e costanti. La risposta del pedale è diretta, offrendo al pilota sicurezza e controllo anche nella guida più aggressiva."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Nissan 350Z è il V6 3.5 litri VQ35DE, capace di erogare circa 280–300 cavalli a seconda della versione e del mercato. L’erogazione è fluida ma energica, con una spinta decisa ai medi e alti regimi. Il motore è noto per la sua affidabilità e per il sound pieno e metallico tipico dei V6 aspirati giapponesi."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della 350Z produce un tono profondo e deciso, che cresce con l’aumentare dei giri. Il V6 regala una sonorità piena e sportiva, particolarmente apprezzata dagli appassionati di tuning. Con impianti aftermarket, il sound diventa ancora più aggressivo e coinvolgente."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della 350Z è orientato al pilota, con una posizione di guida bassa e avvolgente. La strumentazione analogica e i tre strumenti supplementari sul cruscotto centrale richiamano la tradizione delle Z storiche. È un ambiente sportivo e funzionale, progettato per offrire un’esperienza di guida diretta e coinvolgente."
+      }
+    },
+    "rx7_fd": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari a scomparsa della Mazda RX-7 FD rappresentano uno degli elementi più iconici delle sportive anni ’90. Quando chiusi, mantengono il frontale estremamente pulito e aerodinamico; quando aperti, donano alla vettura un carattere deciso e aggressivo. Le linee arrotondate e fluide rendono la RX-7 immediatamente riconoscibile nel panorama JDM."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della RX-7 FD è progettato per sostenere una guida sportiva intensa. I dischi ventilati e le pinze ad alte prestazioni garantiscono frenate efficaci e progressive. Grazie al peso contenuto e alla distribuzione bilanciata delle masse, la vettura offre grande stabilità anche nelle staccate più impegnative."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Mazda RX-7 FD è il celebre 1.3 litri biturbo rotativo 13B-REW. Diverso da qualsiasi altro motore a pistoni tradizionale, il Wankel offre un’erogazione lineare e una capacità di salire di giri in modo impressionante. Il sistema biturbo sequenziale garantisce una risposta fluida ai bassi regimi e una spinta più intensa agli alti, rendendo l’esperienza di guida unica nel suo genere."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della RX-7 produce un suono acuto e metallico, tipico dei motori rotativi. Il caratteristico fischio dei turbo si combina con una tonalità crescente e quasi “urlata” agli alti regimi. È un sound distintivo e immediatamente riconoscibile dagli appassionati di motori Wankel."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della RX-7 FD è compatto e orientato al pilota. La posizione di guida bassa, la strumentazione analogica completa e la plancia avvolgente creano un ambiente sportivo e immersivo. È un interno semplice ma focalizzato sulla guida pura, senza distrazioni superflue."
+      }
+    },
+    "tt_rs": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I gruppi ottici Matrix LED della Audi TT RS presentano una firma luminosa moderna e aggressiva, con indicatori dinamici e tecnologia adattiva. Il design affilato enfatizza il carattere sportivo del frontale, mentre l’illuminazione intelligente migliora visibilità e sicurezza in ogni condizione."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "L’impianto frenante della TT RS è progettato per sostenere prestazioni elevate sia su strada che in pista. I dischi maggiorati e le pinze ad alte prestazioni garantiscono frenate potenti e costanti. Nelle versioni più estreme è disponibile anche l’impianto carboceramico, per una resistenza termica ancora superiore."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Audi TT RS è il leggendario 2.5 litri cinque cilindri turbo TFSI, capace di erogare circa 400 cavalli. Il layout a cinque cilindri regala un sound unico e distintivo, mentre la risposta del turbo è immediata e potente. L’accelerazione è brutale, con uno 0–100 km/h in circa 3.7 secondi grazie alla trazione integrale quattro."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico sportivo della TT RS produce un suono profondo e metallico, accompagnato da scoppiettii in rilascio nelle modalità più sportive. Il cinque cilindri offre una tonalità unica, che richiama le leggendarie Audi da rally. È una colonna sonora coinvolgente e distintiva nel panorama delle sportive compatte."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della TT RS è dominato dall’Audi Virtual Cockpit, che integra strumentazione e infotainment in un unico display digitale. Materiali di alta qualità, inserti in Alcantara o carbonio e sedili sportivi RS creano un ambiente tecnologico e orientato alla performance. È un mix perfetto tra modernità e sportività."
+      }
+    }
+  },
+
   "footer": {
     "brand": "Autosalone",
     "text": "Tutti i diritti riservati.",

@@ -16,20 +16,18 @@ export default function Preloader({ done }) {
     : Math.min(99, Math.max(0, Math.round(progress || 0)));
 
   useEffect(() => {
+    if (Math.abs(displayPct - targetPct) < 0.1) return;
+
     const animate = () => {
       setDisplayPct((prev) => {
         const diff = targetPct - prev;
-
         if (Math.abs(diff) < 0.1) return targetPct;
-
         return prev + diff * 0.08;
       });
-
       raf.current = requestAnimationFrame(animate);
     };
 
     raf.current = requestAnimationFrame(animate);
-
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };

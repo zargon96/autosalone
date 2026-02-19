@@ -1,14 +1,17 @@
 export const CAMERA_CONFIGS = {
   desktop: {
-    home: { pos: [12, 8, 5.5], fov: 12 },
-    hero: { pos: [-4, 1, 6], fov: 20 },
+    home: { pos: [12, 8, 5.5], fov: 20 },
+    hero: { pos: [-4, 1, 6], fov: 45 },
+    experience: { pos: [-8, 1.2, 6], fov: 30 },
   },
   mobile: {
-    home: { pos: [12, 8, 5.5], fov: 22 },
-    hero: { pos: [-2.5, 2, 6], fov: 28 },
+    home: { pos: [12, 8, 5.5], fov: 48 },
+    hero: { pos: [-2.5, 2, 6], fov: 68 },
+    experience: { pos: [-8, 1.2, 6], fov: 50 },
   },
   smallLaptop: {
     home: { pos: [12, 8, 5.5], fov: 12 },
     hero: { pos: [-4, 1, 6], fov: 16 },
+    experience: { pos: [-8, 1.2, 6], fov: 30 },
   },
 };

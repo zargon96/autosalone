@@ -36,7 +36,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  z-index: 0 !important;
+  z-index: 1 !important;
   touch-action: none;
 }
 
@@ -233,6 +233,8 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   margin-top: 6px;
   font-size: 0.8rem;
   color: var(--text-color);
+  position: relative;
+  z-index: 1;
 }
 
 .footer a {
@@ -272,18 +274,11 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 }
 .btn-details {
   padding: 8px 16px;
-  border: 1px solid var(--text-color);
-  background: transparent;
   color: var(--text-color);
   border-radius: 6px;
   font-size: 0.9rem;
   transition: all 0.3s ease;
   cursor: pointer;
-}
-
-.btn-details:hover {
-  background: var(--text-color);
-  color: var(--bg-color);
 }
 
 .btn-details:disabled {

@@ -43,6 +43,8 @@
   .footer .credits {
     padding-bottom: 20px;
     font-size: 0.8rem;
+    position: relative;
+    z-index: 1;
   }
 }
 

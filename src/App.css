@@ -16,6 +16,18 @@ html {
   --text-color: #fff !important;
 }
 
+#global-canvas-root {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transition: transform 0.4s ease;
+}
+
+.canvas-hero {
+  transform: translateX(-20%);
+  padding-top: 80px;
+}
+
 .text-color {
   color: var(--text-color);
 }

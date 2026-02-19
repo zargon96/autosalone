@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, memo, lazy, useEffect } from "react";
+import { useState, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CanvasProvider, useCanvas } from "./context/CanvasContext";
 import { LangProvider } from "./context/langContext";
@@ -7,23 +7,25 @@ import Home from "./pages/Home";
 import GlobalCanvas from "./components/GlobalCanvas";
 import LightPillar from "./components/LightPillar";
 import Preloader from "./components/Preloader";
+import Hero from "./components/hero/Hero";
+import CarExperience from "./pages/CarExperience";
 
 const Credits = lazy(() => import("./pages/Credits"));
-const Hero = lazy(() => import("./components/hero/Hero"));
 
 export default function App() {
   const [ready, setReady] = useState(false);
-
   return (
     <Router>
       <CanvasProvider>
         <LangProvider>
           <Preloader done={ready} />
+          <CanvasLayer onReady={() => setReady(true)} />
           <LightPillar />
-          <CanvasWrapper onCanvasReady={() => setReady(true)} />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cars/:id" element={<Hero />} />
+            <Route path="/cars/:id/experience" element={<CarExperience />} />
             <Route path="/credits" element={<Credits />} />
           </Routes>
         </LangProvider>
@@ -31,28 +33,12 @@ export default function App() {
     </Router>
   );
 }
-
-const CanvasWrapper = memo(function CanvasWrapper({ onCanvasReady }) {
-  const { containerClass, mode } = useCanvas();
-
-  useEffect(() => {
-    const wrapper = document.getElementById("global-canvas-wrapper");
-    if (!wrapper) return;
-
-    if (containerClass === "hero-canvas") {
-      const slot = document.getElementById("hero-canvas-slot");
-      if (slot) slot.appendChild(wrapper);
-    } else {
-      const root = document.getElementById("global-canvas-root");
-      if (root) root.appendChild(wrapper);
-    }
-  }, [containerClass]);
-
-  if (mode === "hidden") return null;
+function CanvasLayer({ onReady }) {
+  const { mode } = useCanvas();
 
   return (
-    <div id="global-canvas-wrapper" className={containerClass}>
-      <GlobalCanvas onReady={onCanvasReady} />
+    <div id="global-canvas-root" className={`canvas-${mode}`}>
+      <GlobalCanvas onReady={onReady} />
     </div>
   );
-});
+}

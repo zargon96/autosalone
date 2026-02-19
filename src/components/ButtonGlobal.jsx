@@ -1,9 +1,14 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-export default function ButtonGlobal({ onClick, disabled, children }) {
+export default function ButtonGlobal({
+  onClick,
+  disabled,
+  children,
+  className,
+}) {
   return (
-    <StyledWrapper>
+    <StyledWrapper className={className}>
       <button onClick={onClick} disabled={disabled}>
         <span className="text">{children}</span>
       </button>
@@ -15,6 +20,7 @@ ButtonGlobal.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
 };
 
 const StyledWrapper = styled.div`
