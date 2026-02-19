@@ -44,17 +44,9 @@ export default function Hero() {
 
   const rates = useFxRates();
 
-  // useEffect(() => {
-  //   setMode("hero");
-  //   setActiveCarId(car.id);
-  // }, [car, setMode, setActiveCarId]);
-
   useEffect(() => {
     setMode("hero");
     setActiveCarId(car.id);
-    return () => {
-      setTimeout(() => setMode("static"), 50);
-    };
   }, [car, setMode, setActiveCarId]);
 
   const powerValue = useMemo(() => {
