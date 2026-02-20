@@ -1,72 +1,63 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import "../styles/preloader.css";
 
 export default function Preloader({ done }) {
   const { progress, item } = useProgress();
-
   const [hidden, setHidden] = useState(false);
   const [displayPct, setDisplayPct] = useState(0);
-
-  const hideTimer = useRef(null);
+  const [filesReady, setFilesReady] = useState(false);
   const raf = useRef(null);
+  const hideTimer = useRef(null);
 
-  const targetPct = done
-    ? 100
-    : Math.min(99, Math.max(0, Math.round(progress || 0)));
+  const targetPct = done ? 100 : Math.min(99, Math.max(0, progress || 0));
 
   useEffect(() => {
-    if (Math.abs(displayPct - targetPct) < 0.1) return;
+    if (progress >= 99.5 && !done) setFilesReady(true);
+  }, [progress, done]);
 
+  useEffect(() => {
+    cancelAnimationFrame(raf.current);
     const animate = () => {
       setDisplayPct((prev) => {
         const diff = targetPct - prev;
-        if (Math.abs(diff) < 0.1) return targetPct;
-        return prev + diff * 0.08;
+        if (Math.abs(diff) < 0.05) return targetPct;
+        return prev + Math.sign(diff) * Math.max(Math.abs(diff) * 0.12, 0.4);
       });
       raf.current = requestAnimationFrame(animate);
     };
-
     raf.current = requestAnimationFrame(animate);
-    return () => {
-      if (raf.current) cancelAnimationFrame(raf.current);
-    };
+    return () => cancelAnimationFrame(raf.current);
   }, [targetPct]);
-
-  const pct = Math.round(displayPct);
-
-  const currentItem = useMemo(() => {
-    if (!item || done) return null;
-    const parts = item.split("/");
-    return parts[parts.length - 1];
-  }, [item, done]);
 
   useEffect(() => {
     if (!done) return;
-
-    hideTimer.current = setTimeout(() => {
-      setHidden(true);
-    }, 650);
-
-    return () => {
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-    };
+    hideTimer.current = setTimeout(() => setHidden(true), 900);
+    return () => clearTimeout(hideTimer.current);
   }, [done]);
 
   if (hidden) return null;
 
+  const pct = Math.round(displayPct);
+  const fileName = item && !done && !filesReady ? item.split("/").pop() : null;
+
   return (
-    <div className={`preloader-overlay ${done ? "done" : ""}`}>
+    <div className={`preloader-overlay${done ? " done" : ""}`}>
       <div className="preloader-box">
         <div className="preloader-bar">
           <div className="preloader-bar-fill" style={{ width: `${pct}%` }} />
         </div>
-
         <div className="preloader-meta">
           <span>{pct}%</span>
         </div>
 
-        {currentItem && <div className="preloader-file">{currentItem}</div>}
+        {fileName && <div className="preloader-file">{fileName}</div>}
+
+        {filesReady && !done && (
+          <div className="preloader-file preloader-phase">
+            Compiling shaders...
+          </div>
+        )}
       </div>
     </div>
   );
