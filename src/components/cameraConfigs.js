@@ -6,7 +6,7 @@ export const CAMERA_CONFIGS = {
   },
   mobile: {
     home: { pos: [12, 8, 5.5], fov: 48 },
-    hero: { pos: [-2.5, 2, 6], fov: 68 },
+    hero: { pos: [-2.5, 2, 6], fov: 75 },
     experience: { pos: [-8, 1.2, 6], fov: 50 },
   },
   smallLaptop: {
