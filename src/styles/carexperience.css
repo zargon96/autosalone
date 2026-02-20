@@ -174,3 +174,9 @@ body[data-hotspots="hidden"] .hotspot {
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
+
+@media (max-width: 1536px) {
+  .experience-content {
+    padding-top: 0px;
+  }
+}

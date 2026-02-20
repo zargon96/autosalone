@@ -10,8 +10,8 @@ export const CAMERA_CONFIGS = {
     experience: { pos: [-8, 1.2, 6], fov: 50 },
   },
   smallLaptop: {
-    home: { pos: [12, 8, 5.5], fov: 12 },
-    hero: { pos: [-4, 1, 6], fov: 16 },
+    home: { pos: [12, 8, 5.5], fov: 18 },
+    hero: { pos: [-4, 1, 6], fov: 25 },
     experience: { pos: [-8, 1.2, 6], fov: 30 },
   },
 };

@@ -35,6 +35,13 @@ html {
   }
 }
 
+@media (max-width: 1536px) {
+  .canvas-hero {
+    transform: translateX(-20%);
+    padding-top: 362px;
+  }
+}
+
 .text-color {
   color: var(--text-color);
 }
