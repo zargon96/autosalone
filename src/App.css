@@ -35,7 +35,7 @@ html {
   }
 }
 
-@media (max-width: 1536px) {
+@media (min-width: 1024px) and (max-width: 1536px) {
   .canvas-hero {
     transform: translateX(-20%);
     padding-top: 362px;
