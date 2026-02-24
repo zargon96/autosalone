@@ -18,6 +18,8 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
 const withDraco = (loader) => loader.setDRACOLoader(dracoLoader);
 
+const OFFSCREEN = 18;
+
 /* ================= DEVICE TYPE ================= */
 
 function useDeviceType() {
@@ -119,9 +121,106 @@ const ModelsGroup = memo(function ModelsGroup({
 
   const setupDone = useRef(false);
   const groupRef = useRef(null);
+  const isTransitioning = useRef(false);
+
+  const { triggerCarTransition, triggerCarTransitionY } = useCanvas();
+  const { gl } = useThree();
+
+  //car experience
+  useEffect(() => {
+    triggerCarTransition.current = (dir, onMidpoint) => {
+      if (!groupRef.current || isTransitioning.current) return;
+      isTransitioning.current = true;
+
+      const exitX = dir === "next" ? -OFFSCREEN : OFFSCREEN;
+      const enterX = dir === "next" ? OFFSCREEN : -OFFSCREEN;
+      const exitRotY = dir === "next" ? -0.4 : 0.4;
+
+      gsap.to(gl.domElement, {
+        opacity: 0,
+        duration: 0.45,
+        ease: "power2.in",
+      });
+
+      gsap.to(groupRef.current.position, {
+        x: exitX,
+        duration: 0.45,
+        ease: "power2.in",
+        onComplete: () => {
+          onMidpoint();
+          groupRef.current.position.x = enterX;
+          groupRef.current.rotation.y = -exitRotY;
+
+          gsap.to(gl.domElement, {
+            opacity: 1,
+            duration: 0.55,
+            ease: "power2.out",
+          });
+
+          gsap.to(groupRef.current.position, {
+            x: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            onComplete: () => {
+              isTransitioning.current = false;
+            },
+          });
+        },
+      });
+
+      gsap.to(groupRef.current.rotation, {
+        y: exitRotY,
+        duration: 0.45,
+        ease: "power2.in",
+      });
+    };
+  }, [triggerCarTransition, gl]);
+
+  //home
+  useEffect(() => {
+    triggerCarTransitionY.current = (dir, onMidpoint) => {
+      if (!groupRef.current || isTransitioning.current) return;
+      isTransitioning.current = true;
+
+      const exitY = dir === "next" ? 8 : -8;
+      const enterY = dir === "next" ? -8 : 8;
+
+      gsap.to(gl.domElement, {
+        opacity: 0,
+        duration: 0.45,
+        ease: "power2.in",
+      });
+
+      gsap.to(groupRef.current.position, {
+        y: exitY,
+        duration: 0.45,
+        ease: "power2.in",
+        onComplete: () => {
+          onMidpoint();
+          groupRef.current.position.y = enterY;
+
+          gsap.to(gl.domElement, {
+            opacity: 1,
+            duration: 0.55,
+            ease: "power2.out",
+          });
+
+          gsap.to(groupRef.current.position, {
+            y: 0,
+            duration: 0.55,
+            ease: "power2.out",
+            onComplete: () => {
+              isTransitioning.current = false;
+            },
+          });
+        },
+      });
+    };
+  }, [triggerCarTransitionY, gl]);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
+    if (isTransitioning.current) return;
 
     if (autoRotate) {
       groupRef.current.rotation.y += delta * 0.3;
@@ -376,7 +475,8 @@ function HotspotOverlayHTML({ activeStep }) {
 /* ================= MAIN ================= */
 
 export default function GlobalCanvas({ onReady, activeStep }) {
-  const { activeCarId, mode, experienceSteps, onStepClick } = useCanvas();
+  const { activeCarId, mode, experienceSteps, onStepClick, hotspotsReady } =
+    useCanvas();
   const { experienceRotation } = useCanvasLive();
 
   const device = useDeviceType();
@@ -399,7 +499,8 @@ export default function GlobalCanvas({ onReady, activeStep }) {
     mode === "experience" &&
     !isMobile &&
     onStepClick &&
-    experienceSteps.length > 0;
+    experienceSteps.length > 0 &&
+    hotspotsReady;
 
   return (
     <>

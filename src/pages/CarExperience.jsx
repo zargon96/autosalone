@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState, useCallback } from "react";
+import { useMemo, useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCanvas, useCanvasLive } from "../context/CanvasContext";
 import { cars } from "../components/hero/carsData";
@@ -23,9 +23,12 @@ export default function CarExperience() {
     setOnStepClick,
     activeStep,
     setActiveStep,
+    setHotspotsReady,
+    triggerCarTransition,
   } = useCanvas();
 
-  const { setExperienceCamera, setExperienceRotation } = useCanvasLive();
+  const { setExperienceCamera, setExperienceRotation, setHotspotPositions } =
+    useCanvasLive();
 
   const { t } = useLang();
 
@@ -35,13 +38,16 @@ export default function CarExperience() {
   const currentCarIndex = useMemo(() => carKeys.indexOf(id), [carKeys, id]);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const hotspotsTimer = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimeout(hotspotsTimer.current);
   }, []);
 
   const handleStepClick = useCallback(
@@ -69,7 +75,6 @@ export default function CarExperience() {
 
   useEffect(() => {
     if (!car) return;
-
     setMode("experience");
     setActiveCarId(id);
 
@@ -100,10 +105,31 @@ export default function CarExperience() {
   }, [steps, handleStepClick, car, setExperienceSteps, setOnStepClick]);
 
   const handleClose = () => {
+    clearTimeout(hotspotsTimer.current);
+    setHotspotsReady(false);
+    setHotspotPositions({});
     setActiveStep(null);
     setExperienceCamera(null);
     setExperienceRotation(null);
     document.body.dataset.hotspots = "";
+    hotspotsTimer.current = setTimeout(() => setHotspotsReady(true), 1200);
+  };
+
+  const handleCarChange = (nextId, dir) => {
+    if (!nextId) return;
+    clearTimeout(hotspotsTimer.current);
+    setHotspotsReady(false);
+    setHotspotPositions({});
+
+    triggerCarTransition.current?.(dir, () => {
+      // questo viene chiamato a metà animazione, quando l'auto è fuori schermo
+      setActiveCarId(nextId);
+      setExperienceCamera(null);
+      setExperienceRotation(null);
+      navigate(`/cars/${nextId}/experience`, { replace: true });
+    });
+
+    hotspotsTimer.current = setTimeout(() => setHotspotsReady(true), 1400);
   };
 
   if (!car) return null;
@@ -126,7 +152,6 @@ export default function CarExperience() {
               <div className="row g-2">
                 {steps.map((step, index) => {
                   const isLast = index === steps.length - 1;
-
                   return (
                     <div
                       key={step.key}
@@ -164,7 +189,7 @@ export default function CarExperience() {
             <div className="col-12 text-center experience-back-btn d-flex justify-content-center align-items-center gap-3">
               <ButtonGlobal
                 onClick={() =>
-                  navigate(`/cars/${carKeys[currentCarIndex - 1]}/experience`)
+                  handleCarChange(carKeys[currentCarIndex - 1], "prev")
                 }
                 disabled={currentCarIndex === 0}
               >
@@ -177,7 +202,7 @@ export default function CarExperience() {
 
               <ButtonGlobal
                 onClick={() =>
-                  navigate(`/cars/${carKeys[currentCarIndex + 1]}/experience`)
+                  handleCarChange(carKeys[currentCarIndex + 1], "next")
                 }
                 disabled={currentCarIndex === carKeys.length - 1}
               >

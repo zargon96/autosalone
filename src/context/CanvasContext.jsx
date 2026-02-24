@@ -1,61 +1,15 @@
-// import { createContext, useContext, useState, useCallback } from "react";
-
-// const CanvasContext = createContext();
-
-// export function CanvasProvider({ children }) {
-//   const [activeCarId, setActiveCarId] = useState(null);
-//   const [mode, setMode] = useState("home");
-//   const [homeIndex, setHomeIndex] = useState(0);
-//   const [experienceCamera, setExperienceCamera] = useState(null);
-//   const [experienceRotation, setExperienceRotation] = useState(null);
-//   const [experienceSteps, setExperienceSteps] = useState([]);
-//   const [onStepClick, setOnStepClick] = useState(null);
-//   const [hotspotPositions, setHotspotPositions] = useState({});
-//   const [activeStep, setActiveStep] = useState(null);
-
-//   const resetExperienceCamera = useCallback(() => {
-//     setExperienceCamera(null);
-//   }, []);
-
-//   return (
-//     <CanvasContext.Provider
-//       value={{
-//         activeCarId,
-//         setActiveCarId,
-//         mode,
-//         setMode,
-//         homeIndex,
-//         setHomeIndex,
-//         experienceRotation,
-//         setExperienceRotation,
-//         experienceCamera,
-//         setExperienceCamera,
-//         resetExperienceCamera,
-//         experienceSteps,
-//         setExperienceSteps,
-//         onStepClick,
-//         setOnStepClick,
-//         hotspotPositions,
-//         setHotspotPositions,
-//         activeStep,
-//         setActiveStep,
-//       }}
-//     >
-//       {children}
-//     </CanvasContext.Provider>
-//   );
-// }
-
-// export function useCanvas() {
-//   return useContext(CanvasContext);
-// }
-
-import { createContext, useContext, useState, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 
 // context "stabile" — cambia raramente
 const CanvasContext = createContext();
 
-// context "live" — cambia spesso (hotspot, camera, rotation)
+// context "live" — cambia spesso
 const CanvasLiveContext = createContext();
 
 export function CanvasProvider({ children }) {
@@ -70,6 +24,9 @@ export function CanvasProvider({ children }) {
   const [experienceCamera, setExperienceCamera] = useState(null);
   const [experienceRotation, setExperienceRotation] = useState(null);
   const [hotspotPositions, setHotspotPositions] = useState({});
+  const [hotspotsReady, setHotspotsReady] = useState(true);
+  const triggerCarTransition = useRef(null);
+  const triggerCarTransitionY = useRef(null);
 
   const resetExperienceCamera = useCallback(() => {
     setExperienceCamera(null);
@@ -91,6 +48,10 @@ export function CanvasProvider({ children }) {
         onStepClick,
         setOnStepClick,
         resetExperienceCamera,
+        hotspotsReady,
+        setHotspotsReady,
+        triggerCarTransition,
+        triggerCarTransitionY,
       }}
     >
       <CanvasLiveContext.Provider
@@ -113,7 +74,6 @@ export function useCanvas() {
   return useContext(CanvasContext);
 }
 
-// hook separato per le cose live — usalo solo dove serve
 export function useCanvasLive() {
   return useContext(CanvasLiveContext);
 }

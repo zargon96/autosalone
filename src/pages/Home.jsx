@@ -11,15 +11,19 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import BlurText from "../components/BlurText";
 import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
-import caretDown from "../assets/caret-down-fill.svg";
-import caretUp from "../assets/caret-up-fill.svg";
 import caretRight from "../assets/caret-right-fill.svg";
 import ButtonGlobal from "../components/ButtonGlobal";
 
 const currentYear = new Date().getFullYear();
 
 export default function Home() {
-  const { setActiveCarId, setMode, homeIndex, setHomeIndex } = useCanvas();
+  const {
+    setActiveCarId,
+    setMode,
+    homeIndex,
+    setHomeIndex,
+    triggerCarTransitionY,
+  } = useCanvas();
 
   const { t, lang } = useLang();
   const rates = useFxRates();
@@ -35,6 +39,7 @@ export default function Home() {
   const touchStartY = useRef(null);
   const initDone = useRef(false);
   const wheelAccRef = useRef(0);
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   const gotoSectionRef = useRef(() => {});
 
@@ -122,11 +127,16 @@ export default function Home() {
       animatingRef.current = true;
       setCurrentIndex(nextIndex);
       setHomeIndex(nextIndex);
-      setActiveCarId(carKeys[nextIndex]);
 
       const from = sections[cur];
       const to = sections[nextIndex];
 
+      // anima il modello 3D
+      triggerCarTransitionY.current?.(dir > 0 ? "next" : "prev", () => {
+        setActiveCarId(carKeys[nextIndex]);
+      });
+
+      // anima le sezioni DOM come prima
       gsap
         .timeline({
           defaults: { ease: "power2.inOut", duration: 0.9 },
@@ -144,7 +154,7 @@ export default function Home() {
           0,
         );
     },
-    [carKeys, setActiveCarId, setHomeIndex],
+    [carKeys, setActiveCarId, setHomeIndex, triggerCarTransitionY],
   );
 
   useEffect(() => {
@@ -287,75 +297,77 @@ export default function Home() {
               </div>
 
               <div className="stats-bottom-center">
-                <div className="stat-item">
-                  <BlurText
-                    key={`${currentIndex}-${car.id}-year`}
-                    text={isActive ? String(car.specs?.year) : " "}
-                    delay={20}
-                    animateBy="letters"
-                    direction="top"
-                    className="stat-value"
-                  />
-                  <span className="stat-label">{t.car.year}</span>
-                </div>
+                {isActive && currentIndex === 0 && (
+                  <div className="scroll-hint">
+                    {isMobile ? (
+                      <>
+                        <div className="swipe-arrow">↑</div>
+                        <span className="scroll-label">swipe up</span>
+                      </>
+                    ) : (
+                      <>
+                        <div className="scroll-mouse">
+                          <div className="scroll-wheel" />
+                        </div>
+                        <span className="scroll-label">scroll</span>
+                      </>
+                    )}
+                  </div>
+                )}
 
-                <div className="stat-item">
-                  <BlurText
-                    key={`${currentIndex}-${car.id}-disp`}
-                    text={isActive ? String(car.stats?.displacement) : " "}
-                    delay={30}
-                    animateBy="letters"
-                    direction="top"
-                    className="stat-value"
-                  />
-                  <span className="stat-label">{t.car.displacement}</span>
-                </div>
+                <div className="stats-row">
+                  <div className="stat-item">
+                    <BlurText
+                      key={`${currentIndex}-${car.id}-year`}
+                      text={isActive ? String(car.specs?.year) : " "}
+                      delay={20}
+                      animateBy="letters"
+                      direction="top"
+                      className="stat-value"
+                    />
+                    <span className="stat-label">{t.car.year}</span>
+                  </div>
 
-                <div className="stat-item">
-                  <BlurText
-                    key={`${currentIndex}-${car.id}-power`}
-                    text={isActive ? formatPower(car.specs) : " "}
-                    delay={40}
-                    animateBy="letters"
-                    direction="top"
-                    className="stat-value"
-                  />
-                  <span className="stat-label">{t.car.power}</span>
-                </div>
+                  <div className="stat-item">
+                    <BlurText
+                      key={`${currentIndex}-${car.id}-disp`}
+                      text={isActive ? String(car.stats?.displacement) : " "}
+                      delay={30}
+                      animateBy="letters"
+                      direction="top"
+                      className="stat-value"
+                    />
+                    <span className="stat-label">{t.car.displacement}</span>
+                  </div>
 
-                <ButtonGlobal
-                  className="btn-details"
-                  onClick={() => navigate(`/cars/${activeCar.id}`)}
-                >
-                  {t.car.details}
-                  <img
-                    src={caretRight}
-                    alt={t.car.next}
-                    className="icon-static"
-                  />
-                </ButtonGlobal>
+                  <div className="stat-item">
+                    <BlurText
+                      key={`${currentIndex}-${car.id}-power`}
+                      text={isActive ? formatPower(car.specs) : " "}
+                      delay={40}
+                      animateBy="letters"
+                      direction="top"
+                      className="stat-value"
+                    />
+                    <span className="stat-label">{t.car.power}</span>
+                  </div>
+
+                  <ButtonGlobal
+                    className="btn-details"
+                    onClick={() => navigate(`/cars/${activeCar.id}`)}
+                  >
+                    {t.car.details}
+                    <img
+                      src={caretRight}
+                      alt={t.car.next}
+                      className="icon-static"
+                    />
+                  </ButtonGlobal>
+                </div>
               </div>
             </section>
           );
         })}
-
-        {/* scroll controls */}
-        <div
-          className="scroll-left"
-          onClick={() => gotoSectionRef.current(carKeys.length - 1, 1)}
-        >
-          <img
-            src={caretDown}
-            alt={t.car.scroll_down}
-            className="bounce-icon"
-          />
-        </div>
-        <div
-          className="scroll-right"
-          onClick={() => gotoSectionRef.current(0, -1)}
-        >
-          <img src={caretUp} alt={t.car.back_to_top} className="bounce-icon" />
-        </div>
 
         {/* footer */}
         <footer className="footer2 container">
