@@ -97,14 +97,6 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      alert(
-        `scrollY: ${window.scrollY} | bodyScroll: ${document.body.scrollTop} | htmlScroll: ${document.documentElement.scrollTop}`,
-      );
-    }, 500);
-  }, []);
-
   // init sections and set default car
   useEffect(() => {
     if (initDone.current) return;
