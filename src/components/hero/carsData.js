@@ -1,8 +1,14 @@
 const BASE_URL = import.meta.env.VITE_CARS_BASE_URL;
 
+const FLAG_ITALY = { top: "#009246", middle: "#FFFFFF", bottom: "#CE2B37" };
+const FLAG_GERMANY = { top: "#000000", middle: "#DD0000", bottom: "#FFCE00" };
+const FLAG_JAPAN = { top: "#BC002D", middle: null, bottom: "#FFFFFF" };
+const FLAG_USA = { top: "#B22234", middle: "#FFFFFF", bottom: "#3C3B6E" };
+
 export const cars = {
   f40: {
     id: "f40",
+    pillarColors: FLAG_ITALY,
     name: "Ferrari F40",
     model: `${BASE_URL}/ferrari_f40_draco.glb`,
     scale: 1,
@@ -82,6 +88,7 @@ export const cars = {
   },
   lancia_delta_integrale: {
     id: "lancia_delta_integrale",
+    pillarColors: FLAG_ITALY,
     name: "Lancia Delta HF",
     model: `${BASE_URL}/lancia_delta_draco.glb`,
     scale: 110,
@@ -161,6 +168,7 @@ export const cars = {
 
   bmw_m2_g87: {
     id: "bmw_m2_g87",
+    pillarColors: FLAG_GERMANY,
     name: "BMW M2 (G87)",
     model: `${BASE_URL}/bmw_m2_draco.glb`,
     scale: 110,
@@ -240,6 +248,7 @@ export const cars = {
 
   honda_s2000: {
     id: "honda_s2000",
+    pillarColors: FLAG_JAPAN,
     name: "Honda S2000",
     model: `${BASE_URL}/honda_s2000_draco.glb`,
     scale: 110,
@@ -319,6 +328,7 @@ export const cars = {
 
   honda_nsx: {
     id: "honda_nsx",
+    pillarColors: FLAG_JAPAN,
     name: "Honda NSX",
     model: `${BASE_URL}/honda_nsx_draco.glb`,
     scale: 110,
@@ -399,6 +409,7 @@ export const cars = {
 
   fxxk: {
     id: "fxxk",
+    pillarColors: FLAG_ITALY,
     name: "Ferrari FXX K",
     model: `${BASE_URL}/ferrari_fxx_k_2015_draco.glb`,
     scale: 40,
@@ -478,6 +489,7 @@ export const cars = {
   },
   zonda_cinque: {
     id: "zonda_cinque",
+    pillarColors: FLAG_ITALY,
     name: "Pagani Zonda Cinque",
     model: `${BASE_URL}/pagani_zonda_cinque_draco.glb`,
     scale: 1.1,
@@ -558,6 +570,7 @@ export const cars = {
 
   porsche_911_turbo_1975: {
     id: "porsche_911_turbo_1975",
+    pillarColors: FLAG_GERMANY,
     name: "Porsche 911 Turbo (1975)",
     model: `${BASE_URL}/porsche_911_turbo_1975_draco.glb`,
     scale: 1.5,
@@ -638,6 +651,7 @@ export const cars = {
 
   f12: {
     id: "f12",
+    pillarColors: FLAG_ITALY,
     name: "Ferrari F12 berlinetta",
     model: `${BASE_URL}/ferrari_f12_berlinetta_draco.glb`,
     scale: 100,
@@ -717,6 +731,7 @@ export const cars = {
 
   f488: {
     id: "f488",
+    pillarColors: FLAG_ITALY,
     name: "Ferrari 488 Pista",
     model: `${BASE_URL}/ferrari_488_pista_draco.glb`,
     scale: 65,
@@ -797,6 +812,7 @@ export const cars = {
 
   m3_e30: {
     id: "m3_e30",
+    pillarColors: FLAG_GERMANY,
     name: "BMW M3 E30",
     model: `${BASE_URL}/bmw_m3_draco.glb`,
     scale: 1,
@@ -872,6 +888,7 @@ export const cars = {
 
   charger69: {
     id: "charger69",
+    pillarColors: FLAG_USA,
     name: "Dodge Charger",
     model: `${BASE_URL}/dodge_charger_draco.glb`,
     scale: 0.9,
@@ -947,6 +964,7 @@ export const cars = {
 
   supra_mk4: {
     id: "supra_mk4",
+    pillarColors: FLAG_JAPAN,
     name: "Toyota Supra MK4",
     model: `${BASE_URL}/toyota_supra_draco.glb`,
     scale: 0.3,
@@ -1026,6 +1044,7 @@ export const cars = {
 
   skyline_r33: {
     id: "skyline_r33",
+    pillarColors: FLAG_JAPAN,
     name: "Nissan Skyline GT-R (R33)",
     model: `${BASE_URL}/nissan_skyline_r33_draco.glb`,
     scale: 0.3,
@@ -1101,6 +1120,7 @@ export const cars = {
 
   skyline_r34: {
     id: "skyline_r34",
+    pillarColors: FLAG_JAPAN,
     name: "Nissan Skyline GT-R (R34)",
     model: `${BASE_URL}/nissan_skyline_r34_draco.glb`,
     scale: 104,
@@ -1176,6 +1196,7 @@ export const cars = {
 
   z350: {
     id: "z350",
+    pillarColors: FLAG_JAPAN,
     name: "Nissan 350Z",
     model: `${BASE_URL}/nissan_350z_draco.glb`,
     scale: 104,
@@ -1251,6 +1272,7 @@ export const cars = {
 
   rx7_fd: {
     id: "rx7_fd",
+    pillarColors: FLAG_JAPAN,
     name: "Mazda RX-7",
     model: `${BASE_URL}/mazda_rx-7_draco.glb`,
     scale: 0.4,
@@ -1330,6 +1352,7 @@ export const cars = {
 
   tt_rs: {
     id: "tt_rs",
+    pillarColors: FLAG_GERMANY,
     name: "Audi TT RS",
     model: `${BASE_URL}/audi_tt_rs_draco.glb`,
     scale: 1,

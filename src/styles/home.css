@@ -208,7 +208,6 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 }
 
 .btn-details {
-  padding: 8px 16px;
   color: var(--text-color);
   border-radius: 6px;
   font-size: 0.9rem;

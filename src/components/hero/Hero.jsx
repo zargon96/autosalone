@@ -112,7 +112,7 @@ export default function Hero() {
           </div>
 
           <div className="col-md-6">
-            <ButtonGlobal className="btn-details mt-3" onClick={goHome}>
+            <ButtonGlobal className="btn-details" onClick={goHome}>
               <img src={caretLeft} alt={t.car.prev} className="icon-static" />
               {t.car.back_home}
             </ButtonGlobal>
@@ -224,12 +224,12 @@ export default function Hero() {
                 />
               </HeroStats.Row>
 
-              <button
-                className="btn btn-outline-light mt-3 mb-3"
+              <ButtonGlobal
+                className="mt-3 mb-3 btn-experience"
                 onClick={() => navigate(`/cars/${id}/experience`)}
               >
                 {t.car.experience}
-              </button>
+              </ButtonGlobal>
             </HeroStats>
           </div>
 

@@ -9,8 +9,24 @@ import LightPillar from "./components/LightPillar";
 import Preloader from "./components/Preloader";
 import Hero from "./components/hero/Hero";
 import CarExperience from "./pages/CarExperience";
+import { cars } from "./components/hero/carsData";
 
 const Credits = lazy(() => import("./pages/Credits"));
+
+function DynamicLightPillar() {
+  const { activeCarId } = useCanvas();
+  const car = cars?.[activeCarId];
+
+  return (
+    <LightPillar
+      topColor={car?.pillarColors?.top}
+      midColor={car?.pillarColors?.middle}
+      bottomColor={car?.pillarColors?.bottom}
+      intensity={1.1}
+      glowAmount={0.008}
+    />
+  );
+}
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -20,7 +36,7 @@ export default function App() {
         <LangProvider>
           <Preloader done={ready} />
           <CanvasLayer onReady={() => setReady(true)} />
-          <LightPillar />
+          <DynamicLightPillar />
 
           <Routes>
             <Route path="/" element={<Home />} />

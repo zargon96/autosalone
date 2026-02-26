@@ -32,7 +32,7 @@ export default function Preloader({ done }) {
 
   useEffect(() => {
     if (!done) return;
-    hideTimer.current = setTimeout(() => setHidden(true), 900);
+    hideTimer.current = setTimeout(() => setHidden(true), 700);
     return () => clearTimeout(hideTimer.current);
   }, [done]);
 

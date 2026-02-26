@@ -46,6 +46,5 @@ Un'applicazione React + Three.js per esplorare modelli 3D di auto sportive e cla
 - Modelli compressi con Draco (~60-80% di riduzione)
 - Warmup del canvas alla prima renderizzazione per evitare lag al primo frame
 - `matrixAutoUpdate` disabilitato sui mesh statici
-- DPR limitato a 1 su mobile per dimezzare i pixel renderizzati
-- DebugCamera attiva solo in development (`import.meta.env.DEV`)
 - Nessun import lazy sulle pagine principali (Home, Hero, CarExperience) per evitare ritardi di navigazione
+- Canvas WebGL condiviso con shader GLSL custom per effetti luce volumetrica, con interpolazione lerp per transizioni colore fluide tra le sezioni
