@@ -5,7 +5,7 @@ export default function NavigationBar() {
   const { lang, setLang } = useLang();
 
   return (
-    <Navbar variant="dark" expand="lg" className="pt-4">
+    <Navbar variant="dark" expand="lg" className="pt-4 mb-5">
       <Container>
         <div className="lang-switch">
           <button
