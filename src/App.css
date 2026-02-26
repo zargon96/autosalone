@@ -33,6 +33,9 @@ html {
     transform: none;
     padding-top: 0;
   }
+  #global-canvas-root {
+    height: 100dvh;
+  }
 }
 
 @media (min-width: 1024px) and (max-width: 1536px) {
