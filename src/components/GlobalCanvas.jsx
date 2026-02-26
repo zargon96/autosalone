@@ -65,6 +65,8 @@ function CameraRig({ mode }) {
 
   useEffect(() => {
     if (experienceCamera) return;
+    gsap.killTweensOf(camera.position);
+    gsap.killTweensOf(camera);
     gsap.to(camera.position, {
       x: defaultCfg.pos[0],
       y: defaultCfg.pos[1],
@@ -85,6 +87,7 @@ function CameraRig({ mode }) {
 
   useEffect(() => {
     if (!experienceCamera) return;
+    gsap.killTweensOf(camera.position);
     gsap.to(camera.position, {
       x: experienceCamera.pos[0],
       y: experienceCamera.pos[1],
@@ -130,6 +133,9 @@ const ModelsGroup = memo(function ModelsGroup({
   useEffect(() => {
     triggerCarTransition.current = (dir, onMidpoint) => {
       if (!groupRef.current || isTransitioning.current) return;
+      gsap.killTweensOf(gl.domElement);
+      gsap.killTweensOf(groupRef.current.position);
+      gsap.killTweensOf(groupRef.current.rotation);
       isTransitioning.current = true;
 
       const exitX = dir === "next" ? -OFFSCREEN : OFFSCREEN;
@@ -180,6 +186,8 @@ const ModelsGroup = memo(function ModelsGroup({
   useEffect(() => {
     triggerCarTransitionY.current = (dir, onMidpoint) => {
       if (!groupRef.current || isTransitioning.current) return;
+      gsap.killTweensOf(gl.domElement);
+      gsap.killTweensOf(groupRef.current.position);
       isTransitioning.current = true;
 
       const exitY = dir === "next" ? 8 : -8;
@@ -218,9 +226,10 @@ const ModelsGroup = memo(function ModelsGroup({
     };
   }, [triggerCarTransitionY, gl]);
 
+  const desiredRef = useRef([0, 0, 0]);
+
   useFrame((_, delta) => {
-    if (!groupRef.current) return;
-    if (isTransitioning.current) return;
+    if (!groupRef.current || isTransitioning.current) return;
 
     if (autoRotate) {
       groupRef.current.rotation.y += delta * 0.3;
@@ -228,30 +237,27 @@ const ModelsGroup = memo(function ModelsGroup({
     }
 
     const t = 1 - Math.exp(-6 * delta);
-    let desired;
 
-    if (Array.isArray(manualRotation)) {
-      desired = manualRotation;
-    } else if (typeof manualRotation === "number") {
-      desired = [0, manualRotation, 0];
-    } else {
-      desired = cars[activeCarId]?.baseRotation ||
-        cars[activeCarId]?.experienceBaseRotation || [0, 0, 0];
-    }
+    desiredRef.current = Array.isArray(manualRotation)
+      ? manualRotation
+      : typeof manualRotation === "number"
+        ? [0, manualRotation, 0]
+        : cars[activeCarId]?.baseRotation ||
+          cars[activeCarId]?.experienceBaseRotation || [0, 0, 0];
 
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
       groupRef.current.rotation.x,
-      desired[0],
+      desiredRef.current[0],
       t,
     );
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
-      desired[1],
+      desiredRef.current[1],
       t,
     );
     groupRef.current.rotation.z = THREE.MathUtils.lerp(
       groupRef.current.rotation.z,
-      desired[2],
+      desiredRef.current[2],
       t,
     );
   });
@@ -336,6 +342,7 @@ function HotspotTracker({ steps, active }) {
   const groupRef = useRef();
   const { setHotspotPositions } = useCanvasLive();
   const prevPositions = useRef({});
+  const vectorRef = useRef(new THREE.Vector3());
 
   useFrame(() => {
     if (!groupRef.current || !active) return;
@@ -345,12 +352,12 @@ function HotspotTracker({ steps, active }) {
     steps.forEach((step) => {
       if (!step.hotspot3D) return;
 
-      const vector = new THREE.Vector3(...step.hotspot3D);
-      groupRef.current.localToWorld(vector);
-      vector.project(camera);
+      vectorRef.current.set(...step.hotspot3D);
+      groupRef.current.localToWorld(vectorRef.current);
+      vectorRef.current.project(camera);
 
-      const x = Number(((vector.x * 0.5 + 0.5) * 100).toFixed(2));
-      const y = Number(((-vector.y * 0.5 + 0.5) * 100).toFixed(2));
+      const x = Number(((vectorRef.current.x * 0.5 + 0.5) * 100).toFixed(2));
+      const y = Number(((-vectorRef.current.y * 0.5 + 0.5) * 100).toFixed(2));
 
       newPositions[step.key] = { x, y };
     });
