@@ -88,9 +88,12 @@ export default function Home() {
 
   // lock body scroll
   useEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.documentElement.style.overscrollBehavior = "none";
