@@ -87,6 +87,7 @@ export default function Hero() {
   }, [car, lang, rates]);
 
   const goHome = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
     setMode("static");
     setHomeIndex(active);
     navigate("/");
