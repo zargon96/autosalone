@@ -16,6 +16,7 @@ const LightPillar = ({
   noiseIntensity = 0.5,
   mixBlendMode = "screen",
   pillarRotation = 116,
+  gradientSpread = 15.0,
 }) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
@@ -59,8 +60,17 @@ const LightPillar = ({
       materialRef.current.uniforms.uIntensity.value = intensity;
       materialRef.current.uniforms.uGlowAmount.value = glowAmount;
       materialRef.current.uniforms.uPillarRotation.value = pillarRotation;
+      materialRef.current.uniforms.uGradientSpread.value = gradientSpread;
     }
-  }, [topColor, midColor, bottomColor, intensity, glowAmount, pillarRotation]);
+  }, [
+    topColor,
+    midColor,
+    bottomColor,
+    intensity,
+    glowAmount,
+    pillarRotation,
+    gradientSpread,
+  ]);
 
   // Main renderer setup — only rebuilds on structural changes
   useEffect(() => {
@@ -131,6 +141,7 @@ const LightPillar = ({
       uniform float uPillarHeight;
       uniform float uNoiseIntensity;
       uniform float uPillarRotation;
+      uniform float uGradientSpread;
       varying vec2 vUv;
 
       const float PI = 3.141592653589793;
@@ -211,7 +222,7 @@ const LightPillar = ({
           fieldDistance = blendMax(radialBound, fieldDistance, 1.0);
           fieldDistance = abs(fieldDistance) * 0.15 + 0.01;
 
-          float t = smoothstep(15.0, -15.0, pos.y);
+          float t = smoothstep(uGradientSpread, -uGradientSpread, pos.y);
 
           vec3 gradient;
           if (t < 0.5) {
@@ -253,6 +264,7 @@ const LightPillar = ({
         uPillarHeight: { value: pillarHeight },
         uNoiseIntensity: { value: noiseIntensity },
         uPillarRotation: { value: pillarRotation },
+        uGradientSpread: { value: gradientSpread },
       },
       transparent: true,
       depthWrite: false,

@@ -513,7 +513,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
     <>
       <Canvas
         shadows={false}
-        dpr={1.5}
+        dpr={isMobile ? 1 : 1.5}
         gl={{
           powerPreference: "high-performance",
           antialias: true,

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, lazy } from "react";
+import { useState, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CanvasProvider, useCanvas } from "./context/CanvasContext";
 import { LangProvider } from "./context/langContext";
@@ -16,12 +16,34 @@ const Credits = lazy(() => import("./pages/Credits"));
 function DynamicLightPillar() {
   const { activeCarId } = useCanvas();
   const car = cars?.[activeCarId];
+  const isMobile = window.innerWidth < 768;
+
+  useEffect(() => {
+    const colors = [
+      car?.pillarColors?.top,
+      car?.pillarColors?.middle,
+      car?.pillarColors?.bottom,
+    ];
+
+    const hasWhite = colors.some(
+      (c) => c?.toLowerCase() === "#ffffff" || c?.toLowerCase() === "#fff",
+    );
+
+    document.documentElement.style.setProperty(
+      "--text-color",
+      hasWhite ? "#000000" : "#ffffff",
+    );
+  }, [activeCarId, car]);
 
   return (
     <LightPillar
       topColor={car?.pillarColors?.top}
       midColor={car?.pillarColors?.middle}
       bottomColor={car?.pillarColors?.bottom}
+      pillarWidth={3.0}
+      pillarRotation={116}
+      pillarHeight={0.4}
+      gradientSpread={isMobile ? 4.0 : 12.0}
       intensity={1.1}
       glowAmount={0.008}
     />
