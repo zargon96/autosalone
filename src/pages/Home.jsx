@@ -88,12 +88,6 @@ export default function Home() {
 
   // lock body scroll
   useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
-
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.documentElement.style.overscrollBehavior = "none";
@@ -101,6 +95,14 @@ export default function Home() {
       document.body.style.overflow = prevOverflow;
       document.documentElement.style.overscrollBehavior = "";
     };
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      alert(
+        `scrollY: ${window.scrollY} | bodyScroll: ${document.body.scrollTop} | htmlScroll: ${document.documentElement.scrollTop}`,
+      );
+    }, 500);
   }, []);
 
   // init sections and set default car
