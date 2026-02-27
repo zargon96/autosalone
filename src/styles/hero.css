@@ -2,11 +2,6 @@
   --model-height: 50vh;
   --swiper-arrow-color: #fff;
   --swiper-pagination-color: #fff;
-  --icon-filter: invert(1);
-}
-
-.icon-static {
-  filter: invert(1) !important;
 }
 
 .hero {

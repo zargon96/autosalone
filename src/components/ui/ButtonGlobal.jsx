@@ -1,14 +1,36 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { FLAG_ITALY, FLAG_JAPAN } from "../cars/carsData";
+
+const INVERT_FLAGS = [JSON.stringify(FLAG_ITALY), JSON.stringify(FLAG_JAPAN)];
 
 export default function ButtonGlobal({
   onClick,
   disabled,
   children,
   className,
+  pillarColors,
 }) {
+  const gradientColors = pillarColors
+    ? [
+        pillarColors.top,
+        pillarColors.middle || pillarColors.top,
+        pillarColors.bottom,
+      ].filter(Boolean)
+    : ["#af40ff", "#5b42f3", "#00ddeb"];
+
+  const gradient = `linear-gradient(144deg, ${gradientColors.join(", ")})`;
+  const shadow = `${gradientColors[0]}33 0 8px 20px -5px`;
+  const shouldInvert = pillarColors
+    ? INVERT_FLAGS.includes(JSON.stringify(pillarColors))
+    : false;
   return (
-    <StyledWrapper className={className}>
+    <StyledWrapper
+      className={className}
+      $gradient={gradient}
+      $shadow={shadow}
+      $invertIcon={shouldInvert}
+    >
       <button onClick={onClick} disabled={disabled}>
         <span className="text">{children}</span>
       </button>
@@ -21,12 +43,17 @@ ButtonGlobal.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  pillarColors: PropTypes.shape({
+    top: PropTypes.string,
+    middle: PropTypes.string,
+    bottom: PropTypes.string,
+  }),
 };
 
 const StyledWrapper = styled.div`
   button {
     align-items: center;
-    background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+    background-image: ${({ $gradient }) => $gradient};
     border: 0;
     border-radius: 8px;
     box-shadow: rgba(151, 65, 252, 0.2) 0 8px 20px -5px;
@@ -52,7 +79,7 @@ const StyledWrapper = styled.div`
   }
 
   button span {
-    background-color: rgb(5, 6, 45);
+    background-color: #000;
     padding: 16px 20px;
     border-radius: 6px;
     transition: 300ms;
@@ -61,10 +88,20 @@ const StyledWrapper = styled.div`
     justify-content: center;
     gap: 8px;
     font-size: 14px;
+    color: #ffffff;
   }
 
   button:hover span {
     background: none;
+    color: ${({ $invertIcon }) => ($invertIcon ? "#000000" : "#ffffff")};
+  }
+
+  button span img {
+    filter: invert(1);
+  }
+
+  button:hover span img {
+    filter: ${({ $invertIcon }) => ($invertIcon ? "invert(0)" : "invert(1)")};
   }
 
   button:active {

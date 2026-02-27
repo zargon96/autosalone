@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "../styles/mobilebottomsheet.css";
+import "../../styles/mobilebottomsheet.css";
 
 export default function MobileBottomSheet({ title, text, onClose }) {
   return (

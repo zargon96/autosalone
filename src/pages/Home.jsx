@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useLang } from "../context/langContext.jsx";
-import useFxRates from "../components/hero/useFxRates";
-import { nf0 } from "../components/hero/formatters";
+import useFxRates from "../components/cars/useFxRates.js";
+import { nf0 } from "../components/cars/formatters.js";
 import gsap from "gsap";
-import Navbar from "../components/Navbar";
-import { cars } from "../components/hero/carsData";
+import Navbar from "../components/layout/Navbar.jsx";
+import { cars } from "../components/cars/carsData.js";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import BlurText from "../components/BlurText";
 import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
-import caretRight from "../assets/caret-right-fill.svg";
-import ButtonGlobal from "../components/ButtonGlobal";
+import CarSection from "../components/cars/CarSection.jsx";
 
 const currentYear = new Date().getFullYear();
 
@@ -30,7 +28,6 @@ export default function Home() {
   const navigate = useNavigate();
   const carKeys = useMemo(() => Object.keys(cars), []);
 
-  // refs for scrolling and navigation
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
   const indexRef = useRef(homeIndex || 0);
@@ -43,7 +40,6 @@ export default function Home() {
 
   const gotoSectionRef = useRef(() => {});
 
-  // format power depending on locale
   const formatPower = useCallback(
     (specs) => {
       if (!specs?.power_hp) return "—";
@@ -57,7 +53,6 @@ export default function Home() {
     [lang],
   );
 
-  // format price depending on locale and fx rates
   const formatPrice = useCallback(
     (eur) => {
       if (!eur) return "—";
@@ -86,7 +81,12 @@ export default function Home() {
     [lang, rates],
   );
 
-  // lock body scroll
+  // handleNavigate DENTRO il componente, non fuori
+  const handleNavigate = useCallback(
+    (id) => navigate(`/cars/${id}`),
+    [navigate],
+  );
+
   useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -97,7 +97,6 @@ export default function Home() {
     };
   }, []);
 
-  // init sections and set default car
   useEffect(() => {
     if (initDone.current) return;
     initDone.current = true;
@@ -105,17 +104,16 @@ export default function Home() {
 
     requestAnimationFrame(() => {
       gsap.set(sections, {
-        yPercent: (i) => (i === currentIndex ? 0 : 100),
-        autoAlpha: (i) => (i === currentIndex ? 1 : 0),
+        yPercent: (i) => (i === indexRef.current ? 0 : 100),
+        autoAlpha: (i) => (i === indexRef.current ? 1 : 0),
         force3D: true,
       });
     });
 
     setMode("static");
-    setActiveCarId(carKeys[currentIndex]);
-  }, [carKeys, currentIndex, setActiveCarId, setMode]);
+    setActiveCarId(carKeys[indexRef.current]);
+  }, [carKeys, setActiveCarId, setMode]);
 
-  // animate transition between sections
   const gotoSection = useCallback(
     (nextIndex, dir) => {
       const sections = sectionsRef.current.filter(Boolean);
@@ -125,23 +123,21 @@ export default function Home() {
       if (nextIndex === cur) return;
 
       animatingRef.current = true;
+      indexRef.current = nextIndex;
       setCurrentIndex(nextIndex);
       setHomeIndex(nextIndex);
 
       const from = sections[cur];
       const to = sections[nextIndex];
 
-      // anima il modello 3D
       triggerCarTransitionY.current?.(dir > 0 ? "next" : "prev", () => {
         setActiveCarId(carKeys[nextIndex]);
       });
 
-      // anima le sezioni DOM come prima
       gsap
         .timeline({
           defaults: { ease: "power2.inOut", duration: 0.9 },
           onComplete: () => {
-            indexRef.current = nextIndex;
             animatingRef.current = false;
             wheelAccRef.current = 0;
           },
@@ -161,11 +157,11 @@ export default function Home() {
     gotoSectionRef.current = gotoSection;
   }, [gotoSection]);
 
-  // wheel, keyboard and touch navigation
   useEffect(() => {
     const WHEEL_THRESHOLD = 100;
 
     const onWheel = (e) => {
+      if (animatingRef.current) return;
       wheelAccRef.current += e.deltaY;
       if (wheelAccRef.current > WHEEL_THRESHOLD) {
         e.preventDefault();
@@ -195,6 +191,7 @@ export default function Home() {
     };
     const onTouchMove = (e) => {
       if (touchStartY.current == null) return;
+      if (animatingRef.current) return;
       const d = touchStartY.current - e.touches[0].clientY;
       if (Math.abs(d) < 50) return;
       e.preventDefault();
@@ -220,29 +217,16 @@ export default function Home() {
     };
   }, []);
 
-  // current active car and price
-  const activeCar = useMemo(
-    () => cars[carKeys[currentIndex]],
-    [carKeys, currentIndex],
-  );
-
-  const activePrice = useMemo(
-    () => formatPrice(activeCar.stats.price_eur),
-    [activeCar, formatPrice],
-  );
-
   return (
     <>
       <Navbar />
       <div ref={containerRef} className="showcase-container container">
-        {/* section indicator */}
         <div className="section-indicator">
           <span className="current-section">
             {String(currentIndex + 1).padStart(2, "0")}
           </span>
         </div>
 
-        {/* social links */}
         <div className="social-vertical">
           <a
             href="https://github.com/zargon96"
@@ -262,114 +246,23 @@ export default function Home() {
           </a>
         </div>
 
-        {/* cars */}
         {carKeys.map((key, i) => {
           const car = cars[key];
-          const isActive = i === currentIndex;
-
           return (
-            <section
-              className="car-section"
-              key={car.id}
-              ref={(el) => (sectionsRef.current[i] = el)}
-              aria-hidden={!isActive}
-            >
-              <div className="title-top-left">
-                <BlurText
-                  key={`${currentIndex}-${car.id}-title`}
-                  text={isActive ? car.name : " "}
-                  delay={50}
-                  animateBy="letters"
-                  direction="top"
-                  className="text-color car-title"
-                />
-              </div>
-
-              <div className="price-top-right text-end">
-                <BlurText
-                  key={`${currentIndex}-${car.id}-price`}
-                  text={isActive ? activePrice : " "}
-                  delay={40}
-                  animateBy="letters"
-                  direction="top"
-                  className="text-color price-value"
-                />
-              </div>
-
-              <div className="stats-bottom-center">
-                {isActive && currentIndex === 0 && (
-                  <div className="scroll-hint">
-                    {isMobile ? (
-                      <>
-                        <div className="swipe-arrow">↑</div>
-                        <span className="scroll-label">swipe up</span>
-                      </>
-                    ) : (
-                      <>
-                        <div className="scroll-mouse">
-                          <div className="scroll-wheel" />
-                        </div>
-                        <span className="scroll-label">scroll</span>
-                      </>
-                    )}
-                  </div>
-                )}
-
-                <div className="stats-row">
-                  <div className="stat-item">
-                    <BlurText
-                      key={`${currentIndex}-${car.id}-year`}
-                      text={isActive ? String(car.specs?.year) : " "}
-                      delay={20}
-                      animateBy="letters"
-                      direction="top"
-                      className="stat-value"
-                    />
-                    <span className="stat-label">{t.car.year}</span>
-                  </div>
-
-                  <div className="stat-item">
-                    <BlurText
-                      key={`${currentIndex}-${car.id}-disp`}
-                      text={isActive ? String(car.stats?.displacement) : " "}
-                      delay={30}
-                      animateBy="letters"
-                      direction="top"
-                      className="stat-value"
-                    />
-                    <span className="stat-label">{t.car.displacement}</span>
-                  </div>
-
-                  <div className="stat-item">
-                    <BlurText
-                      key={`${currentIndex}-${car.id}-power`}
-                      text={isActive ? formatPower(car.specs) : " "}
-                      delay={40}
-                      animateBy="letters"
-                      direction="top"
-                      className="stat-value"
-                    />
-                    <span className="stat-label">{t.car.power}</span>
-                  </div>
-
-                  <ButtonGlobal
-                    className="btn-details"
-                    onClick={() => navigate(`/cars/${activeCar.id}`)}
-                  >
-                    {t.car.details}
-                    <img
-                      src={caretRight}
-                      alt={t.car.next}
-                      className="icon-static"
-                    />
-                  </ButtonGlobal>
-                </div>
-              </div>
-            </section>
+            <CarSection
+              key={key}
+              car={car}
+              isFirst={i === 0}
+              isMobile={isMobile}
+              t={t}
+              price={formatPrice(car.stats.price_eur)}
+              power={formatPower(car.specs)}
+              onNavigate={handleNavigate}
+              sectionRef={(el) => (sectionsRef.current[i] = el)}
+            />
           );
         })}
 
-        {/* footer */}
         <footer className="footer2 container">
           <p className="footer-text text-color">
             © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}

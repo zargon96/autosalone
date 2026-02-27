@@ -1,9 +1,21 @@
 const BASE_URL = import.meta.env.VITE_CARS_BASE_URL;
 
-const FLAG_ITALY = { top: "#009246", middle: "#FFFFFF", bottom: "#CE2B37" };
-const FLAG_GERMANY = { top: "#000000", middle: "#DD0000", bottom: "#FFCE00" };
-const FLAG_JAPAN = { top: "#BC002D", middle: null, bottom: "#FFFFFF" };
-const FLAG_USA = { top: "#B22234", middle: "#FFFFFF", bottom: "#3C3B6E" };
+export const FLAG_ITALY = {
+  top: "#009246",
+  middle: "#FFFFFF",
+  bottom: "#CE2B37",
+};
+export const FLAG_GERMANY = {
+  top: "#000000",
+  middle: "#DD0000",
+  bottom: "#FFCE00",
+};
+export const FLAG_JAPAN = { top: "#BC002D", middle: null, bottom: "#FFFFFF" };
+export const FLAG_USA = {
+  top: "#B22234",
+  middle: "#FFFFFF",
+  bottom: "#3C3B6E",
+};
 
 export const cars = {
   f40: {

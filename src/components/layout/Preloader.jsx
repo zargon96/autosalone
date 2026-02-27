@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
-import "../styles/preloader.css";
+import "../../styles/preloader.css";
 
 export default function Preloader({ done }) {
   const { progress, item } = useProgress();

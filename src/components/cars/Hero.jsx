@@ -3,17 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useLang } from "../../context/langContext";
 import { useCanvas } from "../../context/CanvasContext";
 import { cars } from "./carsData";
-import BlurText from "../BlurText";
-import CountUp from "../CountUp";
-import HeroStats from "./HeroStats";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import BlurText from "../ui/BlurText";
+import CountUp from "../ui/CountUp";
+import HeroStats from "../cars/HeroStats";
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
 import useFxRates from "./useFxRates";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import caretLeft from "../../assets/caret-left-fill.svg";
 import caretRight from "../../assets/caret-right-fill.svg";
-import ButtonGlobal from "../ButtonGlobal";
+import ButtonGlobal from "../ui/ButtonGlobal";
 import {
   nf0,
   nf1,
@@ -112,8 +112,12 @@ export default function Hero() {
           </div>
 
           <div className="col-md-6">
-            <ButtonGlobal className="btn-details" onClick={goHome}>
-              <img src={caretLeft} alt={t.car.prev} className="icon-static" />
+            <ButtonGlobal
+              className="btn-details"
+              onClick={goHome}
+              pillarColors={car.pillarColors}
+            >
+              <img src={caretLeft} alt={t.car.prev} />
               {t.car.back_home}
             </ButtonGlobal>
           </div>
@@ -227,6 +231,7 @@ export default function Hero() {
               <ButtonGlobal
                 className="mt-3 mb-3 btn-experience"
                 onClick={() => navigate(`/cars/${id}/experience`)}
+                pillarColors={car.pillarColors}
               >
                 {t.car.experience}
               </ButtonGlobal>
@@ -235,6 +240,7 @@ export default function Hero() {
 
           <div className="col-6">
             <ButtonGlobal
+              pillarColors={car.pillarColors}
               onClick={() => {
                 if (active > 0) {
                   navigate(`/cars/${carKeys[active - 1]}`);
@@ -245,7 +251,7 @@ export default function Hero() {
               }}
               disabled={active === 0}
             >
-              <img src={caretLeft} alt={t.car.prev} className="icon-static" />
+              <img src={caretLeft} alt={t.car.prev} />
               {t.car.prev}
             </ButtonGlobal>
           </div>
@@ -253,6 +259,7 @@ export default function Hero() {
           <div className="col-6">
             <div className="box-next">
               <ButtonGlobal
+                pillarColors={car.pillarColors}
                 onClick={() => {
                   if (active < carKeys.length - 1) {
                     navigate(`/cars/${carKeys[active + 1]}`);
@@ -264,11 +271,7 @@ export default function Hero() {
                 disabled={active === carKeys.length - 1}
               >
                 {t.car.next}
-                <img
-                  src={caretRight}
-                  alt={t.car.next}
-                  className="icon-static"
-                />
+                <img src={caretRight} alt={t.car.next} />
               </ButtonGlobal>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCanvas } from "../context/CanvasContext";
-import ButtonGlobal from "../components/ButtonGlobal";
+import ButtonGlobal from "../components/ui/ButtonGlobal";
 import caretLeft from "../assets/caret-left-fill.svg";
 
 const creditsData = [

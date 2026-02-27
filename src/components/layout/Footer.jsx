@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useLang } from "../context/langContext.jsx";
-import "../styles/footer.css";
+import { useLang } from "../../context/langContext.jsx";
+import "../../styles/footer.css";
 
 export default function Footer() {
   const { t } = useLang();

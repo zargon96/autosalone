@@ -5,8 +5,8 @@ import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
 import * as THREE from "three";
 import ReactDOM from "react-dom";
 
-import { useCanvas, useCanvasLive } from "../context/CanvasContext";
-import { cars } from "./hero/carsData";
+import { useCanvas, useCanvasLive } from "../../context/CanvasContext";
+import { cars } from "../cars/carsData";
 import { CAMERA_CONFIGS } from "./cameraConfigs";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";

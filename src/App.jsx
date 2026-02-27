@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CanvasProvider, useCanvas } from "./context/CanvasContext";
 import { LangProvider } from "./context/langContext";
 import Home from "./pages/Home";
-import GlobalCanvas from "./components/GlobalCanvas";
-import LightPillar from "./components/LightPillar";
-import Preloader from "./components/Preloader";
-import Hero from "./components/hero/Hero";
+import GlobalCanvas from "./components/canvas/GlobalCanvas";
+import LightPillar from "./components/cars/LightPillar";
+import Preloader from "./components/layout/Preloader";
+import Hero from "./components/cars/Hero";
 import CarExperience from "./pages/CarExperience";
-import { cars } from "./components/hero/carsData";
+import { cars } from "./components/cars/carsData";
 
 const Credits = lazy(() => import("./pages/Credits"));
 

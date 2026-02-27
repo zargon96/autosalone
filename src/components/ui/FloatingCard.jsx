@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLang } from "../context/langContext";
+import { useLang } from "../../context/langContext";
 
 export default function FloatingCard({ title, text, onClose }) {
   const [expanded, setExpanded] = useState(false);

@@ -1,6 +1,5 @@
 :root {
   --text-color: #fff;
-  --icon-filter: invert(1);
 }
 
 nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
@@ -169,10 +168,6 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 
 .social-vertical a:hover {
   color: var(--text-color);
-}
-
-.icon-static {
-  filter: var(--icon-filter);
 }
 
 .footer2 {

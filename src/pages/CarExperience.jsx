@@ -1,15 +1,15 @@
 import { useMemo, useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCanvas, useCanvasLive } from "../context/CanvasContext";
-import { cars } from "../components/hero/carsData";
+import { cars } from "../components/cars/carsData";
 import caretLeft from "../assets/caret-left-fill.svg";
 import caretRight from "../assets/caret-right-fill.svg";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ButtonGlobal from "../components/ButtonGlobal";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import ButtonGlobal from "../components/ui/ButtonGlobal";
 import { useLang } from "../context/langContext";
-import FloatingCard from "../components/FloatingCard";
-import MobileBottomSheet from "../components/MobileBottomSheet";
+import FloatingCard from "../components/ui/FloatingCard";
+import MobileBottomSheet from "../components/mobile/MobileBottomSheet";
 import "../styles/carexperience.css";
 
 export default function CarExperience() {
@@ -158,6 +158,7 @@ export default function CarExperience() {
                       className={`col-6 ${steps.length % 2 !== 0 && isLast ? "col-12" : ""} ${isLast ? "mb-5" : ""} mb-2`}
                     >
                       <ButtonGlobal
+                        pillarColors={car.pillarColors}
                         onClick={() => handleStepClick(step)}
                         className="w-100 mobile-step-btn"
                       >
@@ -188,6 +189,7 @@ export default function CarExperience() {
           {!activeStep && (
             <div className="col-12 text-center experience-back-btn d-flex justify-content-center align-items-center gap-3">
               <ButtonGlobal
+                pillarColors={car.pillarColors}
                 onClick={() =>
                   handleCarChange(carKeys[currentCarIndex - 1], "prev")
                 }
@@ -196,11 +198,15 @@ export default function CarExperience() {
                 <img src={caretLeft} alt="prev" className="icon-static" />
               </ButtonGlobal>
 
-              <ButtonGlobal onClick={() => navigate(`/cars/${id}`)}>
+              <ButtonGlobal
+                onClick={() => navigate(`/cars/${id}`)}
+                pillarColors={car.pillarColors}
+              >
                 {t.experience?.back}
               </ButtonGlobal>
 
               <ButtonGlobal
+                pillarColors={car.pillarColors}
                 onClick={() =>
                   handleCarChange(carKeys[currentCarIndex + 1], "next")
                 }
