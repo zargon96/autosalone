@@ -37,7 +37,7 @@
 .preloader-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #5227ff, #ff9ffc);
+  background: linear-gradient(90deg, #009246, #ffffff, #ce2b37);
   border-radius: 999px;
   position: relative;
   transition: width 0.15s ease-out;

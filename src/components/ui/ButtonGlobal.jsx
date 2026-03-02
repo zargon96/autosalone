@@ -1,8 +1,12 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { FLAG_ITALY, FLAG_JAPAN } from "../cars/carsData";
+import { FLAG_ITALY, FLAG_JAPAN, FLAG_USA } from "../cars/carsData";
 
-const INVERT_FLAGS = [JSON.stringify(FLAG_ITALY), JSON.stringify(FLAG_JAPAN)];
+const INVERT_FLAGS = [
+  JSON.stringify(FLAG_ITALY),
+  JSON.stringify(FLAG_JAPAN),
+  JSON.stringify(FLAG_USA),
+];
 
 export default function ButtonGlobal({
   onClick,

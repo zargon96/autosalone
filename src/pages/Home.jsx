@@ -259,6 +259,7 @@ export default function Home() {
               power={formatPower(car.specs)}
               onNavigate={handleNavigate}
               sectionRef={(el) => (sectionsRef.current[i] = el)}
+              isActive={i === currentIndex}
             />
           );
         })}

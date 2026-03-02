@@ -12,9 +12,10 @@ const CarSection = memo(function CarSection({
   power,
   onNavigate,
   sectionRef,
+  isActive,
 }) {
   return (
-    <section className="car-section" ref={sectionRef} aria-hidden={true}>
+    <section className="car-section" ref={sectionRef} inert={!isActive}>
       <div className="title-top-left">
         <BlurText
           text={car.name}

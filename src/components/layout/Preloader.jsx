@@ -4,51 +4,88 @@ import "../../styles/preloader.css";
 
 export default function Preloader({ done }) {
   const { progress, item } = useProgress();
+
   const [hidden, setHidden] = useState(false);
-  const [displayPct, setDisplayPct] = useState(0);
   const [filesReady, setFilesReady] = useState(false);
+
   const raf = useRef(null);
   const hideTimer = useRef(null);
+
+  const displayRef = useRef(0);
+  const barRef = useRef(null);
+  const textRef = useRef(null);
 
   const targetPct = done ? 100 : Math.min(99, Math.max(0, progress || 0));
 
   useEffect(() => {
-    if (progress >= 99.5 && !done) setFilesReady(true);
-  }, [progress, done]);
+    if (!filesReady && progress >= 99.5 && !done) {
+      setFilesReady(true);
+    }
+  }, [progress, done, filesReady]);
 
   useEffect(() => {
     cancelAnimationFrame(raf.current);
+
     const animate = () => {
-      setDisplayPct((prev) => {
-        const diff = targetPct - prev;
-        if (Math.abs(diff) < 0.05) return targetPct;
-        return prev + Math.sign(diff) * Math.max(Math.abs(diff) * 0.12, 0.4);
-      });
-      raf.current = requestAnimationFrame(animate);
+      const prev = displayRef.current;
+      const diff = targetPct - prev;
+
+      if (Math.abs(diff) > 0.05) {
+        const speed = done ? 0.25 : 0.12;
+        const next =
+          prev + Math.sign(diff) * Math.max(Math.abs(diff) * speed, 0.4);
+
+        displayRef.current = next;
+
+        const pct = Math.round(next);
+
+        if (barRef.current) barRef.current.style.width = `${pct}%`;
+
+        if (textRef.current) textRef.current.textContent = `${pct}%`;
+
+        raf.current = requestAnimationFrame(animate);
+      } else {
+        displayRef.current = targetPct;
+
+        const pct = Math.round(targetPct);
+
+        if (barRef.current) barRef.current.style.width = `${pct}%`;
+
+        if (textRef.current) textRef.current.textContent = `${pct}%`;
+      }
     };
+
     raf.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf.current);
-  }, [targetPct]);
+  }, [targetPct, done]);
 
   useEffect(() => {
     if (!done) return;
-    hideTimer.current = setTimeout(() => setHidden(true), 700);
+
+    hideTimer.current = setTimeout(() => {
+      setHidden(true);
+    }, 700);
+
     return () => clearTimeout(hideTimer.current);
   }, [done]);
 
   if (hidden) return null;
 
-  const pct = Math.round(displayPct);
   const fileName = item && !done && !filesReady ? item.split("/").pop() : null;
 
   return (
     <div className={`preloader-overlay${done ? " done" : ""}`}>
       <div className="preloader-box">
         <div className="preloader-bar">
-          <div className="preloader-bar-fill" style={{ width: `${pct}%` }} />
+          <div
+            ref={barRef}
+            className="preloader-bar-fill"
+            style={{ width: "0%" }}
+          />
         </div>
+
         <div className="preloader-meta">
-          <span>{pct}%</span>
+          <span ref={textRef}>0%</span>
         </div>
 
         {fileName && <div className="preloader-file">{fileName}</div>}

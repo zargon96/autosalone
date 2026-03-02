@@ -1,7 +1,15 @@
 import { Canvas, useThree, useLoader, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { Environment } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState, memo } from "react";
+import {
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  memo,
+  useCallback,
+} from "react";
 import * as THREE from "three";
 import ReactDOM from "react-dom";
 
@@ -125,25 +133,30 @@ const ModelsGroup = memo(function ModelsGroup({
   const setupDone = useRef(false);
   const groupRef = useRef(null);
   const isTransitioning = useRef(false);
+  const pendingTransitionX = useRef(null);
+  const pendingTransitionY = useRef(null);
 
   const { triggerCarTransition, triggerCarTransitionY } = useCanvas();
   const { gl } = useThree();
 
-  //car experience
-  useEffect(() => {
-    triggerCarTransition.current = (dir, onMidpoint) => {
-      if (!groupRef.current || isTransitioning.current) return;
+  /* ================= CAR EXPEIENCE ================= */
+  const runTransitionX = useCallback(
+    (dir, onMidpoint) => {
+      if (!groupRef.current) return;
+      isTransitioning.current = true;
+      pendingTransitionX.current = null;
+
       gsap.killTweensOf(gl.domElement);
       gsap.killTweensOf(groupRef.current.position);
       gsap.killTweensOf(groupRef.current.rotation);
-      isTransitioning.current = true;
 
       const exitX = dir === "next" ? -OFFSCREEN : OFFSCREEN;
       const enterX = dir === "next" ? OFFSCREEN : -OFFSCREEN;
       const exitRotY = dir === "next" ? -0.4 : 0.4;
 
-      gsap.to(gl.domElement, {
-        opacity: 0,
+      gsap.to(gl.domElement, { opacity: 0, duration: 0.45, ease: "power2.in" });
+      gsap.to(groupRef.current.rotation, {
+        y: exitRotY,
         duration: 0.45,
         ease: "power2.in",
       });
@@ -152,6 +165,13 @@ const ModelsGroup = memo(function ModelsGroup({
         x: exitX,
         duration: 0.45,
         ease: "power2.in",
+        onInterrupt: () => {
+          isTransitioning.current = false;
+          if (pendingTransitionX.current) {
+            const { dir: d, onMidpoint: m } = pendingTransitionX.current;
+            runTransitionX(d, m);
+          }
+        },
         onComplete: () => {
           onMidpoint();
           groupRef.current.position.x = enterX;
@@ -167,42 +187,63 @@ const ModelsGroup = memo(function ModelsGroup({
             x: 0,
             duration: 0.55,
             ease: "power2.out",
+            onInterrupt: () => {
+              isTransitioning.current = false;
+              if (pendingTransitionX.current) {
+                const { dir: d, onMidpoint: m } = pendingTransitionX.current;
+                runTransitionX(d, m);
+              }
+            },
             onComplete: () => {
               isTransitioning.current = false;
+              if (pendingTransitionX.current) {
+                const { dir: d, onMidpoint: m } = pendingTransitionX.current;
+                runTransitionX(d, m);
+              }
             },
           });
         },
       });
+    },
+    [gl],
+  );
 
-      gsap.to(groupRef.current.rotation, {
-        y: exitRotY,
-        duration: 0.45,
-        ease: "power2.in",
-      });
-    };
-  }, [triggerCarTransition, gl]);
-
-  //home
   useEffect(() => {
-    triggerCarTransitionY.current = (dir, onMidpoint) => {
-      if (!groupRef.current || isTransitioning.current) return;
+    triggerCarTransition.current = (dir, onMidpoint) => {
+      if (isTransitioning.current) {
+        pendingTransitionX.current = { dir, onMidpoint };
+        return;
+      }
+      runTransitionX(dir, onMidpoint);
+    };
+  }, [triggerCarTransition, runTransitionX]);
+
+  /* ================= HOME ================= */
+  const runTransitionY = useCallback(
+    (dir, onMidpoint) => {
+      if (!groupRef.current) return;
+      isTransitioning.current = true;
+      pendingTransitionY.current = null;
+
       gsap.killTweensOf(gl.domElement);
       gsap.killTweensOf(groupRef.current.position);
-      isTransitioning.current = true;
 
       const exitY = dir === "next" ? 8 : -8;
       const enterY = dir === "next" ? -8 : 8;
 
-      gsap.to(gl.domElement, {
-        opacity: 0,
-        duration: 0.45,
-        ease: "power2.in",
-      });
+      gsap.to(gl.domElement, { opacity: 0, duration: 0.45, ease: "power2.in" });
 
       gsap.to(groupRef.current.position, {
         y: exitY,
         duration: 0.45,
         ease: "power2.in",
+        onInterrupt: () => {
+          isTransitioning.current = false;
+          if (pendingTransitionY.current) {
+            const { dir: d, onMidpoint: m } = pendingTransitionY.current;
+            runTransitionY(d, m);
+          }
+        },
         onComplete: () => {
           onMidpoint();
           groupRef.current.position.y = enterY;
@@ -217,15 +258,38 @@ const ModelsGroup = memo(function ModelsGroup({
             y: 0,
             duration: 0.55,
             ease: "power2.out",
+            onInterrupt: () => {
+              isTransitioning.current = false;
+              if (pendingTransitionY.current) {
+                const { dir: d, onMidpoint: m } = pendingTransitionY.current;
+                runTransitionY(d, m);
+              }
+            },
             onComplete: () => {
               isTransitioning.current = false;
+              if (pendingTransitionY.current) {
+                const { dir: d, onMidpoint: m } = pendingTransitionY.current;
+                runTransitionY(d, m);
+              }
             },
           });
         },
       });
-    };
-  }, [triggerCarTransitionY, gl]);
+    },
+    [gl],
+  );
 
+  useEffect(() => {
+    triggerCarTransitionY.current = (dir, onMidpoint) => {
+      if (isTransitioning.current) {
+        pendingTransitionY.current = { dir, onMidpoint };
+        return;
+      }
+      runTransitionY(dir, onMidpoint);
+    };
+  }, [triggerCarTransitionY, runTransitionY]);
+
+  /* ================= ROTATION ================= */
   const desiredRef = useRef([0, 0, 0]);
 
   useFrame((_, delta) => {
@@ -262,6 +326,7 @@ const ModelsGroup = memo(function ModelsGroup({
     );
   });
 
+  /* ================= SETUP ================= */
   useEffect(() => {
     if (setupDone.current) return;
     setupDone.current = true;

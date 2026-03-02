@@ -10,7 +10,11 @@ export const FLAG_GERMANY = {
   middle: "#DD0000",
   bottom: "#FFCE00",
 };
-export const FLAG_JAPAN = { top: "#BC002D", middle: null, bottom: "#FFFFFF" };
+export const FLAG_JAPAN = {
+  top: "#FFFFFF",
+  middle: "#BC002D",
+  bottom: "#FFFFFF",
+};
 export const FLAG_USA = {
   top: "#B22234",
   middle: "#FFFFFF",
