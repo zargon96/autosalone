@@ -2,6 +2,16 @@
   --text-color: #fff;
 }
 
+.car-title,
+.price-value,
+.stat-value,
+.stat-label,
+.current-section,
+.scroll-label,
+.text-color {
+  text-shadow: var(--text-shadow, none);
+}
+
 nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   position: relative;
   z-index: 9 !important;

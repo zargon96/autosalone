@@ -33,6 +33,13 @@ function DynamicLightPillar() {
       "--text-color",
       hasWhite ? "#000000" : "#ffffff",
     );
+
+    document.documentElement.style.setProperty(
+      "--text-shadow",
+      hasWhite
+        ? "0 1px 2px rgba(255,255,255,0.4), 0 2px 12px rgba(255,255,255,0.25)"
+        : "none",
+    );
   }, [activeCarId, car]);
 
   return (
