@@ -17,6 +17,7 @@ const LightPillar = ({
   mixBlendMode = "screen",
   pillarRotation = 116,
   gradientSpread = 15.0,
+  midDominance = 0.5,
 }) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
@@ -61,6 +62,7 @@ const LightPillar = ({
       materialRef.current.uniforms.uGlowAmount.value = glowAmount;
       materialRef.current.uniforms.uPillarRotation.value = pillarRotation;
       materialRef.current.uniforms.uGradientSpread.value = gradientSpread;
+      materialRef.current.uniforms.uMidDominance.value = midDominance;
     }
   }, [
     topColor,
@@ -70,6 +72,7 @@ const LightPillar = ({
     glowAmount,
     pillarRotation,
     gradientSpread,
+    midDominance,
   ]);
 
   // Main renderer setup — only rebuilds on structural changes
@@ -142,6 +145,7 @@ const LightPillar = ({
       uniform float uNoiseIntensity;
       uniform float uPillarRotation;
       uniform float uGradientSpread;
+      uniform float uMidDominance;
       varying vec2 vUv;
 
       const float PI = 3.141592653589793;
@@ -224,12 +228,18 @@ const LightPillar = ({
 
           float t = smoothstep(uGradientSpread, -uGradientSpread, pos.y);
 
-          vec3 gradient;
-          if (t < 0.5) {
-            gradient = mix(uBottomColor, uMidColor, t * 2.0);
-          } else {
-            gradient = mix(uMidColor, uTopColor, (t - 0.5) * 2.0);
-          }
+// uMidDominance: 0.5 = default, >0.5 = mid occupa più spazio (es. 0.8)
+float lowerBound = 1.0 - uMidDominance;
+float upperBound = uMidDominance;
+
+vec3 gradient;
+if (t < lowerBound) {
+  gradient = mix(uBottomColor, uMidColor, t / lowerBound);
+} else if (t > upperBound) {
+  gradient = mix(uMidColor, uTopColor, (t - upperBound) / (1.0 - upperBound));
+} else {
+  gradient = uMidColor;
+}
 
           color += gradient * pow(1.0 / fieldDistance, 1.0);
 
@@ -265,6 +275,7 @@ const LightPillar = ({
         uNoiseIntensity: { value: noiseIntensity },
         uPillarRotation: { value: pillarRotation },
         uGradientSpread: { value: gradientSpread },
+        uMidDominance: { value: midDominance },
       },
       transparent: true,
       depthWrite: false,

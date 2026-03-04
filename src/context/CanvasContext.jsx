@@ -5,6 +5,7 @@ import {
   useCallback,
   useRef,
 } from "react";
+import { allBrands } from "../components/cars/BrandFilter.jsx";
 
 // context "stabile" — cambia raramente
 const CanvasContext = createContext();
@@ -19,6 +20,7 @@ export function CanvasProvider({ children }) {
   const [activeStep, setActiveStep] = useState(null);
   const [experienceSteps, setExperienceSteps] = useState([]);
   const [onStepClick, setOnStepClick] = useState(null);
+  const [selectedBrands, setSelectedBrands] = useState(allBrands);
 
   // live — aggiornati frequentemente
   const [experienceCamera, setExperienceCamera] = useState(null);
@@ -52,6 +54,8 @@ export function CanvasProvider({ children }) {
         setHotspotsReady,
         triggerCarTransition,
         triggerCarTransitionY,
+        selectedBrands,
+        setSelectedBrands,
       }}
     >
       <CanvasLiveContext.Provider

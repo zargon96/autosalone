@@ -30,9 +30,23 @@ export default function Hero() {
   const { t, lang } = useLang();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { setActiveCarId, setMode, setHomeIndex } = useCanvas();
+  const { setActiveCarId, setMode, setHomeIndex, selectedBrands } = useCanvas();
 
-  const carKeys = useMemo(() => Object.keys(cars), []);
+  const carKeys = useMemo(() => {
+    const filtered = Object.keys(cars).filter((key) =>
+      selectedBrands.includes(cars[key].name.split(" ")[0]),
+    );
+    return filtered.length > 0 ? filtered : Object.keys(cars);
+  }, [selectedBrands]);
+
+  useEffect(() => {
+    if (!carKeys.includes(id)) {
+      const firstAvailable = carKeys[0];
+      if (firstAvailable) {
+        navigate(`/cars/${firstAvailable}`, { replace: true });
+      }
+    }
+  }, [carKeys, id, navigate]);
 
   const active = useMemo(() => {
     const idx = carKeys.indexOf(id);

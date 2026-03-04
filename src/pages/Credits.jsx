@@ -117,6 +117,20 @@ const creditsData = [
     license: "Creative Commons Attribution-NonCommercial-ShareAlike",
     licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
   },
+  {
+    title: "2002 Ferrari Enzo",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/pqYPr",
+    license: "Creative Commons Attribution",
+    licenseLink: "http://creativecommons.org/licenses/by/4.0/",
+  },
+  {
+    title: "1995 Lamborghini Diablo SV",
+    author: "Ddiaz Design",
+    link: "https://skfb.ly/px8DD",
+    license: "CC Attribution-NonCommercial-ShareAlike",
+    licenseLink: "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  },
 ];
 
 const Credits = () => {

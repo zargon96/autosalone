@@ -25,6 +25,7 @@ export default function CarExperience() {
     setActiveStep,
     setHotspotsReady,
     triggerCarTransition,
+    selectedBrands,
   } = useCanvas();
 
   const { setExperienceCamera, setExperienceRotation, setHotspotPositions } =
@@ -34,8 +35,22 @@ export default function CarExperience() {
 
   const car = useMemo(() => cars[id], [id]);
   const steps = useMemo(() => car?.experience ?? [], [car]);
-  const carKeys = useMemo(() => Object.keys(cars), []);
+  const carKeys = useMemo(() => {
+    const filtered = Object.keys(cars).filter((key) =>
+      selectedBrands.includes(cars[key].name.split(" ")[0]),
+    );
+    return filtered.length > 0 ? filtered : Object.keys(cars);
+  }, [selectedBrands]);
   const currentCarIndex = useMemo(() => carKeys.indexOf(id), [carKeys, id]);
+
+  useEffect(() => {
+    if (!carKeys.includes(id)) {
+      const firstAvailable = carKeys[0];
+      if (firstAvailable) {
+        navigate(`/cars/${firstAvailable}/experience`, { replace: true });
+      }
+    }
+  }, [carKeys, id, navigate]);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const hotspotsTimer = useRef(null);
@@ -122,7 +137,6 @@ export default function CarExperience() {
     setHotspotPositions({});
 
     triggerCarTransition.current?.(dir, () => {
-      // questo viene chiamato a metà animazione, quando l'auto è fuori schermo
       setActiveCarId(nextId);
       setExperienceCamera(null);
       setExperienceRotation(null);

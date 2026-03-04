@@ -102,6 +102,86 @@ export const cars = {
       },
     ],
   },
+  ferrari_enzo: {
+    id: "ferrari_enzo",
+    pillarColors: FLAG_ITALY,
+    name: "Ferrari Enzo",
+    model: `${BASE_URL}/ferrari_enzo_draco.glb`,
+    scale: 110,
+    rotation: [0, -0.4, 0],
+    offset: [0, -0.5, 0],
+    stats: {
+      engine: "V12 6.0L",
+      displacement: "5998 cc",
+      price_eur: 3000000,
+    },
+    specs: {
+      year: 2002,
+      power_hp: 660,
+      torque_nm: 657,
+      drivetrain: "RWD",
+      transmission: "6-seq",
+      weight_kg: 1365,
+      zeroTo100_s: 3.65,
+      topSpeed_kmh: 355,
+      length_mm: 4702,
+      width_mm: 2035,
+      height_mm: 1147,
+      wheelbase_mm: 2650,
+    },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-2.742, 0.229, 2.475],
+        camera: {
+          pos: [-2.508, 0.086, 2.73],
+          target: [-1.645, 0.12, 1.898],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.456, -0.021, 1.771],
+          target: [-0.285, -0.14, 1.54],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.198, 0.588, -0.171],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.515, 1.358, 2.77],
+          target: [-0.343, 0.759, 1.744],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.856, -0.173, 3.154],
+          target: [-1.435, -0.067, 2.108],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-1.148, 0.51, 0.951],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
+  },
   lancia_delta_integrale: {
     id: "lancia_delta_integrale",
     pillarColors: FLAG_ITALY,
@@ -262,9 +342,91 @@ export const cars = {
     ],
   },
 
+  lamborghini_diablo: {
+    id: "lamborghini_diablo",
+    pillarColors: FLAG_ITALY,
+    name: "Lamborghini Diablo SV",
+    model: `${BASE_URL}/lamborghini_diablo_sv_draco.glb`,
+    scale: 110,
+    rotation: [0, -0.4, 0],
+    offset: [0, -0.5, 0],
+    stats: {
+      engine: "V12 5.7L",
+      displacement: "5707 cc",
+      price_eur: 350000,
+    },
+    specs: {
+      year: 1995,
+      power_hp: 492,
+      torque_nm: 580,
+      drivetrain: "RWD",
+      transmission: "5MT",
+      weight_kg: 1576,
+      zeroTo100_s: 4.1,
+      topSpeed_kmh: 325,
+      length_mm: 4460,
+      width_mm: 2040,
+      height_mm: 1105,
+      wheelbase_mm: 2650,
+    },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-2.742, 0.229, 2.475],
+        camera: {
+          pos: [-2.508, 0.086, 2.73],
+          target: [-1.645, 0.12, 1.898],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.456, -0.021, 1.771],
+          target: [-0.285, -0.14, 1.54],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.198, 0.588, -0.171],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-1.148, 0.51, 0.951],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
+  },
+
   honda_s2000: {
     id: "honda_s2000",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Honda S2000",
     model: `${BASE_URL}/honda_s2000_draco.glb`,
     scale: 110,
@@ -345,6 +507,7 @@ export const cars = {
   honda_nsx: {
     id: "honda_nsx",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Honda NSX",
     model: `${BASE_URL}/honda_nsx_draco.glb`,
     scale: 110,
@@ -981,6 +1144,7 @@ export const cars = {
   supra_mk4: {
     id: "supra_mk4",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Toyota Supra MK4",
     model: `${BASE_URL}/toyota_supra_draco.glb`,
     scale: 0.3,
@@ -1061,6 +1225,7 @@ export const cars = {
   skyline_r33: {
     id: "skyline_r33",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Nissan Skyline GT-R (R33)",
     model: `${BASE_URL}/nissan_skyline_r33_draco.glb`,
     scale: 0.3,
@@ -1137,6 +1302,7 @@ export const cars = {
   skyline_r34: {
     id: "skyline_r34",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Nissan Skyline GT-R (R34)",
     model: `${BASE_URL}/nissan_skyline_r34_draco.glb`,
     scale: 104,
@@ -1213,6 +1379,7 @@ export const cars = {
   z350: {
     id: "z350",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Nissan 350Z",
     model: `${BASE_URL}/nissan_350z_draco.glb`,
     scale: 104,
@@ -1289,6 +1456,7 @@ export const cars = {
   rx7_fd: {
     id: "rx7_fd",
     pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
     name: "Mazda RX-7",
     model: `${BASE_URL}/mazda_rx-7_draco.glb`,
     scale: 0.4,

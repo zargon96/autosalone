@@ -22,6 +22,10 @@
     "scroll_down": "Scorri in basso",
     "experience": " Scopri di più su quest'auto"
   },
+  "filter": {
+    "title": "Filtra per marca",
+    "reset": "Reimposta"
+  },
   "experience": {
     "back": "Torna alla scheda",
     "readMore": "Continua a leggere",
@@ -421,6 +425,50 @@
       "interior": {
         "title": "Interni",
         "text": "L’abitacolo della TT RS è dominato dall’Audi Virtual Cockpit, che integra strumentazione e infotainment in un unico display digitale. Materiali di alta qualità, inserti in Alcantara o carbonio e sedili sportivi RS creano un ambiente tecnologico e orientato alla performance. È un mix perfetto tra modernità e sportività."
+      }
+    },
+    "ferrari_enzo": {
+      "headlights": {
+        "title": "Fari",
+        "text": "I fari della Ferrari Enzo adottano una forma affilata e verticale che segue l’aerodinamica estrema del frontale. Il design minimalista è funzionale alla gestione dei flussi d’aria e contribuisce all’aspetto aggressivo della vettura. Ogni elemento della carrozzeria è pensato per massimizzare le prestazioni e la stabilità alle alte velocità."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "La Ferrari Enzo utilizza un impianto frenante carboceramico sviluppato con Brembo, progettato per offrire potenza e resistenza eccezionali. I grandi dischi ventilati garantiscono frenate estremamente efficaci anche nelle condizioni più estreme. Questo sistema permette alla vettura di decelerare con precisione mantenendo pieno controllo."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il cuore della Ferrari Enzo è un V12 aspirato da 6.0 litri montato in posizione centrale posteriore, capace di sviluppare circa 660 cavalli. Derivato direttamente dall’esperienza Ferrari in Formula 1, questo motore offre una risposta immediata e un allungo impressionante fino a oltre 8000 giri. È uno dei V12 più iconici mai prodotti dalla casa di Maranello."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della Enzo esprime tutta la brutalità del V12 Ferrari, con un suono pieno e metallico che cresce progressivamente con il regime del motore. A regimi elevati il timbro diventa acuto e quasi da monoposto da corsa. È una colonna sonora pura e meccanica, senza filtri."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "L’abitacolo della Ferrari Enzo è completamente orientato alla guida. La fibra di carbonio domina la struttura interna, mentre la posizione di guida è estremamente bassa e sportiva. Ogni comando è progettato per ridurre distrazioni e massimizzare il controllo del pilota, seguendo la filosofia delle vetture da competizione."
+      }
+    },
+    "lamborghini_diablo": {
+      "headlights": {
+        "title": "Fari",
+        "text": "La Lamborghini Diablo SV mantiene i classici fari a scomparsa tipici delle supercar degli anni ’90. Quando chiusi preservano la linea affilata e bassa del frontale, mentre una volta aperti enfatizzano il carattere aggressivo della vettura. Questo elemento di design è diventato uno dei simboli delle Lamborghini di quell’epoca."
+      },
+      "brake": {
+        "title": "Freni",
+        "text": "La Diablo SV è equipaggiata con dischi freno ventilati di grandi dimensioni e pinze ad alte prestazioni, progettati per gestire la potenza del poderoso V12. Il sistema garantisce frenate solide e progressive, fondamentali per controllare una vettura così potente. Nonostante l’assenza delle tecnologie moderne, offre comunque una sensazione di guida molto diretta."
+      },
+      "engine": {
+        "title": "Motore",
+        "text": "Il motore della Diablo SV è un V12 aspirato da 5.7 litri montato longitudinalmente in posizione centrale posteriore. Nella versione SV eroga circa 510 cavalli, rendendo la vettura una delle supercar più veloci degli anni ’90. La risposta del motore è brutale e lineare, accompagnata da un sound tipicamente Lamborghini."
+      },
+      "exhaust": {
+        "title": "Scarico",
+        "text": "Lo scarico della Diablo SV produce un suono potente e profondo, tipico dei grandi V12 aspirati italiani. Con l’aumentare dei giri il rombo diventa sempre più aggressivo e coinvolgente. È un suono meccanico puro che rappresenta perfettamente il carattere estremo della vettura."
+      },
+      "interior": {
+        "title": "Interni",
+        "text": "Gli interni della Diablo SV sono relativamente essenziali rispetto alle supercar moderne. Pelle, strumenti analogici e una posizione di guida molto bassa creano un ambiente autenticamente sportivo. L’esperienza di guida è cruda e coinvolgente, con pochissima elettronica a filtrare le sensazioni del pilota."
       }
     }
   },

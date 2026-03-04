@@ -46,6 +46,7 @@ function DynamicLightPillar() {
       gradientSpread={isMobile ? 4.0 : 12.0}
       intensity={1.1}
       glowAmount={0.008}
+      midDominance={car?.midDominance ?? 0.5}
     />
   );
 }

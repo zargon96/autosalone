@@ -2,13 +2,16 @@ import { useLang } from "../../context/langContext.jsx";
 import { Navbar, Container } from "react-bootstrap";
 import { useCanvas } from "../../context/CanvasContext";
 import { cars, FLAG_ITALY, FLAG_JAPAN } from "../cars/carsData";
+import BrandFilter, { allBrands } from "../cars/BrandFilter.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const INVERT_FLAGS = [JSON.stringify(FLAG_ITALY), JSON.stringify(FLAG_JAPAN)];
 
 export default function NavigationBar() {
   const { lang, setLang } = useLang();
-  const { activeCarId } = useCanvas();
+  const { activeCarId, selectedBrands } = useCanvas();
 
   const pillarColors = activeCarId ? cars[activeCarId]?.pillarColors : null;
 
@@ -25,6 +28,8 @@ export default function NavigationBar() {
   const shouldInvert = pillarColors
     ? INVERT_FLAGS.includes(JSON.stringify(pillarColors))
     : false;
+
+  const isFiltered = selectedBrands.length < allBrands.length;
 
   return (
     <Navbar variant="dark" expand="lg" className="pt-4 mb-5">
@@ -52,12 +57,31 @@ export default function NavigationBar() {
             EN
           </LangButton>
         </div>
+
+        <div className="ms-auto">
+          <BrandFilter
+            trigger={
+              <LangButton
+                type="button"
+                $gradient={gradient}
+                $active={true}
+                $invertText={shouldInvert}
+              >
+                <FontAwesomeIcon icon={faSlidersH} />
+                {isFiltered && (
+                  <span className="filter-badge">{selectedBrands.length}</span>
+                )}
+              </LangButton>
+            }
+          />
+        </div>
       </Container>
     </Navbar>
   );
 }
 
 const LangButton = styled.button`
+  position: relative;
   background: ${({ $active, $gradient }) => ($active ? $gradient : "none")};
   border: none;
   cursor: pointer;

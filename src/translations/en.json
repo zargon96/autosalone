@@ -22,7 +22,10 @@
     "scroll_down": "Scroll down",
     "experience": " Discover more about this car"
   },
-
+  "filter": {
+    "title": "Filter by brand",
+    "reset": "Reset"
+  },
   "experience": {
     "back": "Back to card",
     "readMore": "Read more",
@@ -422,6 +425,50 @@
       "interior": {
         "title": "Interior",
         "text": "The TT RS cabin is dominated by the Audi Virtual Cockpit, integrating digital instrumentation and infotainment into a single display. High-quality materials, Alcantara or carbon fiber inserts, and RS sport seats create a technological yet performance-focused environment. It’s a perfect blend of modern design and sporty character."
+      }
+    },
+    "ferrari_enzo": {
+      "headlights": {
+        "title": "Headlights",
+        "text": "The Ferrari Enzo features sharp, vertically shaped headlights that follow the extreme aerodynamics of the front end. Their minimalist design helps manage airflow while enhancing the car’s aggressive appearance. Every body element is engineered to maximize performance and stability at high speeds."
+      },
+      "brake": {
+        "title": "Brakes",
+        "text": "The Ferrari Enzo uses a carbon-ceramic braking system developed with Brembo, designed to deliver exceptional stopping power and durability. Large ventilated discs ensure extremely effective braking even under the most demanding conditions. The system allows the car to decelerate with remarkable precision and control."
+      },
+      "engine": {
+        "title": "Engine",
+        "text": "At the heart of the Ferrari Enzo is a naturally aspirated 6.0-liter V12 mounted in a rear mid-engine layout, producing around 660 horsepower. Derived directly from Ferrari’s Formula 1 experience, the engine delivers immediate response and an impressive high-revving character exceeding 8000 rpm. It remains one of the most iconic V12 engines ever built by Ferrari."
+      },
+      "exhaust": {
+        "title": "Exhaust",
+        "text": "The Enzo’s exhaust unleashes the raw character of the Ferrari V12 with a deep and metallic tone that intensifies as the engine revs climb. At higher rpm the sound becomes sharp and almost reminiscent of a racing single-seater. It is a pure mechanical symphony."
+      },
+      "interior": {
+        "title": "Interior",
+        "text": "The Ferrari Enzo’s cockpit is entirely driver-focused. Carbon fiber dominates the interior structure, while the driving position is extremely low and race-inspired. Every control is designed to minimize distraction and maximize driver engagement, following a true motorsport philosophy."
+      }
+    },
+    "lamborghini_diablo": {
+      "headlights": {
+        "title": "Headlights",
+        "text": "The Lamborghini Diablo SV features classic pop-up headlights, a defining trait of 1990s supercars. When closed they preserve the sharp and low front profile, while when raised they emphasize the car’s aggressive character. This design element became one of the iconic signatures of Lamborghini during that era."
+      },
+      "brake": {
+        "title": "Brakes",
+        "text": "The Diablo SV is equipped with large ventilated brake discs and high-performance calipers designed to handle the power of its massive V12 engine. The system delivers strong and progressive braking, essential for controlling such a powerful machine. Despite lacking modern electronic assistance, it offers a very direct driving feel."
+      },
+      "engine": {
+        "title": "Engine",
+        "text": "The Diablo SV is powered by a naturally aspirated 5.7-liter V12 mounted longitudinally in a rear mid-engine configuration. In the SV version it produces around 510 horsepower, making it one of the fastest supercars of the 1990s. The engine delivers brutal and linear power with the unmistakable character of a Lamborghini V12."
+      },
+      "exhaust": {
+        "title": "Exhaust",
+        "text": "The Diablo SV’s exhaust produces a deep and powerful sound typical of large Italian naturally aspirated V12 engines. As the revs rise, the roar becomes increasingly aggressive and dramatic. It is a raw mechanical soundtrack that perfectly matches the extreme nature of the car."
+      },
+      "interior": {
+        "title": "Interior",
+        "text": "The interior of the Diablo SV is relatively minimal compared to modern supercars. Leather surfaces, analog gauges and a very low driving position create an authentically sporty environment. The driving experience is raw and engaging, with very little electronics filtering the driver’s sensations."
       }
     }
   },

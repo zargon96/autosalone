@@ -21,12 +21,19 @@ export default function Home() {
     homeIndex,
     setHomeIndex,
     triggerCarTransitionY,
+    selectedBrands,
+    activeCarId,
   } = useCanvas();
 
   const { t, lang } = useLang();
   const rates = useFxRates();
   const navigate = useNavigate();
-  const carKeys = useMemo(() => Object.keys(cars), []);
+  const carKeys = useMemo(() => {
+    const filtered = Object.keys(cars).filter((key) =>
+      selectedBrands.includes(cars[key].name.split(" ")[0]),
+    );
+    return filtered.length > 0 ? filtered : Object.keys(cars);
+  }, [selectedBrands]);
 
   const containerRef = useRef(null);
   const sectionsRef = useRef([]);
@@ -39,6 +46,16 @@ export default function Home() {
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   const gotoSectionRef = useRef(() => {});
+
+  useEffect(() => {
+    const startIndex = activeCarId
+      ? Math.max(carKeys.indexOf(activeCarId), 0)
+      : 0;
+    indexRef.current = startIndex;
+    setCurrentIndex(startIndex);
+    setHomeIndex(startIndex);
+    initDone.current = false;
+  }, [carKeys, activeCarId, setHomeIndex]);
 
   const formatPower = useCallback(
     (specs) => {
@@ -81,7 +98,6 @@ export default function Home() {
     [lang, rates],
   );
 
-  // handleNavigate DENTRO il componente, non fuori
   const handleNavigate = useCallback(
     (id) => navigate(`/cars/${id}`),
     [navigate],
