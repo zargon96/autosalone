@@ -233,7 +233,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 .scroll-mouse {
   width: 24px;
   height: 38px;
-  border: 2px solid #000;
+  border: 2px solid var(--text-color);
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -243,7 +243,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 .scroll-wheel {
   width: 4px;
   height: 8px;
-  background: #000;
+  background: var(--text-color);
   border-radius: 2px;
   animation: scrollWheel 1.6s ease infinite;
 }
@@ -252,7 +252,7 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #000;
+  color: var(--text-color);
 }
 
 @keyframes scrollWheel {
@@ -375,6 +375,6 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
 
 .swipe-arrow {
   font-size: 1.4rem;
-  color: #000;
+  color: var(--text-color);
   animation: bounce 1.5s infinite;
 }
