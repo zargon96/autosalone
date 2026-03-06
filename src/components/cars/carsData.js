@@ -102,6 +102,165 @@ export const cars = {
       },
     ],
   },
+  bmw_m2_g87: {
+    id: "bmw_m2_g87",
+    pillarColors: FLAG_GERMANY,
+    name: "BMW M2 (G87)",
+    model: `${BASE_URL}/bmw_m2_draco.glb`,
+    scale: 110,
+    rotation: [0, -0.5, 0],
+    offset: [0, -0.5, 0],
+    stats: {
+      engine: "3.0L Twin-Turbo Inline-6 (S58)",
+      displacement: "2993 cc",
+      price_eur: 77000,
+    },
+    specs: {
+      year: 2023,
+      power_hp: 460,
+      torque_nm: 550,
+      drivetrain: "RWD",
+      transmission: "6MT / 8AT",
+      weight_kg: 1725,
+      zeroTo100_s: 4.1,
+      topSpeed_kmh: 285,
+      length_mm: 4580,
+      width_mm: 1887,
+      height_mm: 1403,
+      wheelbase_mm: 2747,
+    },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.776, 0.226, 1.528],
+        camera: {
+          pos: [-2.508, 0.086, 2.73],
+          target: [-1.645, 0.12, 1.898],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.789, -0.056, 1.139],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.456, -0.021, 1.771],
+          target: [-0.285, -0.14, 1.54],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.049, 0.429, 1.778],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.659, -0.2, 3.621],
+          target: [-0.481, -0.175, 2.434],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.352, 0.73, 0.535],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
+  },
+  honda_s2000: {
+    id: "honda_s2000",
+    pillarColors: FLAG_JAPAN,
+    midDominance: 0.78,
+    name: "Honda S2000",
+    model: `${BASE_URL}/honda_s2000_draco.glb`,
+    scale: 110,
+    rotation: [0, -0.4, 0],
+    offset: [0, -0.5, 0],
+    stats: {
+      engine: "2.0L DOHC VTEC Inline-4 (F20C)",
+      displacement: "1997 cc",
+      price_eur: 35000,
+    },
+    specs: {
+      year: 1999,
+      power_hp: 240,
+      torque_nm: 208,
+      drivetrain: "RWD",
+      transmission: "6MT",
+      weight_kg: 1250,
+      zeroTo100_s: 6.2,
+      topSpeed_kmh: 240,
+      length_mm: 4135,
+      width_mm: 1750,
+      height_mm: 1285,
+      wheelbase_mm: 2400,
+    },
+    experience: [
+      {
+        key: "headlights",
+        type: "focus",
+        hotspot3D: [-1.647, 0.166, 1.777],
+        camera: {
+          pos: [-2.508, 0.086, 2.73],
+          target: [-1.645, 0.12, 1.898],
+        },
+      },
+      {
+        key: "brake",
+        type: "focus",
+        hotspot3D: [-1.884, -0.018, 1.369],
+        rotation: [0, 1, 0],
+        camera: {
+          pos: [-1.456, -0.021, 1.771],
+          target: [-0.285, -0.14, 1.54],
+        },
+      },
+      {
+        key: "engine",
+        type: "focus",
+        hotspot3D: [-1.326, 0.374, 1.77],
+        camera: {
+          pos: [-0.579, 1.579, 3.15],
+          target: [-0.401, 0.779, 2.126],
+        },
+      },
+
+      {
+        key: "exhaust",
+        type: "focus",
+        hotspot3D: [-0.691, -0.039, -0.946],
+        rotation: [0, Math.PI + 0.2, 0],
+        camera: {
+          pos: [-0.711, -0.221, 3.277],
+          target: [-0.889, -0.294, 2.093],
+        },
+      },
+      {
+        key: "interior",
+        type: "focus",
+        hotspot3D: [-0.747, 0.588, 0.541],
+        rotation: [0, 0, 0],
+        camera: {
+          pos: [-2.044, 1, 1.699],
+          target: [-1.09, 0.8, 0.998],
+        },
+      },
+    ],
+  },
   ferrari_enzo: {
     id: "ferrari_enzo",
     pillarColors: FLAG_ITALY,
@@ -262,86 +421,6 @@ export const cars = {
     ],
   },
 
-  bmw_m2_g87: {
-    id: "bmw_m2_g87",
-    pillarColors: FLAG_GERMANY,
-    name: "BMW M2 (G87)",
-    model: `${BASE_URL}/bmw_m2_draco.glb`,
-    scale: 110,
-    rotation: [0, -0.5, 0],
-    offset: [0, -0.5, 0],
-    stats: {
-      engine: "3.0L Twin-Turbo Inline-6 (S58)",
-      displacement: "2993 cc",
-      price_eur: 77000,
-    },
-    specs: {
-      year: 2023,
-      power_hp: 460,
-      torque_nm: 550,
-      drivetrain: "RWD",
-      transmission: "6MT / 8AT",
-      weight_kg: 1725,
-      zeroTo100_s: 4.1,
-      topSpeed_kmh: 285,
-      length_mm: 4580,
-      width_mm: 1887,
-      height_mm: 1403,
-      wheelbase_mm: 2747,
-    },
-    experience: [
-      {
-        key: "headlights",
-        type: "focus",
-        hotspot3D: [-1.776, 0.226, 1.528],
-        camera: {
-          pos: [-2.508, 0.086, 2.73],
-          target: [-1.645, 0.12, 1.898],
-        },
-      },
-      {
-        key: "brake",
-        type: "focus",
-        hotspot3D: [-1.789, -0.056, 1.139],
-        rotation: [0, 1, 0],
-        camera: {
-          pos: [-1.456, -0.021, 1.771],
-          target: [-0.285, -0.14, 1.54],
-        },
-      },
-      {
-        key: "engine",
-        type: "focus",
-        hotspot3D: [-1.049, 0.429, 1.778],
-        camera: {
-          pos: [-0.579, 1.579, 3.15],
-          target: [-0.401, 0.779, 2.126],
-        },
-      },
-
-      {
-        key: "exhaust",
-        type: "focus",
-        hotspot3D: [-0.691, -0.039, -0.946],
-        rotation: [0, Math.PI + 0.2, 0],
-        camera: {
-          pos: [-0.659, -0.2, 3.621],
-          target: [-0.481, -0.175, 2.434],
-        },
-      },
-      {
-        key: "interior",
-        type: "focus",
-        hotspot3D: [-0.352, 0.73, 0.535],
-        rotation: [0, 0, 0],
-        camera: {
-          pos: [-2.044, 1, 1.699],
-          target: [-1.09, 0.8, 0.998],
-        },
-      },
-    ],
-  },
-
   lamborghini_diablo: {
     id: "lamborghini_diablo",
     pillarColors: FLAG_ITALY,
@@ -414,87 +493,6 @@ export const cars = {
         key: "interior",
         type: "focus",
         hotspot3D: [-1.148, 0.51, 0.951],
-        rotation: [0, 0, 0],
-        camera: {
-          pos: [-2.044, 1, 1.699],
-          target: [-1.09, 0.8, 0.998],
-        },
-      },
-    ],
-  },
-
-  honda_s2000: {
-    id: "honda_s2000",
-    pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
-    name: "Honda S2000",
-    model: `${BASE_URL}/honda_s2000_draco.glb`,
-    scale: 110,
-    rotation: [0, -0.4, 0],
-    offset: [0, -0.5, 0],
-    stats: {
-      engine: "2.0L DOHC VTEC Inline-4 (F20C)",
-      displacement: "1997 cc",
-      price_eur: 35000,
-    },
-    specs: {
-      year: 1999,
-      power_hp: 240,
-      torque_nm: 208,
-      drivetrain: "RWD",
-      transmission: "6MT",
-      weight_kg: 1250,
-      zeroTo100_s: 6.2,
-      topSpeed_kmh: 240,
-      length_mm: 4135,
-      width_mm: 1750,
-      height_mm: 1285,
-      wheelbase_mm: 2400,
-    },
-    experience: [
-      {
-        key: "headlights",
-        type: "focus",
-        hotspot3D: [-1.647, 0.166, 1.777],
-        camera: {
-          pos: [-2.508, 0.086, 2.73],
-          target: [-1.645, 0.12, 1.898],
-        },
-      },
-      {
-        key: "brake",
-        type: "focus",
-        hotspot3D: [-1.884, -0.018, 1.369],
-        rotation: [0, 1, 0],
-        camera: {
-          pos: [-1.456, -0.021, 1.771],
-          target: [-0.285, -0.14, 1.54],
-        },
-      },
-      {
-        key: "engine",
-        type: "focus",
-        hotspot3D: [-1.326, 0.374, 1.77],
-        camera: {
-          pos: [-0.579, 1.579, 3.15],
-          target: [-0.401, 0.779, 2.126],
-        },
-      },
-
-      {
-        key: "exhaust",
-        type: "focus",
-        hotspot3D: [-0.691, -0.039, -0.946],
-        rotation: [0, Math.PI + 0.2, 0],
-        camera: {
-          pos: [-0.711, -0.221, 3.277],
-          target: [-0.889, -0.294, 2.093],
-        },
-      },
-      {
-        key: "interior",
-        type: "focus",
-        hotspot3D: [-0.747, 0.588, 0.541],
         rotation: [0, 0, 0],
         camera: {
           pos: [-2.044, 1, 1.699],
