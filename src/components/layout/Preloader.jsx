@@ -2,6 +2,24 @@ import { useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import "../../styles/preloader.css";
 
+function AnimatedDots({ label }) {
+  const [dots, setDots] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
+    }, 400);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <span>
+      {label}
+      {dots}
+    </span>
+  );
+}
+
 export default function Preloader({ done }) {
   const { progress, item } = useProgress();
 
@@ -64,7 +82,7 @@ export default function Preloader({ done }) {
 
     hideTimer.current = setTimeout(() => {
       setHidden(true);
-    }, 700);
+    }, 1500);
 
     return () => clearTimeout(hideTimer.current);
   }, [done]);
@@ -79,7 +97,7 @@ export default function Preloader({ done }) {
         <div className="preloader-bar">
           <div
             ref={barRef}
-            className="preloader-bar-fill"
+            className={`preloader-bar-fill${filesReady && !done ? " compiling" : ""}`}
             style={{ width: "0%" }}
           />
         </div>
@@ -92,7 +110,7 @@ export default function Preloader({ done }) {
 
         {filesReady && !done && (
           <div className="preloader-file preloader-phase">
-            Compiling shaders...
+            <AnimatedDots label="Almost ready" />
           </div>
         )}
       </div>

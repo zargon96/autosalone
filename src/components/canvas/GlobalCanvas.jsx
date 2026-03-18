@@ -376,24 +376,22 @@ const ModelsGroup = memo(function ModelsGroup({
 });
 
 /* ================= WARMUP ================= */
-
 function Warmup({ onDone }) {
   const { gl, scene, camera } = useThree();
 
   useEffect(() => {
-    let raf1 = 0;
-    let raf2 = 0;
-    raf1 = requestAnimationFrame(() => {
-      try {
-        gl.compile(scene, camera);
-      } catch {}
-      raf2 = requestAnimationFrame(() => {
-        onDone?.();
+    let cancelled = false;
+
+    gl.compileAsync(scene, camera)
+      .then(() => {
+        if (!cancelled) onDone?.();
+      })
+      .catch(() => {
+        if (!cancelled) onDone?.();
       });
-    });
+
     return () => {
-      cancelAnimationFrame(raf1);
-      cancelAnimationFrame(raf2);
+      cancelled = true;
     };
   }, [gl, scene, camera, onDone]);
 
@@ -594,10 +592,11 @@ export default function GlobalCanvas({ onReady, activeStep }) {
             manualRotation={mode === "experience" ? experienceRotation : null}
           />
           <Environment
-            preset="sunset"
+            files="/venice_sunset_1k.hdr"
             background={false}
             environmentIntensity={1}
             resolution={32}
+            frames={1}
           />
           <Warmup onDone={finish} />
           {showHotspots && (
