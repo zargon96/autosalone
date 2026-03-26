@@ -12,8 +12,6 @@ import { useCanvas } from "../context/CanvasContext";
 import "../styles/home.css";
 import CarSection from "../components/cars/CarSection.jsx";
 
-const currentYear = new Date().getFullYear();
-
 export default function Home() {
   const {
     setActiveCarId,
@@ -282,8 +280,8 @@ export default function Home() {
 
         <footer className="footer2 container">
           <p className="footer-text text-color">
-            © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}
-            {t.footer.brand}. {t.footer.text}
+            © <time dateTime="2025-2026">2025–2026</time> {t.footer.brand}.{" "}
+            {t.footer.text}
           </p>
           <p className="footer-text credits">
             <Link to="/credits" className="text-color">
