@@ -4,13 +4,12 @@ import "../../styles/footer.css";
 
 export default function Footer() {
   const { t } = useLang();
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="footer container">
       <p className="footer-text text-color">
-        © <time dateTime={String(currentYear)}>{currentYear}</time>{" "}
-        {t.footer.brand}. {t.footer.text}
+        © <time dateTime="2025-2026">2025–2026</time> {t.footer.brand}.{" "}
+        {t.footer.text}
       </p>
       <p className="footer-text credits">
         <Link to="/credits" className="text-color">
