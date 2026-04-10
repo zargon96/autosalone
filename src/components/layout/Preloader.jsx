@@ -3,25 +3,30 @@ import { useProgress } from "@react-three/drei";
 import "../../styles/preloader.css";
 
 export default function Preloader({ done }) {
-  const { progress, item } = useProgress();
-
+  const { loaded, total, item } = useProgress();
   const [hidden, setHidden] = useState(false);
   const [filesReady, setFilesReady] = useState(false);
-
   const raf = useRef(null);
   const hideTimer = useRef(null);
-
   const displayRef = useRef(0);
   const barRef = useRef(null);
   const textRef = useRef(null);
+  const maxRatioRef = useRef(0);
+  const seenTotalRef = useRef(0);
 
-  const targetPct = done ? 100 : Math.min(99, Math.max(0, progress || 0));
+  if (total > 0) {
+    seenTotalRef.current = Math.max(seenTotalRef.current, total);
+    const ratio = loaded / seenTotalRef.current;
+    maxRatioRef.current = Math.max(maxRatioRef.current, ratio);
+  }
+
+  const targetPct = done ? 100 : Math.min(99, maxRatioRef.current * 100);
 
   useEffect(() => {
-    if (!filesReady && progress >= 99.5 && !done) {
+    if (!filesReady && (done || targetPct >= 85)) {
       setFilesReady(true);
     }
-  }, [progress, done, filesReady]);
+  }, [targetPct, done, filesReady]);
 
   useEffect(() => {
     cancelAnimationFrame(raf.current);
@@ -31,26 +36,21 @@ export default function Preloader({ done }) {
       const diff = targetPct - prev;
 
       if (Math.abs(diff) > 0.05) {
-        const speed = done ? 0.25 : 0.12;
+        const speed = done ? 0.3 : 0.1;
+        const minStep = done ? 1 : 0.3;
         const next =
-          prev + Math.sign(diff) * Math.max(Math.abs(diff) * speed, 0.4);
+          prev + Math.sign(diff) * Math.max(Math.abs(diff) * speed, minStep);
 
-        displayRef.current = next;
-
-        const pct = Math.round(next);
-
+        displayRef.current = Math.max(prev, next);
+        const pct = Math.round(displayRef.current);
         if (barRef.current) barRef.current.style.width = `${pct}%`;
-
         if (textRef.current) textRef.current.textContent = `${pct}%`;
 
         raf.current = requestAnimationFrame(animate);
       } else {
-        displayRef.current = targetPct;
-
-        const pct = Math.round(targetPct);
-
+        displayRef.current = Math.max(displayRef.current, targetPct);
+        const pct = Math.round(displayRef.current);
         if (barRef.current) barRef.current.style.width = `${pct}%`;
-
         if (textRef.current) textRef.current.textContent = `${pct}%`;
       }
     };
@@ -61,11 +61,7 @@ export default function Preloader({ done }) {
 
   useEffect(() => {
     if (!done) return;
-
-    hideTimer.current = setTimeout(() => {
-      setHidden(true);
-    }, 1500);
-
+    hideTimer.current = setTimeout(() => setHidden(true), 1500);
     return () => clearTimeout(hideTimer.current);
   }, [done]);
 
