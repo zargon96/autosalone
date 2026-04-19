@@ -318,6 +318,14 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
   .stats-row {
     gap: 1.5rem;
   }
+
+  .brand-logo {
+    position: absolute;
+    left: 0%;
+    top: 22%;
+    width: 80px;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 640px) {
