@@ -22,6 +22,18 @@
     width: 100% !important;
   }
 
+  .border-glow-card {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .edge-light {
+    margin: 0 !important;
+    padding: 0% !important;
+    width: 0% !important;
+  }
+
   .title-car {
     font-size: 26px;
   }
@@ -93,19 +105,16 @@
 .title-car {
   margin-bottom: 30px;
 }
+
 .car-stats {
-  padding-bottom: 0px !important;
-  color: var(--text-color);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px) saturate(150%);
-  -webkit-backdrop-filter: blur(10px) saturate(150%);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
   padding: 17px;
-  max-width: 500px;
-  width: 120%;
+  padding-bottom: 0px;
+}
+
+.border-glow-card {
+  max-width: 500px !important;
   margin-inline: auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .text-color {

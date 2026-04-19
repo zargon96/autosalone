@@ -26,6 +26,8 @@ const CarSection = memo(function CarSection({
         />
       </div>
 
+      <img src={car.logo} alt={`${car.name} logo`} className="brand-logo" />
+
       <div className="price-top-right text-end">
         <BlurText
           text={price}

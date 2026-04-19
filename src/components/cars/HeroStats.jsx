@@ -1,7 +1,8 @@
 import { useEffect, useRef, memo } from "react";
+import BorderGlow from "../BorderGlow";
 import gsap from "gsap";
 
-function HeroStats({ children, active }) {
+function HeroStats({ children, active, pillarColors }) {
   const statsRef = useRef(null);
 
   useEffect(() => {
@@ -20,10 +21,28 @@ function HeroStats({ children, active }) {
     return () => ctx.revert();
   }, [active]);
 
+  const colors = pillarColors
+    ? [
+        pillarColors.top,
+        pillarColors.middle ?? pillarColors.bottom,
+        pillarColors.bottom,
+      ]
+    : ["#c084fc", "#f472b6", "#38bdf8"];
+
   return (
-    <div className="car-stats" ref={statsRef}>
-      <div className="tech-sheet">{children}</div>
-    </div>
+    <BorderGlow
+      edgeSensitivity={30}
+      borderRadius={16}
+      glowRadius={40}
+      glowIntensity={1}
+      coneSpread={25}
+      animated
+      colors={colors}
+    >
+      <div className="car-stats" ref={statsRef}>
+        <div className="tech-sheet">{children}</div>
+      </div>
+    </BorderGlow>
   );
 }
 

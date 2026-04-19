@@ -158,7 +158,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <HeroStats active={active}>
+            <HeroStats active={active} pillarColors={car.pillarColors}>
               <HeroStats.Title>{t.car.tech_sheet}</HeroStats.Title>
 
               <HeroStats.Row>
