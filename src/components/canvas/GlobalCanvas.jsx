@@ -19,12 +19,16 @@ import { CAMERA_CONFIGS } from "./cameraConfigs";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 
 gsap.ticker.lagSmoothing(0);
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
-const withDraco = (loader) => loader.setDRACOLoader(dracoLoader);
+const withDraco = (loader) => {
+  loader.setDRACOLoader(dracoLoader);
+  loader.setMeshoptDecoder(MeshoptDecoder);
+};
 
 const OFFSCREEN = 18;
 
@@ -116,11 +120,11 @@ function CameraRig({ mode }) {
   return null;
 }
 
-/* ================= MODELS ================= */
+/* ================= MODELS GROUP ================= */
 
 const ModelsGroup = memo(function ModelsGroup({
   activeCarId,
-  warmupAll,
+  warmupDone,
   autoRotate,
   manualRotation,
 }) {
@@ -139,7 +143,6 @@ const ModelsGroup = memo(function ModelsGroup({
   const { triggerCarTransition, triggerCarTransitionY } = useCanvas();
   const { gl } = useThree();
 
-  /* ================= CAR EXPEIENCE ================= */
   const runTransitionX = useCallback(
     (dir, onMidpoint) => {
       if (!groupRef.current) return;
@@ -160,7 +163,6 @@ const ModelsGroup = memo(function ModelsGroup({
         duration: 0.45,
         ease: "power2.in",
       });
-
       gsap.to(groupRef.current.position, {
         x: exitX,
         duration: 0.45,
@@ -176,13 +178,11 @@ const ModelsGroup = memo(function ModelsGroup({
           onMidpoint();
           groupRef.current.position.x = enterX;
           groupRef.current.rotation.y = -exitRotY;
-
           gsap.to(gl.domElement, {
             opacity: 1,
             duration: 0.55,
             ease: "power2.out",
           });
-
           gsap.to(groupRef.current.position, {
             x: 0,
             duration: 0.55,
@@ -218,7 +218,6 @@ const ModelsGroup = memo(function ModelsGroup({
     };
   }, [triggerCarTransition, runTransitionX]);
 
-  /* ================= HOME ================= */
   const runTransitionY = useCallback(
     (dir, onMidpoint) => {
       if (!groupRef.current) return;
@@ -232,7 +231,6 @@ const ModelsGroup = memo(function ModelsGroup({
       const enterY = dir === "next" ? -8 : 8;
 
       gsap.to(gl.domElement, { opacity: 0, duration: 0.45, ease: "power2.in" });
-
       gsap.to(groupRef.current.position, {
         y: exitY,
         duration: 0.45,
@@ -247,13 +245,11 @@ const ModelsGroup = memo(function ModelsGroup({
         onComplete: () => {
           onMidpoint();
           groupRef.current.position.y = enterY;
-
           gsap.to(gl.domElement, {
             opacity: 1,
             duration: 0.55,
             ease: "power2.out",
           });
-
           gsap.to(groupRef.current.position, {
             y: 0,
             duration: 0.55,
@@ -289,7 +285,6 @@ const ModelsGroup = memo(function ModelsGroup({
     };
   }, [triggerCarTransitionY, runTransitionY]);
 
-  /* ================= ROTATION ================= */
   const desiredRef = useRef([0, 0, 0]);
 
   useFrame((_, delta) => {
@@ -326,7 +321,6 @@ const ModelsGroup = memo(function ModelsGroup({
     );
   });
 
-  /* ================= SETUP ================= */
   useEffect(() => {
     if (setupDone.current) return;
     setupDone.current = true;
@@ -365,7 +359,7 @@ const ModelsGroup = memo(function ModelsGroup({
         <primitive
           key={id}
           object={list[idx].scene}
-          visible={warmupAll ? true : id === activeCarId}
+          visible={!warmupDone ? true : id === activeCarId}
           scale={car.scale}
           rotation={car.rotation}
           dispose={null}
@@ -409,22 +403,16 @@ function HotspotTracker({ steps, active }) {
 
   useFrame(() => {
     if (!groupRef.current || !active) return;
-
     const newPositions = {};
-
     steps.forEach((step) => {
       if (!step.hotspot3D) return;
-
       vectorRef.current.set(...step.hotspot3D);
       groupRef.current.localToWorld(vectorRef.current);
       vectorRef.current.project(camera);
-
       const x = Number(((vectorRef.current.x * 0.5 + 0.5) * 100).toFixed(2));
       const y = Number(((-vectorRef.current.y * 0.5 + 0.5) * 100).toFixed(2));
-
       newPositions[step.key] = { x, y };
     });
-
     const prev = prevPositions.current;
     const changed = steps.some((step) => {
       const p = prev[step.key];
@@ -432,7 +420,6 @@ function HotspotTracker({ steps, active }) {
       if (!p || !n) return true;
       return p.x !== n.x || p.y !== n.y;
     });
-
     if (changed) {
       prevPositions.current = newPositions;
       setHotspotPositions(newPositions);
@@ -454,13 +441,11 @@ function DebugCamera() {
     const handleClick = (event) => {
       mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
       raycaster.current.setFromCamera(mouse.current, camera);
       const intersects = raycaster.current.intersectObjects(
         scene.children,
         true,
       );
-
       if (intersects.length > 0) {
         const point = intersects[0].point;
         const direction = new THREE.Vector3()
@@ -469,7 +454,6 @@ function DebugCamera() {
         const camPos = new THREE.Vector3()
           .copy(point)
           .add(direction.multiplyScalar(DISTANCE));
-
         console.log(
           JSON.stringify(
             {
@@ -497,7 +481,6 @@ function DebugCamera() {
         );
       }
     };
-
     window.addEventListener("click", handleClick);
     return () => window.removeEventListener("click", handleClick);
   }, [camera, scene]);
@@ -505,7 +488,7 @@ function DebugCamera() {
   return null;
 }
 
-/* ================= HOTSPOT OVERLAY HTML ================= */
+/* ================= HOTSPOT OVERLAY ================= */
 
 function HotspotOverlayHTML({ activeStep }) {
   const { experienceSteps, onStepClick } = useCanvas();
@@ -521,7 +504,6 @@ function HotspotOverlayHTML({ activeStep }) {
       {experienceSteps.map((step) => {
         const pos = hotspotPositions?.[step.key];
         if (!pos || !step.hotspot3D) return null;
-
         return (
           <button
             key={step.key}
@@ -555,15 +537,15 @@ export default function GlobalCanvas({ onReady, activeStep }) {
   const firstId = useMemo(() => Object.keys(cars)[0], []);
   const currentId = activeCarId || firstId;
 
-  const [warmupAll, setWarmupAll] = useState(true);
+  const [warmupDone, setWarmupDone] = useState(false);
   const readyOnce = useRef(false);
 
-  const finish = () => {
+  const handleWarmupDone = useCallback(() => {
     if (readyOnce.current) return;
     readyOnce.current = true;
-    setWarmupAll(false);
-    if (typeof onReady === "function") onReady();
-  };
+    setWarmupDone(true);
+    onReady?.();
+  }, [onReady]);
 
   const showHotspots =
     mode === "experience" &&
@@ -587,7 +569,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
         <Suspense fallback={null}>
           <ModelsGroup
             activeCarId={currentId}
-            warmupAll={warmupAll}
+            warmupDone={warmupDone}
             autoRotate={mode === "hero"}
             manualRotation={mode === "experience" ? experienceRotation : null}
           />
@@ -595,10 +577,10 @@ export default function GlobalCanvas({ onReady, activeStep }) {
             files="/venice_sunset_1k.hdr"
             background={false}
             environmentIntensity={1}
-            resolution={32}
+            resolution={16}
             frames={1}
           />
-          <Warmup onDone={finish} />
+          <Warmup onDone={handleWarmupDone} />
           {showHotspots && (
             <HotspotTracker steps={experienceSteps} active={!activeStep} />
           )}

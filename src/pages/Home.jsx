@@ -42,7 +42,7 @@ export default function Home() {
   const initDone = useRef(false);
   const wheelAccRef = useRef(0);
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
+  const gltfMapRef = useRef(null);
   const gotoSectionRef = useRef(() => {});
 
   useEffect(() => {
@@ -135,6 +135,9 @@ export default function Home() {
       if (animatingRef.current) return;
       if (nextIndex < 0 || nextIndex >= sections.length) return;
       if (nextIndex === cur) return;
+      const targetId = carKeys[nextIndex];
+      const innerMap = gltfMapRef.current?.current;
+      if (innerMap && !innerMap[targetId]) return;
 
       animatingRef.current = true;
       indexRef.current = nextIndex;

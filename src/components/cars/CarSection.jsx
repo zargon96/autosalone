@@ -26,7 +26,17 @@ const CarSection = memo(function CarSection({
         />
       </div>
 
-      <img src={car.logo} alt={`${car.name} logo`} className="brand-logo" />
+      <img
+        src={car.logo}
+        alt={`${car.name} logo`}
+        className="brand-logo"
+        width="100"
+        height="100"
+        loading={isFirst ? "eager" : "lazy"}
+        fetchPriority={isFirst ? "high" : "auto"}
+        decoding="async"
+        style={{ objectFit: "contain" }}
+      />
 
       <div className="price-top-right text-end">
         <BlurText
