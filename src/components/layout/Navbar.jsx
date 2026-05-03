@@ -66,6 +66,7 @@ export default function NavigationBar() {
                 $gradient={gradient}
                 $active={true}
                 $invertText={shouldInvert}
+                aria-label="Apri filtri auto"
               >
                 <FontAwesomeIcon icon={faSlidersH} />
                 {isFiltered && (
