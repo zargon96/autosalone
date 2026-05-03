@@ -10,8 +10,7 @@ export default function useFxRates() {
     // return early if already cached
     if (cachedRates) return;
     const cacheKey = import.meta.env.VITE_FX_CACHE_KEY;
-    const apiBase = import.meta.env.VITE_FX_API_BASE;
-    const url = `${apiBase}/latest?base=EUR&symbols=GBP`;
+    const url = "/.netlify/functions/fx";
 
     // try to read from localstorage cache
     try {
@@ -50,7 +49,7 @@ export default function useFxRates() {
         try {
           localStorage.setItem(
             cacheKey,
-            JSON.stringify({ ts: Date.now(), data })
+            JSON.stringify({ ts: Date.now(), data }),
           );
         } catch (err) {
           console.warn("[FX] Cache write error:", err);
