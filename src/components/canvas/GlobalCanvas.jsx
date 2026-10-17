@@ -24,7 +24,9 @@ import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.j
 gsap.ticker.lagSmoothing(0);
 
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
+
+dracoLoader.setDecoderPath("/draco/");
+
 const withDraco = (loader) => {
   loader.setDRACOLoader(dracoLoader);
   loader.setMeshoptDecoder(MeshoptDecoder);
