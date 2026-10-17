@@ -7,6 +7,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   memo,
   useCallback,
 } from "react";
@@ -32,44 +33,81 @@ const withDraco = (loader) => {
   loader.setMeshoptDecoder(MeshoptDecoder);
 };
 
-const OFFSCREEN = 18;
+const OFFSCREEN_X = 18;
+const OFFSCREEN_Y = 8;
+
+/* ================= PRELOAD ================= */
+
+const CAR_ENTRIES = Object.entries(cars);
+const CAR_URLS = CAR_ENTRIES.map(([, car]) => car.model);
+
+useLoader.preload(GLTFLoader, CAR_URLS, withDraco);
+
+/* ================= HOTSPOT DOM REFS ================= */
+// Riferimenti diretti ai bottoni degli hotspot: il tracker li muove
+// scrivendo nel DOM, senza passare da setState a ogni frame.
+
+const hotspotEls = { current: {} };
+
+const hotspotTransform = (x, y) =>
+  `translate3d(${x}vw, ${y}vh, 0) translate(-50%, -50%)`;
 
 /* ================= DEVICE TYPE ================= */
+// Un solo listener di resize condiviso da tutti i componenti.
+
+const getDevice = () => {
+  const w = window.innerWidth;
+  if (w <= 768) return "mobile";
+  if (w <= 1536) return "smallLaptop";
+  return "desktop";
+};
+
+const deviceListeners = new Set();
+let deviceSnapshot = getDevice();
+let deviceTicking = false;
+
+const onDeviceResize = () => {
+  if (deviceTicking) return;
+  deviceTicking = true;
+  requestAnimationFrame(() => {
+    deviceTicking = false;
+    const next = getDevice();
+    if (next !== deviceSnapshot) {
+      deviceSnapshot = next;
+      deviceListeners.forEach((cb) => cb());
+    }
+  });
+};
+
+const subscribeDevice = (cb) => {
+  if (deviceListeners.size === 0) {
+    deviceSnapshot = getDevice();
+    window.addEventListener("resize", onDeviceResize, { passive: true });
+  }
+  deviceListeners.add(cb);
+  return () => {
+    deviceListeners.delete(cb);
+    if (deviceListeners.size === 0) {
+      window.removeEventListener("resize", onDeviceResize);
+    }
+  };
+};
+
+const getDeviceSnapshot = () => deviceSnapshot;
 
 function useDeviceType() {
-  const [device, setDevice] = useState(() => {
-    const w = window.innerWidth;
-    if (w <= 768) return "mobile";
-    if (w <= 1536) return "smallLaptop";
-    return "desktop";
-  });
-
-  useEffect(() => {
-    let ticking = false;
-    const onResize = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const w = window.innerWidth;
-        if (w <= 768) setDevice("mobile");
-        else if (w <= 1536) setDevice("smallLaptop");
-        else setDevice("desktop");
-        ticking = false;
-      });
-    };
-    window.addEventListener("resize", onResize, { passive: true });
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  return device;
+  return useSyncExternalStore(
+    subscribeDevice,
+    getDeviceSnapshot,
+    getDeviceSnapshot,
+  );
 }
 
 /* ================= CAMERA ================= */
 
-function CameraRig({ mode }) {
+function CameraRig({ mode, device }) {
   const { camera } = useThree();
   const { experienceCamera } = useCanvasLive();
-  const device = useDeviceType();
 
   const defaultCfg = useMemo(() => {
     const byDevice = CAMERA_CONFIGS?.[device] ?? CAMERA_CONFIGS?.desktop;
@@ -130,79 +168,75 @@ const ModelsGroup = memo(function ModelsGroup({
   autoRotate,
   manualRotation,
 }) {
-  const entries = useMemo(() => Object.entries(cars), []);
-  const urls = useMemo(() => entries.map(([, car]) => car.model), [entries]);
-
-  const gltfs = useLoader(GLTFLoader, urls, withDraco);
+  // Stessi URL (stesso ordine) del preload a livello modulo -> cache hit
+  const gltfs = useLoader(GLTFLoader, CAR_URLS, withDraco);
   const list = Array.isArray(gltfs) ? gltfs : [gltfs];
 
   const setupDone = useRef(false);
   const groupRef = useRef(null);
   const isTransitioning = useRef(false);
-  const pendingTransitionX = useRef(null);
-  const pendingTransitionY = useRef(null);
+  const pendingTransition = useRef(null);
 
   const { triggerCarTransition, triggerCarTransitionY } = useCanvas();
   const { gl } = useThree();
 
-  const runTransitionX = useCallback(
-    (dir, onMidpoint) => {
-      if (!groupRef.current) return;
-      isTransitioning.current = true;
-      pendingTransitionX.current = null;
+  /* ---- Transizione unica (asse "x" o "y") ---- */
+  const runTransition = useCallback(
+    (axis, dir, onMidpoint) => {
+      const group = groupRef.current;
+      if (!group) return;
+
+      pendingTransition.current = null;
 
       gsap.killTweensOf(gl.domElement);
-      gsap.killTweensOf(groupRef.current.position);
-      gsap.killTweensOf(groupRef.current.rotation);
+      gsap.killTweensOf(group.position);
+      gsap.killTweensOf(group.rotation);
 
-      const exitX = dir === "next" ? -OFFSCREEN : OFFSCREEN;
-      const enterX = dir === "next" ? OFFSCREEN : -OFFSCREEN;
-      const exitRotY = dir === "next" ? -0.4 : 0.4;
+      isTransitioning.current = true;
+
+      const isX = axis === "x";
+      const sign = dir === "next" ? 1 : -1;
+      const offscreen = isX ? OFFSCREEN_X : OFFSCREEN_Y;
+      // su X "next" esce a sinistra, su Y "next" esce in alto
+      const exitPos = (isX ? -sign : sign) * offscreen;
+      const enterPos = -exitPos;
+      const exitRotY = -sign * 0.4;
+
+      const finish = () => {
+        isTransitioning.current = false;
+        const p = pendingTransition.current;
+        if (p) runTransition(p.axis, p.dir, p.onMidpoint);
+      };
 
       gsap.to(gl.domElement, { opacity: 0, duration: 0.45, ease: "power2.in" });
-      gsap.to(groupRef.current.rotation, {
-        y: exitRotY,
+
+      if (isX) {
+        gsap.to(group.rotation, {
+          y: exitRotY,
+          duration: 0.45,
+          ease: "power2.in",
+        });
+      }
+
+      gsap.to(group.position, {
+        [axis]: exitPos,
         duration: 0.45,
         ease: "power2.in",
-      });
-      gsap.to(groupRef.current.position, {
-        x: exitX,
-        duration: 0.45,
-        ease: "power2.in",
-        onInterrupt: () => {
-          isTransitioning.current = false;
-          if (pendingTransitionX.current) {
-            const { dir: d, onMidpoint: m } = pendingTransitionX.current;
-            runTransitionX(d, m);
-          }
-        },
         onComplete: () => {
           onMidpoint();
-          groupRef.current.position.x = enterX;
-          groupRef.current.rotation.y = -exitRotY;
+          group.position[axis] = enterPos;
+          if (isX) group.rotation.y = -exitRotY;
+
           gsap.to(gl.domElement, {
             opacity: 1,
             duration: 0.55,
             ease: "power2.out",
           });
-          gsap.to(groupRef.current.position, {
-            x: 0,
+          gsap.to(group.position, {
+            [axis]: 0,
             duration: 0.55,
             ease: "power2.out",
-            onInterrupt: () => {
-              isTransitioning.current = false;
-              if (pendingTransitionX.current) {
-                const { dir: d, onMidpoint: m } = pendingTransitionX.current;
-                runTransitionX(d, m);
-              }
-            },
-            onComplete: () => {
-              isTransitioning.current = false;
-              if (pendingTransitionX.current) {
-                const { dir: d, onMidpoint: m } = pendingTransitionX.current;
-                runTransitionX(d, m);
-              }
-            },
+            onComplete: finish,
           });
         },
       });
@@ -213,87 +247,31 @@ const ModelsGroup = memo(function ModelsGroup({
   useEffect(() => {
     triggerCarTransition.current = (dir, onMidpoint) => {
       if (isTransitioning.current) {
-        pendingTransitionX.current = { dir, onMidpoint };
+        pendingTransition.current = { axis: "x", dir, onMidpoint };
         return;
       }
-      runTransitionX(dir, onMidpoint);
+      runTransition("x", dir, onMidpoint);
     };
-  }, [triggerCarTransition, runTransitionX]);
-
-  const runTransitionY = useCallback(
-    (dir, onMidpoint) => {
-      if (!groupRef.current) return;
-      isTransitioning.current = true;
-      pendingTransitionY.current = null;
-
-      gsap.killTweensOf(gl.domElement);
-      gsap.killTweensOf(groupRef.current.position);
-
-      const exitY = dir === "next" ? 8 : -8;
-      const enterY = dir === "next" ? -8 : 8;
-
-      gsap.to(gl.domElement, { opacity: 0, duration: 0.45, ease: "power2.in" });
-      gsap.to(groupRef.current.position, {
-        y: exitY,
-        duration: 0.45,
-        ease: "power2.in",
-        onInterrupt: () => {
-          isTransitioning.current = false;
-          if (pendingTransitionY.current) {
-            const { dir: d, onMidpoint: m } = pendingTransitionY.current;
-            runTransitionY(d, m);
-          }
-        },
-        onComplete: () => {
-          onMidpoint();
-          groupRef.current.position.y = enterY;
-          gsap.to(gl.domElement, {
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-          });
-          gsap.to(groupRef.current.position, {
-            y: 0,
-            duration: 0.55,
-            ease: "power2.out",
-            onInterrupt: () => {
-              isTransitioning.current = false;
-              if (pendingTransitionY.current) {
-                const { dir: d, onMidpoint: m } = pendingTransitionY.current;
-                runTransitionY(d, m);
-              }
-            },
-            onComplete: () => {
-              isTransitioning.current = false;
-              if (pendingTransitionY.current) {
-                const { dir: d, onMidpoint: m } = pendingTransitionY.current;
-                runTransitionY(d, m);
-              }
-            },
-          });
-        },
-      });
-    },
-    [gl],
-  );
+  }, [triggerCarTransition, runTransition]);
 
   useEffect(() => {
     triggerCarTransitionY.current = (dir, onMidpoint) => {
       if (isTransitioning.current) {
-        pendingTransitionY.current = { dir, onMidpoint };
+        pendingTransition.current = { axis: "y", dir, onMidpoint };
         return;
       }
-      runTransitionY(dir, onMidpoint);
+      runTransition("y", dir, onMidpoint);
     };
-  }, [triggerCarTransitionY, runTransitionY]);
+  }, [triggerCarTransitionY, runTransition]);
 
   const desiredRef = useRef([0, 0, 0]);
 
   useFrame((_, delta) => {
-    if (!groupRef.current || isTransitioning.current) return;
+    const group = groupRef.current;
+    if (!group || isTransitioning.current) return;
 
     if (autoRotate) {
-      groupRef.current.rotation.y += delta * 0.3;
+      group.rotation.y += delta * 0.3;
       return;
     }
 
@@ -306,21 +284,10 @@ const ModelsGroup = memo(function ModelsGroup({
         : cars[activeCarId]?.baseRotation ||
           cars[activeCarId]?.experienceBaseRotation || [0, 0, 0];
 
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(
-      groupRef.current.rotation.x,
-      desiredRef.current[0],
-      t,
-    );
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      desiredRef.current[1],
-      t,
-    );
-    groupRef.current.rotation.z = THREE.MathUtils.lerp(
-      groupRef.current.rotation.z,
-      desiredRef.current[2],
-      t,
-    );
+    const d = desiredRef.current;
+    group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, d[0], t);
+    group.rotation.y = THREE.MathUtils.lerp(group.rotation.y, d[1], t);
+    group.rotation.z = THREE.MathUtils.lerp(group.rotation.z, d[2], t);
   });
 
   useEffect(() => {
@@ -328,7 +295,7 @@ const ModelsGroup = memo(function ModelsGroup({
     setupDone.current = true;
 
     list.forEach((gltf, idx) => {
-      const car = entries[idx][1];
+      const car = CAR_ENTRIES[idx][1];
       const scene = gltf.scene;
 
       const box = new THREE.Box3().setFromObject(scene);
@@ -353,11 +320,11 @@ const ModelsGroup = memo(function ModelsGroup({
 
       scene.matrixAutoUpdate = true;
     });
-  }, [list, entries]);
+  }, [list]);
 
   return (
     <group ref={groupRef}>
-      {entries.map(([id, car], idx) => (
+      {CAR_ENTRIES.map(([id, car], idx) => (
         <primitive
           key={id}
           object={list[idx].scene}
@@ -400,31 +367,41 @@ function HotspotTracker({ steps, active }) {
   const { camera } = useThree();
   const groupRef = useRef();
   const { setHotspotPositions } = useCanvasLive();
-  const prevPositions = useRef({});
   const vectorRef = useRef(new THREE.Vector3());
+  const reportedRef = useRef(false);
+
+  // Se cambiano gli step, la prima posizione va ri-comunicata al context
+  useEffect(() => {
+    reportedRef.current = false;
+  }, [steps]);
 
   useFrame(() => {
     if (!groupRef.current || !active) return;
-    const newPositions = {};
+
+    const positions = {};
+
     steps.forEach((step) => {
       if (!step.hotspot3D) return;
+
       vectorRef.current.set(...step.hotspot3D);
       groupRef.current.localToWorld(vectorRef.current);
       vectorRef.current.project(camera);
-      const x = Number(((vectorRef.current.x * 0.5 + 0.5) * 100).toFixed(2));
-      const y = Number(((-vectorRef.current.y * 0.5 + 0.5) * 100).toFixed(2));
-      newPositions[step.key] = { x, y };
+
+      const x = (vectorRef.current.x * 0.5 + 0.5) * 100;
+      const y = (-vectorRef.current.y * 0.5 + 0.5) * 100;
+
+      positions[step.key] = { x, y };
+
+      // Aggiornamento diretto del DOM: zero re-render di React
+      const el = hotspotEls.current[step.key];
+      if (el) el.style.transform = hotspotTransform(x, y);
     });
-    const prev = prevPositions.current;
-    const changed = steps.some((step) => {
-      const p = prev[step.key];
-      const n = newPositions[step.key];
-      if (!p || !n) return true;
-      return p.x !== n.x || p.y !== n.y;
-    });
-    if (changed) {
-      prevPositions.current = newPositions;
-      setHotspotPositions(newPositions);
+
+    // setState UNA sola volta (serve a far comparire i bottoni),
+    // poi ci pensa il DOM.
+    if (!reportedRef.current) {
+      reportedRef.current = true;
+      setHotspotPositions(positions);
     }
   });
 
@@ -510,11 +487,19 @@ function HotspotOverlayHTML({ activeStep }) {
           <button
             key={step.key}
             className="hotspot"
+            ref={(el) => {
+              if (el) {
+                hotspotEls.current[step.key] = el;
+                // posizione iniziale; poi la aggiorna il tracker ogni frame
+                el.style.transform = hotspotTransform(pos.x, pos.y);
+              } else {
+                delete hotspotEls.current[step.key];
+              }
+            }}
             style={{
-              left: `${pos.x}%`,
-              top: `${pos.y}%`,
+              left: 0,
+              top: 0,
               position: "absolute",
-              transform: "translate(-50%, -50%)",
               pointerEvents: "all",
             }}
             onClick={() => onStepClick(step)}
@@ -536,7 +521,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
   const device = useDeviceType();
   const isMobile = device === "mobile";
 
-  const firstId = useMemo(() => Object.keys(cars)[0], []);
+  const firstId = CAR_ENTRIES[0]?.[0];
   const currentId = activeCarId || firstId;
 
   const [warmupDone, setWarmupDone] = useState(false);
@@ -563,11 +548,12 @@ export default function GlobalCanvas({ onReady, activeStep }) {
         dpr={isMobile ? 1 : 1.5}
         gl={{
           powerPreference: "high-performance",
-          antialias: true,
+          antialias: !isMobile,
           preserveDrawingBuffer: false,
         }}
+        style={{ willChange: "opacity" }}
       >
-        <CameraRig mode={mode} />
+        <CameraRig mode={mode} device={device} />
         <Suspense fallback={null}>
           <ModelsGroup
             activeCarId={currentId}

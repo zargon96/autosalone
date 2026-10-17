@@ -17,10 +17,12 @@ function buildGlowVars(glowColor, intensity) {
   const opacities = [100, 60, 50, 40, 30, 20, 10];
   const keys = ["", "-60", "-50", "-40", "-30", "-20", "-10"];
   const vars = {};
+
   for (let i = 0; i < opacities.length; i++) {
     vars[`--glow-color${keys[i]}`] =
       `hsl(${base} / ${Math.min(opacities[i] * intensity, 100)}%)`;
   }
+
   return vars;
 }
 
@@ -33,6 +35,7 @@ const GRADIENT_POSITIONS = [
   "82% 18%",
   "51% 4%",
 ];
+
 const GRADIENT_KEYS = [
   "--gradient-one",
   "--gradient-two",
@@ -42,22 +45,27 @@ const GRADIENT_KEYS = [
   "--gradient-six",
   "--gradient-seven",
 ];
+
 const COLOR_MAP = [0, 1, 2, 0, 1, 2, 1];
 
 function buildGradientVars(colors) {
   const vars = {};
+
   for (let i = 0; i < 7; i++) {
     const c = colors[Math.min(COLOR_MAP[i], colors.length - 1)];
     vars[GRADIENT_KEYS[i]] =
       `radial-gradient(at ${GRADIENT_POSITIONS[i]}, ${c} 0px, transparent 50%)`;
   }
+
   vars["--gradient-base"] = `linear-gradient(${colors[0]} 0 100%)`;
+
   return vars;
 }
 
 function easeOutCubic(x) {
   return 1 - Math.pow(1 - x, 3);
 }
+
 function easeInCubic(x) {
   return x * x * x;
 }
@@ -71,15 +79,39 @@ function animateValue({
   onUpdate,
   onEnd,
 }) {
-  const t0 = performance.now() + delay;
-  function tick() {
-    const elapsed = performance.now() - t0;
-    const t = Math.min(elapsed / duration, 1);
+  let frameId = null;
+  let timeoutId = null;
+  let cancelled = false;
+
+  const tick = (startTime) => {
+    if (cancelled) return;
+
+    const elapsed = performance.now() - startTime;
+    const t = Math.min(Math.max(elapsed / duration, 0), 1);
+
     onUpdate(start + (end - start) * ease(t));
-    if (t < 1) requestAnimationFrame(tick);
-    else if (onEnd) onEnd();
-  }
-  setTimeout(() => requestAnimationFrame(tick), delay);
+
+    if (t < 1) {
+      frameId = requestAnimationFrame(() => tick(startTime));
+    } else {
+      onEnd?.();
+    }
+  };
+
+  timeoutId = setTimeout(() => {
+    if (!cancelled) {
+      frameId = requestAnimationFrame(() => tick(performance.now()));
+    }
+  }, delay);
+
+  return () => {
+    cancelled = true;
+    clearTimeout(timeoutId);
+
+    if (frameId !== null) {
+      cancelAnimationFrame(frameId);
+    }
+  };
 }
 
 const BorderGlow = ({
@@ -97,6 +129,21 @@ const BorderGlow = ({
   fillOpacity = 0.5,
 }) => {
   const cardRef = useRef(null);
+  const hoveredRef = useRef(false);
+  const animationCleanupsRef = useRef([]);
+
+  const stopAnimation = useCallback(() => {
+    animationCleanupsRef.current.forEach((cleanup) => cleanup());
+    animationCleanupsRef.current = [];
+
+    const card = cardRef.current;
+
+    if (card) {
+      card.classList.remove("sweep-active");
+      card.style.setProperty("--edge-proximity", "0");
+      card.style.setProperty("--cursor-angle", "45deg");
+    }
+  }, []);
 
   const getCenterOfElement = useCallback((el) => {
     const { width, height } = el.getBoundingClientRect();
@@ -108,10 +155,13 @@ const BorderGlow = ({
       const [cx, cy] = getCenterOfElement(el);
       const dx = x - cx;
       const dy = y - cy;
+
       let kx = Infinity;
       let ky = Infinity;
+
       if (dx !== 0) kx = cx / Math.abs(dx);
       if (dy !== 0) ky = cy / Math.abs(dy);
+
       return Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
     },
     [getCenterOfElement],
@@ -122,10 +172,14 @@ const BorderGlow = ({
       const [cx, cy] = getCenterOfElement(el);
       const dx = x - cx;
       const dy = y - cy;
+
       if (dx === 0 && dy === 0) return 0;
+
       const radians = Math.atan2(dy, dx);
       let degrees = radians * (180 / Math.PI) + 90;
+
       if (degrees < 0) degrees += 360;
+
       return degrees;
     },
     [getCenterOfElement],
@@ -134,7 +188,7 @@ const BorderGlow = ({
   const handlePointerMove = useCallback(
     (e) => {
       const card = cardRef.current;
-      if (!card) return;
+      if (!card || !hoveredRef.current || animated) return;
 
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -144,79 +198,113 @@ const BorderGlow = ({
       const angle = getCursorAngle(card, x, y);
 
       card.style.setProperty("--edge-proximity", `${(edge * 100).toFixed(3)}`);
+
       card.style.setProperty("--cursor-angle", `${angle.toFixed(3)}deg`);
     },
-    [getEdgeProximity, getCursorAngle],
+    [animated, getEdgeProximity, getCursorAngle],
   );
 
-  useEffect(() => {
-    if (!animated || !cardRef.current) return;
+  const runSweep = useCallback(() => {
     const card = cardRef.current;
-    let cancelled = false;
 
-    const runLoop = () => {
-      if (cancelled) return;
-      const angleStart = 110;
-      const angleEnd = 470;
+    if (!card || !hoveredRef.current) return;
 
-      card.classList.add("sweep-active");
-      card.style.setProperty("--cursor-angle", `${angleStart}deg`);
+    const angleStart = 110;
+    const angleEnd = 470;
 
-      animateValue({
-        duration: 500,
-        onUpdate: (v) => card.style.setProperty("--edge-proximity", v),
-      });
-      animateValue({
-        ease: easeInCubic,
-        duration: 1500,
-        end: 50,
-        onUpdate: (v) => {
-          card.style.setProperty(
-            "--cursor-angle",
-            `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`,
-          );
-        },
-      });
-      animateValue({
-        ease: easeOutCubic,
-        delay: 1500,
-        duration: 2250,
-        start: 50,
-        end: 100,
-        onUpdate: (v) => {
-          card.style.setProperty(
-            "--cursor-angle",
-            `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`,
-          );
-        },
-      });
-      animateValue({
-        ease: easeInCubic,
-        delay: 2500,
-        duration: 1500,
-        start: 100,
-        end: 0,
-        onUpdate: (v) => card.style.setProperty("--edge-proximity", v),
-        onEnd: () => {
-          card.classList.remove("sweep-active");
-          if (!cancelled) runLoop();
-        },
-      });
+    card.classList.add("sweep-active");
+    card.style.setProperty("--cursor-angle", `${angleStart}deg`);
+
+    const addAnimation = (config) => {
+      const cleanup = animateValue(config);
+      animationCleanupsRef.current.push(cleanup);
     };
 
-    runLoop();
+    addAnimation({
+      duration: 500,
+      onUpdate: (v) => {
+        card.style.setProperty("--edge-proximity", v);
+      },
+    });
 
+    addAnimation({
+      ease: easeInCubic,
+      duration: 1500,
+      end: 50,
+      onUpdate: (v) => {
+        card.style.setProperty(
+          "--cursor-angle",
+          `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`,
+        );
+      },
+    });
+
+    addAnimation({
+      ease: easeOutCubic,
+      delay: 1500,
+      duration: 2250,
+      start: 50,
+      end: 100,
+      onUpdate: (v) => {
+        card.style.setProperty(
+          "--cursor-angle",
+          `${(angleEnd - angleStart) * (v / 100) + angleStart}deg`,
+        );
+      },
+    });
+
+    addAnimation({
+      ease: easeInCubic,
+      delay: 2500,
+      duration: 1500,
+      start: 100,
+      end: 0,
+      onUpdate: (v) => {
+        card.style.setProperty("--edge-proximity", v);
+      },
+      onEnd: () => {
+        if (!hoveredRef.current) return;
+
+        animationCleanupsRef.current.forEach((cleanup) => cleanup());
+        animationCleanupsRef.current = [];
+
+        card.classList.remove("sweep-active");
+
+        runSweep();
+      },
+    });
+  }, []);
+
+  const handlePointerEnter = useCallback(() => {
+    if (hoveredRef.current) return;
+
+    hoveredRef.current = true;
+
+    if (animated) {
+      runSweep();
+    }
+  }, [animated, runSweep]);
+
+  const handlePointerLeave = useCallback(() => {
+    hoveredRef.current = false;
+    stopAnimation();
+  }, [stopAnimation]);
+
+  useEffect(() => {
     return () => {
-      cancelled = true;
+      hoveredRef.current = false;
+      stopAnimation();
     };
-  }, [animated]);
+  }, [stopAnimation]);
 
   const glowVars = buildGlowVars(glowColor, glowIntensity);
 
   return (
     <div
       ref={cardRef}
+      onPointerEnter={handlePointerEnter}
       onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
       className={`border-glow-card ${className}`}
       style={{
         "--card-bg": backgroundColor,
