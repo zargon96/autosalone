@@ -40,6 +40,28 @@ const OFFSCREEN_Y = 8;
 
 const CAR_ENTRIES = Object.entries(cars);
 const CAR_URLS = CAR_ENTRIES.map(([, car]) => car.model);
+const CAR_IMAGE_URLS = [
+  ...new Set(
+    CAR_ENTRIES.flatMap(([, car]) =>
+      [car.backgroundImage, car.detailBackgroundImage, car.logo].filter(
+        Boolean,
+      ),
+    ),
+  ),
+];
+
+const CAR_IMAGES_PRELOAD = Promise.all(
+  CAR_IMAGE_URLS.map(async (src) => {
+    const image = new Image();
+    image.src = src;
+
+    try {
+      await image.decode();
+    } catch (error) {
+      console.warn(`Unable to preload car image "${src}":`, error);
+    }
+  }),
+);
 
 useLoader.preload(GLTFLoader, CAR_URLS, withDraco);
 
@@ -535,7 +557,9 @@ export default function GlobalCanvas({ onReady, activeStep }) {
   const [warmupDone, setWarmupDone] = useState(false);
   const readyOnce = useRef(false);
 
-  const handleWarmupDone = useCallback(() => {
+  const handleWarmupDone = useCallback(async () => {
+    if (readyOnce.current) return;
+    await CAR_IMAGES_PRELOAD;
     if (readyOnce.current) return;
     readyOnce.current = true;
     setWarmupDone(true);
