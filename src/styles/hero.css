@@ -60,7 +60,7 @@
 
   .canvas-hero {
     margin: 0 !important;
-    transform: none !important;
+    transform: translateY(-7vh) !important;
   }
 
   .car-stats p {

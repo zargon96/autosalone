@@ -144,7 +144,7 @@ function CameraRig({ mode, device }) {
       x: experienceCamera.pos[0],
       y: experienceCamera.pos[1],
       z: experienceCamera.pos[2],
-      duration: 1.1,
+      duration: 0.65,
       ease: "power3.out",
       onUpdate: () => {
         camera.lookAt(
@@ -285,6 +285,14 @@ const ModelsGroup = memo(function ModelsGroup({
           cars[activeCarId]?.experienceBaseRotation || [0, 0, 0];
 
     const d = desiredRef.current;
+    if (
+      Math.abs(group.rotation.x - d[0]) < 0.0001 &&
+      Math.abs(group.rotation.y - d[1]) < 0.0001 &&
+      Math.abs(group.rotation.z - d[2]) < 0.0001
+    ) {
+      return;
+    }
+
     group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, d[0], t);
     group.rotation.y = THREE.MathUtils.lerp(group.rotation.y, d[1], t);
     group.rotation.z = THREE.MathUtils.lerp(group.rotation.z, d[2], t);
@@ -549,9 +557,10 @@ export default function GlobalCanvas({ onReady, activeStep }) {
         gl={{
           powerPreference: "high-performance",
           antialias: !isMobile,
+          alpha: true,
           preserveDrawingBuffer: false,
         }}
-        style={{ willChange: "opacity" }}
+        style={{ willChange: "opacity", background: "transparent" }}
       >
         <CameraRig mode={mode} device={device} />
         <Suspense fallback={null}>

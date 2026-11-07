@@ -47,7 +47,10 @@
   border: 2px solid black;
   position: absolute;
   pointer-events: auto;
-  transition: 0.3s;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .hotspot.active {

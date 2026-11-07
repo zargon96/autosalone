@@ -23,6 +23,10 @@ html {
   transition: transform 0.4s ease;
 }
 
+#global-canvas-root.canvas-backgrounded {
+  z-index: 1;
+}
+
 .canvas-hero {
   transform: translateX(-15%);
   padding-top: 80px;
@@ -48,6 +52,54 @@ html {
 .text-color {
   color: var(--text-color);
 }
+
+:where(
+    .text-color,
+    .car-title,
+    .car-subtitle,
+    .price-value,
+    .price-location,
+    .stat-value,
+    .stat-label,
+    .current-section,
+    .scroll-label,
+    .experience-title,
+    .title-car,
+    .hero-topbar h1,
+    .car-stats h2,
+    .car-stats p
+  ) {
+  color: #fff !important;
+  mix-blend-mode: difference;
+  text-shadow: none !important;
+}
+
+.scroll-mouse,
+.scroll-wheel {
+  mix-blend-mode: difference;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+      .text-color,
+      .car-title,
+      .car-subtitle,
+      .price-value,
+      .price-location,
+      .stat-value,
+      .stat-label,
+      .current-section,
+      .scroll-label,
+      .experience-title,
+      .title-car,
+      .hero-topbar h1,
+      .car-stats h2,
+      .car-stats p
+    ) {
+    transition: none;
+  }
+}
+
 .lang-btn {
   background: none;
   border: none;
@@ -96,6 +148,7 @@ body {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain;
+  background: transparent;
 }
 
 body.page-credits .canvas-container,

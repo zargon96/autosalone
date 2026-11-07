@@ -1,0 +1,49 @@
+.diagonal-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #101114;
+  pointer-events: none;
+}
+
+.diagonal-background__color {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  will-change: background-color;
+}
+
+.diagonal-background__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  opacity: 0;
+  transition: opacity 0.75s ease;
+  pointer-events: none;
+}
+
+.diagonal-background__image.is-visible {
+  opacity: 1;
+}
+
+.diagonal-background__divider {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagonal-background__image {
+    transition-duration: 0.01ms;
+  }
+}

@@ -27,6 +27,9 @@ export const FLAG_USA = {
 export const cars = {
   f40: {
     id: "f40",
+    backgroundColor: "#C8102E",
+    backgroundImage: "/img/f40/f40.webp",
+    detailBackgroundImage: "/img/f40/f40_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Ferrari F40",
     logo: getLogo("ferrari"),
@@ -108,6 +111,9 @@ export const cars = {
   },
   bmw_m2_g87: {
     id: "bmw_m2_g87",
+    backgroundColor: "#4C9AD4",
+    backgroundImage: "/img/m2/m2.webp",
+    detailBackgroundImage: "/img/m2/m2_motore.webp",
     pillarColors: FLAG_GERMANY,
     name: "BMW M2 (G87)",
     logo: getLogo("bmw"),
@@ -188,8 +194,10 @@ export const cars = {
   },
   honda_s2000: {
     id: "honda_s2000",
+    backgroundColor: "#B5121B",
+    backgroundImage: "/img/s2000/s2000.webp",
+    detailBackgroundImage: "/img/s2000/s2000_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Honda S2000",
     logo: getLogo("honda"),
     model: `${BASE_URL}/honda_s2000_opt.glb`,
@@ -269,6 +277,9 @@ export const cars = {
   },
   ferrari_enzo: {
     id: "ferrari_enzo",
+    backgroundColor: "#B5121B",
+    backgroundImage: "/img/ferrari_enzo/ferrari_enzo.webp",
+    detailBackgroundImage: "/img/ferrari_enzo/ferrari_enzo_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Ferrari Enzo",
     logo: getLogo("ferrari"),
@@ -350,6 +361,9 @@ export const cars = {
   },
   lancia_delta_integrale: {
     id: "lancia_delta_integrale",
+    backgroundColor: "#D21E2B",
+    backgroundImage: "/img/lancia/lancia.webp",
+    detailBackgroundImage: "/img/lancia/lancia_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Lancia Delta HF",
     logo: getLogo("lancia"),
@@ -431,6 +445,10 @@ export const cars = {
 
   lamborghini_diablo: {
     id: "lamborghini_diablo",
+    backgroundColor: "#E8B923",
+    backgroundImage: "/img/lamborghini_diablo/lamborghini_diablo.webp",
+    detailBackgroundImage:
+      "/img/lamborghini_diablo/lamborghini_diablo_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Lamborghini Diablo SV",
     logo: getLogo("lamborghini"),
@@ -513,8 +531,10 @@ export const cars = {
 
   honda_nsx: {
     id: "honda_nsx",
+    backgroundColor: "#030914",
+    backgroundImage: "/img/honda_nsx/honda_nsx.webp",
+    detailBackgroundImage: "/img/honda_nsx/honda_nsx_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Honda NSX",
     logo: getLogo("honda"),
     model: `${BASE_URL}/honda_nsx_opt.glb`,
@@ -596,6 +616,9 @@ export const cars = {
 
   fxxk: {
     id: "fxxk",
+    backgroundColor: "#B5121B",
+    backgroundImage: "/img/ferrari_fxxk/ferrari_fxxk.webp",
+    detailBackgroundImage: "/img/ferrari_fxxk/ferrari_fxxk_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Ferrari FXX K",
     logo: getLogo("ferrari"),
@@ -677,6 +700,9 @@ export const cars = {
   },
   zonda_cinque: {
     id: "zonda_cinque",
+    backgroundColor: "#ccd2de",
+    backgroundImage: "/img/zonda_cinque/zonda_cinque.webp",
+    detailBackgroundImage: "/img/zonda_cinque/zonda_cinque_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Pagani Zonda Cinque",
     logo: getLogo("pagani"),
@@ -759,6 +785,9 @@ export const cars = {
 
   porsche_911_turbo_1975: {
     id: "porsche_911_turbo_1975",
+    backgroundColor: "#101e32",
+    backgroundImage: "/img/911/911.webp",
+    detailBackgroundImage: "/img/911/911_motore.webp",
     pillarColors: FLAG_GERMANY,
     name: "Porsche 911 Turbo (1975)",
     logo: getLogo("porsche"),
@@ -841,6 +870,9 @@ export const cars = {
 
   f12: {
     id: "f12",
+    backgroundColor: "#C8102E",
+    backgroundImage: "/img/f12/f12.webp",
+    detailBackgroundImage: "/img/f12/f12_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Ferrari F12 berlinetta",
     logo: getLogo("ferrari"),
@@ -922,6 +954,9 @@ export const cars = {
 
   f488: {
     id: "f488",
+    backgroundColor: "#f00029",
+    backgroundImage: "/img/f488/f488.webp",
+    detailBackgroundImage: "/img/f488/f488_motore.webp",
     pillarColors: FLAG_ITALY,
     name: "Ferrari 488 Pista",
     logo: getLogo("ferrari"),
@@ -1004,6 +1039,9 @@ export const cars = {
 
   m3_e30: {
     id: "m3_e30",
+    backgroundColor: "#71344d",
+    backgroundImage: "/img/m3/m3.webp",
+    detailBackgroundImage: "/img/m3/m3_motore.webp",
     pillarColors: FLAG_GERMANY,
     name: "BMW M3 E30",
     logo: getLogo("bmw"),
@@ -1081,6 +1119,9 @@ export const cars = {
 
   charger69: {
     id: "charger69",
+    backgroundColor: "#ae3328",
+    backgroundImage: "/img/charger/charger.webp",
+    detailBackgroundImage: "/img/charger/charger_motore.webp",
     pillarColors: FLAG_USA,
     name: "Dodge Charger",
     logo: getLogo("dodge"),
@@ -1158,8 +1199,10 @@ export const cars = {
 
   supra_mk4: {
     id: "supra_mk4",
+    backgroundColor: "#ff6c75",
+    backgroundImage: "/img/supra/supra.webp",
+    detailBackgroundImage: "/img/supra/supra_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Toyota Supra MK4",
     logo: getLogo("toyota"),
     model: `${BASE_URL}/toyota_supra_draco.glb`,
@@ -1240,8 +1283,10 @@ export const cars = {
 
   skyline_r33: {
     id: "skyline_r33",
+    backgroundColor: "#4e627a",
+    backgroundImage: "/img/skyline_r33/skyline_r33.webp",
+    detailBackgroundImage: "/img/skyline_r33/skyline_r33_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Nissan Skyline GT-R (R33)",
     logo: getLogo("nissan"),
     model: `${BASE_URL}/nissan_skyline_r33_draco.glb`,
@@ -1318,8 +1363,10 @@ export const cars = {
 
   skyline_r34: {
     id: "skyline_r34",
+    backgroundColor: "#22221c",
+    backgroundImage: "/img/skyline_r34/skyline_r34.webp",
+    detailBackgroundImage: "/img/skyline_r34/skyline_r34_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Nissan Skyline GT-R (R34)",
     logo: getLogo("nissan"),
     model: `${BASE_URL}/nissan_skyline_r34_draco.glb`,
@@ -1396,8 +1443,10 @@ export const cars = {
 
   z350: {
     id: "z350",
+    backgroundColor: "#474d5f",
+    backgroundImage: "/img/z350/z350.webp",
+    detailBackgroundImage: "/img/z350/z350_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Nissan 350Z",
     logo: getLogo("nissan"),
     model: `${BASE_URL}/nissan_350z_opt.glb`,
@@ -1474,8 +1523,10 @@ export const cars = {
 
   rx7_fd: {
     id: "rx7_fd",
+    backgroundColor: "#4c1d34",
+    backgroundImage: "/img/rx7/rx7.webp",
+    detailBackgroundImage: "/img/rx7/rx7_motore.webp",
     pillarColors: FLAG_JAPAN,
-    midDominance: 0.78,
     name: "Mazda RX-7",
     logo: getLogo("mazda"),
     model: `${BASE_URL}/mazda_rx7_opt.glb`,
@@ -1556,6 +1607,9 @@ export const cars = {
 
   tt_rs: {
     id: "tt_rs",
+    backgroundColor: "#871a33",
+    backgroundImage: "/img/tt_rs/tt_rs.webp",
+    detailBackgroundImage: "/img/tt_rs/tt_rs_motore.webp",
     pillarColors: FLAG_GERMANY,
     name: "Audi TT RS",
     logo: getLogo("audi"),
