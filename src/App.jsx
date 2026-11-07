@@ -1,5 +1,5 @@
 import "./App.css";
-import { Component, useState, lazy } from "react";
+import { Component, useEffect, useState, lazy } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -36,6 +36,17 @@ class CanvasErrorBoundary extends Component {
 
 function PageBackground() {
   const { pathname } = useLocation();
+  const [isMobile, setIsMobile] = useState(() =>
+    window.matchMedia("(max-width: 768px)").matches,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleChange = (event) => setIsMobile(event.matches);
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   if (pathname === "/") {
     return <DiagonalBackground imageType="home" />;
@@ -47,13 +58,13 @@ function PageBackground() {
         raysColor="#ffffff"
         raysSpeed={0.45}
         lightSpread={0.65}
-        rayLength={1.8}
+        rayLength={isMobile ? 2.6 : 1.8}
         rayDensity={0.6}
         raySharpness={0.3}
         glow={0.45}
         haze={0.12}
         atmosphere={0.4}
-        intensity={0.65}
+        intensity={isMobile ? 1.1 : 0.65}
         pulsating={false}
         followMouse={false}
         mouseInfluence={0}
@@ -62,7 +73,7 @@ function PageBackground() {
         noiseAmount={0}
         distortion={0}
         intro={false}
-        opacity={0.75}
+        opacity={isMobile ? 1 : 0.75}
         maxDevicePixelRatio={1.25}
         className="experience-light-rays"
       />
