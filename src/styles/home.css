@@ -392,6 +392,10 @@ nav.pt-4.navbar.navbar-expand-lg.navbar-dark {
     text-align: center;
     font-size: 0.9rem;
   }
+
+  .footer2.container {
+    bottom: 15px;
+  }
   .stats-bottom-center {
     position: absolute !important;
     left: 0 !important;
