@@ -25,11 +25,21 @@
 
 @media (max-width: 767px) {
   .experience-title {
-    font-size: 1.6rem;
+    font-size: clamp(1.35rem, 5.5vw, 1.6rem);
+    margin-bottom: 0.75rem;
   }
 
   .experience-canvas-zone {
-    height: 45vh;
+    height: 42svh;
+  }
+
+  .experience-content {
+    padding-inline: clamp(0.75rem, 3vw, 1.25rem);
+  }
+
+  .experience-back-btn {
+    margin-top: 0.75rem;
+    margin-bottom: calc(1.25rem + env(safe-area-inset-bottom));
   }
 }
 

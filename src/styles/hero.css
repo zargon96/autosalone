@@ -16,7 +16,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding-top: 0px;
+    padding-top: 0;
   }
   .car-stats {
     width: 100% !important;
@@ -54,13 +54,18 @@
     border-radius: 12px;
   }
   .hero-content {
-    margin-top: 100px !important;
-    padding-top: 380px;
+    margin-top: 0 !important;
+    padding-top: 0;
+  }
+
+  .hero-content > .col-md-6.mb-5 {
+    margin-top: clamp(10rem, 80svh, 22rem);
+    margin-bottom: 1.5rem !important;
   }
 
   .canvas-hero {
     margin: 0 !important;
-    transform: translateY(-7vh) !important;
+    transform: none !important;
   }
 
   .car-stats p {
@@ -74,7 +79,7 @@
   }
 
   .tech-sheet {
-    padding: 14px;
+    padding: clamp(0.75rem, 3vw, 1rem);
   }
 }
 

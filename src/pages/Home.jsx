@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
 import { useLang } from "../context/langContext.jsx";
 import useFxRates from "../components/cars/useFxRates.js";
 import { nf0 } from "../components/cars/formatters.js";
@@ -8,7 +15,7 @@ import { cars } from "../components/cars/carsData.js";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { useCanvas } from "../context/CanvasContext";
+import { useCanvas, useHomeIndex } from "../context/CanvasContext";
 import "../styles/home.css";
 import CarSection from "../components/cars/CarSection.jsx";
 
@@ -16,12 +23,12 @@ export default function Home() {
   const {
     setActiveCarId,
     setMode,
-    homeIndex,
     setHomeIndex,
     triggerCarTransitionY,
     selectedBrands,
     activeCarId,
   } = useCanvas();
+  const homeIndex = useHomeIndex();
 
   const { t, lang } = useLang();
   const rates = useFxRates();
@@ -34,7 +41,16 @@ export default function Home() {
   }, [selectedBrands]);
 
   const containerRef = useRef(null);
+  const footerRef = useRef(null);
   const sectionsRef = useRef([]);
+  const sectionRefCallbacks = useMemo(
+    () =>
+      carKeys.map((_, index) => (element) => {
+        sectionsRef.current[index] = element;
+        if (element) element.inert = index !== indexRef.current;
+      }),
+    [carKeys],
+  );
   const indexRef = useRef(homeIndex || 0);
   const [currentIndex, setCurrentIndex] = useState(homeIndex || 0);
   const animatingRef = useRef(false);
@@ -54,6 +70,25 @@ export default function Home() {
     setHomeIndex(startIndex);
     initDone.current = false;
   }, [carKeys, activeCarId, setHomeIndex]);
+
+  useLayoutEffect(() => {
+    const statsRow =
+      sectionsRef.current[currentIndex]?.querySelector(".stats-row");
+    const footer = footerRef.current;
+    if (!statsRow || !footer) return undefined;
+
+    const updateFooterWidth = () => {
+      footer.style.setProperty(
+        "--footer-panel-width",
+        `${statsRow.getBoundingClientRect().width}px`,
+      );
+    };
+
+    updateFooterWidth();
+    const observer = new ResizeObserver(updateFooterWidth);
+    observer.observe(statsRow);
+    return () => observer.disconnect();
+  }, [carKeys, currentIndex]);
 
   const formatPower = useCallback(
     (specs) => {
@@ -122,6 +157,9 @@ export default function Home() {
         autoAlpha: (i) => (i === indexRef.current ? 1 : 0),
         force3D: true,
       });
+      sections.forEach((section, index) => {
+        section.inert = index !== indexRef.current;
+      });
     });
 
     setMode("static");
@@ -146,6 +184,8 @@ export default function Home() {
 
       const from = sections[cur];
       const to = sections[nextIndex];
+      from.inert = true;
+      to.inert = false;
 
       triggerCarTransitionY.current?.(dir > 0 ? "next" : "prev", () => {
         setActiveCarId(carKeys[nextIndex]);
@@ -176,8 +216,14 @@ export default function Home() {
 
   useEffect(() => {
     const WHEEL_THRESHOLD = 100;
+    const isBrandFilterOpen = () =>
+      Boolean(document.querySelector(".brand-filter-offcanvas.show"));
 
     const onWheel = (e) => {
+      if (isBrandFilterOpen()) {
+        wheelAccRef.current = 0;
+        return;
+      }
       if (animatingRef.current) return;
       wheelAccRef.current += e.deltaY;
       if (wheelAccRef.current > WHEEL_THRESHOLD) {
@@ -192,6 +238,7 @@ export default function Home() {
     };
 
     const onKey = (e) => {
+      if (isBrandFilterOpen()) return;
       const down = ["ArrowDown", "PageDown"];
       const up = ["ArrowUp", "PageUp"];
       if (down.includes(e.key) || (e.key === " " && !e.shiftKey)) {
@@ -204,9 +251,17 @@ export default function Home() {
     };
 
     const onTouchStart = (e) => {
+      if (isBrandFilterOpen()) {
+        touchStartY.current = null;
+        return;
+      }
       touchStartY.current = e.touches[0].clientY;
     };
     const onTouchMove = (e) => {
+      if (isBrandFilterOpen()) {
+        touchStartY.current = null;
+        return;
+      }
       if (touchStartY.current == null) return;
       if (animatingRef.current) return;
       const d = touchStartY.current - e.touches[0].clientY;
@@ -275,13 +330,13 @@ export default function Home() {
               price={formatPrice(car.stats.price_eur)}
               power={formatPower(car.specs)}
               onNavigate={handleNavigate}
-              sectionRef={(el) => (sectionsRef.current[i] = el)}
+              sectionRef={sectionRefCallbacks[i]}
               isActive={i === currentIndex}
             />
           );
         })}
 
-        <footer className="footer2 container">
+        <footer ref={footerRef} className="footer2 container">
           <p className="footer-text text-color">
             © <time dateTime="2025-2026">2025–2026</time> {t.footer.brand}.{" "}
             {t.footer.text}

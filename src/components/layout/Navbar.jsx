@@ -43,7 +43,7 @@ export default function NavigationBar() {
             $active={lang === "it"}
             $invertText={shouldInvert}
           >
-            IT
+            <span className="navbar-button-content">IT</span>
           </LangButton>
           <span className="mx-2 text-color">|</span>
           <LangButton
@@ -54,25 +54,27 @@ export default function NavigationBar() {
             $active={lang === "en"}
             $invertText={shouldInvert}
           >
-            EN
+            <span className="navbar-button-content">EN</span>
           </LangButton>
         </div>
 
         <div className="ms-auto">
           <BrandFilter
             trigger={
-              <LangButton
+              <FilterButton
                 type="button"
                 $gradient={gradient}
-                $active={true}
+                $shadow={`${gradientColors[0]}33 0 8px 20px -5px`}
                 $invertText={shouldInvert}
                 aria-label="Apri filtri auto"
               >
-                <FontAwesomeIcon icon={faSlidersH} />
-                {isFiltered && (
-                  <span className="filter-badge">{selectedBrands.length}</span>
-                )}
-              </LangButton>
+                <span className="navbar-button-content">
+                  <FontAwesomeIcon icon={faSlidersH} />
+                  {isFiltered && (
+                    <span className="filter-badge">{selectedBrands.length}</span>
+                  )}
+                </span>
+              </FilterButton>
             }
           />
         </div>
@@ -82,18 +84,110 @@ export default function NavigationBar() {
 }
 
 const LangButton = styled.button`
+  --button-bg: #000;
   position: relative;
-  background: ${({ $active, $gradient }) => ($active ? $gradient : "none")};
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: ${({ $active, $gradient }) =>
+    $active ? $gradient : "transparent"};
   border: none;
   cursor: pointer;
-  color: ${({ $active, $invertText }) =>
-    $active && $invertText ? "#000000" : "var(--text-color)"};
+  color: var(--text-color);
   font-weight: 700;
-  border: 2px solid
-    ${({ $active, $invertText }) =>
-      $active ? ($invertText ? "#000000" : "#ffffff") : "transparent"};
   font-size: 1rem;
-  padding: 2px 6px;
+  padding: ${({ $active }) => ($active ? "2px" : "0.35rem 0.55rem")};
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  .navbar-button-content {
+    position: relative;
+    display: inline-flex;
+    min-width: ${({ $active }) => ($active ? "2.4rem" : "auto")};
+    min-height: ${({ $active }) => ($active ? "2rem" : "auto")};
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: ${({ $active }) => ($active ? "0.4rem 0.65rem" : "0")};
+    border-radius: 6px;
+    background: ${({ $active }) =>
+      $active ? "var(--button-bg)" : "transparent"};
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:hover .navbar-button-content {
+    background: transparent;
+    color: ${({ $active, $invertText }) =>
+      $active && $invertText ? "#000" : "#fff"};
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+`;
+
+const FilterButton = styled.button`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 0;
+  border-radius: 8px;
+  background: ${({ $gradient }) => $gradient};
+  color: #fff;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
+
+  .navbar-button-content {
+    position: relative;
+    display: inline-flex;
+    min-width: 2.4rem;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
+    background: #000;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: ${({ $shadow }) => $shadow};
+  }
+
+  &:hover .navbar-button-content {
+    background: transparent;
+    color: ${({ $invertText }) => ($invertText ? "#000" : "#fff")};
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
 `;

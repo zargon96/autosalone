@@ -1,7 +1,10 @@
 import { memo } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import BlurText from "../ui/BlurText";
 import ButtonGlobal from "../ui/ButtonGlobal";
 import caretRight from "../../assets/caret-right-fill.svg";
+
+const MotionSpan = motion.span;
 
 const CarSection = memo(function CarSection({
   car,
@@ -14,8 +17,10 @@ const CarSection = memo(function CarSection({
   sectionRef,
   isActive,
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
-    <section className="car-section" ref={sectionRef} inert={!isActive}>
+    <section className="car-section" ref={sectionRef} inert>
       <div className="title-top-left">
         <BlurText
           text={car.name}
@@ -39,13 +44,33 @@ const CarSection = memo(function CarSection({
       />
 
       <div className="price-top-right text-end">
-        <BlurText
-          text={price}
-          delay={40}
-          animateBy="letters"
-          direction="top"
-          className="text-color price-value"
-        />
+        <div
+          className="price-underline-wrap"
+          style={{ "--price-accent": car.backgroundColor ?? "#ffffff" }}
+        >
+          {price !== "—" && (
+            <MotionSpan
+              key={isActive ? "active" : "inactive"}
+              className="price-highlight"
+              aria-hidden="true"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: isActive ? 1 : 0 }}
+              style={{ transformOrigin: "left center" }}
+              transition={{
+                duration: prefersReducedMotion ? 0 : isActive ? 1.8 : 0.15,
+                delay: isActive && !prefersReducedMotion ? 0.15 : 0,
+                ease: "easeOut",
+              }}
+            />
+          )}
+          <BlurText
+            text={price}
+            delay={40}
+            animateBy="letters"
+            direction="top"
+            className="text-color price-value"
+          />
+        </div>
       </div>
 
       <div className="stats-bottom-center">

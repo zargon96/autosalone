@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useRef,
+  useMemo,
 } from "react";
 import { allBrands } from "../components/cars/BrandFilter.jsx";
 
@@ -12,6 +13,7 @@ const CanvasContext = createContext();
 
 // context "live" — cambia spesso
 const CanvasLiveContext = createContext();
+const HomeIndexContext = createContext(0);
 
 export function CanvasProvider({ children }) {
   const [activeCarId, setActiveCarId] = useState(null);
@@ -34,43 +36,58 @@ export function CanvasProvider({ children }) {
     setExperienceCamera(null);
   }, []);
 
+  const canvasValue = useMemo(
+    () => ({
+      activeCarId,
+      setActiveCarId,
+      mode,
+      setMode,
+      setHomeIndex,
+      activeStep,
+      setActiveStep,
+      experienceSteps,
+      setExperienceSteps,
+      onStepClick,
+      setOnStepClick,
+      resetExperienceCamera,
+      hotspotsReady,
+      setHotspotsReady,
+      triggerCarTransition,
+      triggerCarTransitionY,
+      selectedBrands,
+      setSelectedBrands,
+    }),
+    [
+      activeCarId,
+      mode,
+      activeStep,
+      experienceSteps,
+      onStepClick,
+      resetExperienceCamera,
+      hotspotsReady,
+      selectedBrands,
+    ],
+  );
+  const liveValue = useMemo(
+    () => ({
+      experienceCamera,
+      setExperienceCamera,
+      experienceRotation,
+      setExperienceRotation,
+      hotspotPositions,
+      setHotspotPositions,
+    }),
+    [experienceCamera, experienceRotation, hotspotPositions],
+  );
+
   return (
-    <CanvasContext.Provider
-      value={{
-        activeCarId,
-        setActiveCarId,
-        mode,
-        setMode,
-        homeIndex,
-        setHomeIndex,
-        activeStep,
-        setActiveStep,
-        experienceSteps,
-        setExperienceSteps,
-        onStepClick,
-        setOnStepClick,
-        resetExperienceCamera,
-        hotspotsReady,
-        setHotspotsReady,
-        triggerCarTransition,
-        triggerCarTransitionY,
-        selectedBrands,
-        setSelectedBrands,
-      }}
-    >
-      <CanvasLiveContext.Provider
-        value={{
-          experienceCamera,
-          setExperienceCamera,
-          experienceRotation,
-          setExperienceRotation,
-          hotspotPositions,
-          setHotspotPositions,
-        }}
-      >
-        {children}
-      </CanvasLiveContext.Provider>
-    </CanvasContext.Provider>
+    <HomeIndexContext.Provider value={homeIndex}>
+      <CanvasContext.Provider value={canvasValue}>
+        <CanvasLiveContext.Provider value={liveValue}>
+          {children}
+        </CanvasLiveContext.Provider>
+      </CanvasContext.Provider>
+    </HomeIndexContext.Provider>
   );
 }
 
@@ -80,4 +97,9 @@ export function useCanvas() {
 
 export function useCanvasLive() {
   return useContext(CanvasLiveContext);
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function useHomeIndex() {
+  return useContext(HomeIndexContext);
 }

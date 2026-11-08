@@ -1199,7 +1199,7 @@ export const cars = {
 
   supra_mk4: {
     id: "supra_mk4",
-    backgroundColor: "#ff6c75",
+    backgroundColor: "#ae3328",
     backgroundImage: "/img/supra/supra.webp",
     detailBackgroundImage: "/img/supra/supra_motore.webp",
     pillarColors: FLAG_JAPAN,

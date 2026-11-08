@@ -6,12 +6,13 @@ import { useCanvas } from "../../context/CanvasContext.jsx";
 import "../../styles/brandFilter.css";
 import { useLang } from "../../context/langContext.jsx";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const allBrands = [
   ...new Set(Object.values(cars).map((car) => car.name.split(" ")[0])),
 ].sort();
 
 export default function BrandFilter({ trigger }) {
-  const { selectedBrands, setSelectedBrands } = useCanvas();
+  const { activeCarId, selectedBrands, setSelectedBrands } = useCanvas();
   const { t } = useLang();
   const offcanvasRef = useRef(null);
   const bsOffcanvasRef = useRef(null);
@@ -53,6 +54,10 @@ export default function BrandFilter({ trigger }) {
           className="offcanvas offcanvas-end brand-filter-offcanvas"
           tabIndex="-1"
           aria-labelledby="brandFilterLabel"
+          style={{
+            "--filter-accent":
+              cars[activeCarId]?.pillarColors?.top ?? "#8b5cf6",
+          }}
         >
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="brandFilterLabel">
@@ -78,25 +83,42 @@ export default function BrandFilter({ trigger }) {
               </div>
             )}
 
-            <div className="brand-list">
-              {allBrands.map((brand) => {
-                const count = Object.values(cars).filter(
-                  (c) => c.name.split(" ")[0] === brand,
-                ).length;
+            <div className="container-fluid brand-filter-grid">
+              <div className="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3">
+                {allBrands.map((brand) => {
+                  const brandCars = Object.values(cars).filter(
+                    (car) => car.name.split(" ")[0] === brand,
+                  );
+                  const count = brandCars.length;
+                  const logo = brandCars[0]?.logo;
+                  const isSelected = selectedBrands.includes(brand);
 
-                return (
-                  <label key={brand} className="brand-item">
-                    <input
-                      type="checkbox"
-                      className="brand-checkbox"
-                      checked={selectedBrands.includes(brand)}
-                      onChange={() => toggleBrand(brand)}
-                    />
-                    <span className="brand-name">{brand}</span>
-                    <span className="brand-count">{count}</span>
-                  </label>
-                );
-              })}
+                  return (
+                    <div key={brand} className="col">
+                      <label
+                        className={`brand-card${isSelected ? " is-selected" : ""}`}
+                      >
+                        <input
+                          type="checkbox"
+                          className="brand-card-checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleBrand(brand)}
+                        />
+                        <span className="brand-card-logo">
+                          <img
+                            src={logo}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </span>
+                        <span className="brand-card-name">{brand}</span>
+                        <span className="brand-card-count">{count}</span>
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>,

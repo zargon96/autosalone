@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+.diagonal-background__scene {
+  position: absolute;
+  inset: 0;
+}
+
+.diagonal-background__scene.is-incoming {
+  z-index: 1;
+}
+
 .diagonal-background__color {
   position: absolute;
   inset: 0;
@@ -31,6 +40,11 @@
 
 .diagonal-background__image.is-visible {
   opacity: 1;
+}
+
+.diagonal-background__scene .diagonal-background__image {
+  opacity: 1;
+  transition: none;
 }
 
 .diagonal-background__divider {

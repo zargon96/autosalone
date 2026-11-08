@@ -40,25 +40,24 @@ const OFFSCREEN_Y = 8;
 
 const CAR_ENTRIES = Object.entries(cars);
 const CAR_URLS = CAR_ENTRIES.map(([, car]) => car.model);
-const CAR_IMAGE_URLS = [
-  ...new Set(
-    CAR_ENTRIES.flatMap(([, car]) =>
-      [car.backgroundImage, car.detailBackgroundImage, car.logo].filter(
-        Boolean,
-      ),
-    ),
-  ),
+const CAR_BACKGROUND_IMAGE_URLS = [
+  ...new Set(CAR_ENTRIES.map(([, car]) => car.backgroundImage).filter(Boolean)),
 ];
+const CAR_BACKGROUND_IMAGE_CACHE = new Map();
 
 const CAR_IMAGES_PRELOAD = Promise.all(
-  CAR_IMAGE_URLS.map(async (src) => {
+  CAR_BACKGROUND_IMAGE_URLS.map(async (src) => {
     const image = new Image();
+    image.decoding = "async";
+    image.fetchPriority = "low";
     image.src = src;
+    CAR_BACKGROUND_IMAGE_CACHE.set(src, image);
 
     try {
       await image.decode();
     } catch (error) {
       console.warn(`Unable to preload car image "${src}":`, error);
+      CAR_BACKGROUND_IMAGE_CACHE.delete(src);
     }
   }),
 );
@@ -128,7 +127,7 @@ function useDeviceType() {
 /* ================= CAMERA ================= */
 
 function CameraRig({ mode, device }) {
-  const { camera } = useThree();
+  const { camera, invalidate } = useThree();
   const { experienceCamera } = useCanvasLive();
 
   const defaultCfg = useMemo(() => {
@@ -150,14 +149,18 @@ function CameraRig({ mode, device }) {
       onUpdate: () => {
         camera.lookAt(0, 0, 0);
         camera.updateProjectionMatrix();
+        invalidate();
       },
     });
     gsap.to(camera, {
       fov: defaultCfg.fov,
       duration: 1.2,
-      onUpdate: () => camera.updateProjectionMatrix(),
+      onUpdate: () => {
+        camera.updateProjectionMatrix();
+        invalidate();
+      },
     });
-  }, [experienceCamera, defaultCfg, camera]);
+  }, [experienceCamera, defaultCfg, camera, invalidate]);
 
   useEffect(() => {
     if (!experienceCamera) return;
@@ -175,9 +178,10 @@ function CameraRig({ mode, device }) {
           experienceCamera.target[2],
         );
         camera.updateProjectionMatrix();
+        invalidate();
       },
     });
-  }, [experienceCamera, camera]);
+  }, [experienceCamera, camera, invalidate]);
 
   return null;
 }
@@ -192,7 +196,10 @@ const ModelsGroup = memo(function ModelsGroup({
 }) {
   // Stessi URL (stesso ordine) del preload a livello modulo -> cache hit
   const gltfs = useLoader(GLTFLoader, CAR_URLS, withDraco);
-  const list = Array.isArray(gltfs) ? gltfs : [gltfs];
+  const list = useMemo(
+    () => (Array.isArray(gltfs) ? gltfs : [gltfs]),
+    [gltfs],
+  );
 
   const setupDone = useRef(false);
   const groupRef = useRef(null);
@@ -200,7 +207,7 @@ const ModelsGroup = memo(function ModelsGroup({
   const pendingTransition = useRef(null);
 
   const { triggerCarTransition, triggerCarTransitionY } = useCanvas();
-  const { gl } = useThree();
+  const { gl, invalidate, frameloop } = useThree();
 
   /* ---- Transizione unica (asse "x" o "y") ---- */
   const runTransition = useCallback(
@@ -237,6 +244,7 @@ const ModelsGroup = memo(function ModelsGroup({
           y: exitRotY,
           duration: 0.45,
           ease: "power2.in",
+          onUpdate: invalidate,
         });
       }
 
@@ -244,6 +252,7 @@ const ModelsGroup = memo(function ModelsGroup({
         [axis]: exitPos,
         duration: 0.45,
         ease: "power2.in",
+        onUpdate: invalidate,
         onComplete: () => {
           onMidpoint();
           group.position[axis] = enterPos;
@@ -253,17 +262,19 @@ const ModelsGroup = memo(function ModelsGroup({
             opacity: 1,
             duration: 0.55,
             ease: "power2.out",
+            onUpdate: invalidate,
           });
           gsap.to(group.position, {
             [axis]: 0,
             duration: 0.55,
             ease: "power2.out",
+            onUpdate: invalidate,
             onComplete: finish,
           });
         },
       });
     },
-    [gl],
+    [gl, invalidate],
   );
 
   useEffect(() => {
@@ -294,6 +305,7 @@ const ModelsGroup = memo(function ModelsGroup({
 
     if (autoRotate) {
       group.rotation.y += delta * 0.3;
+      if (frameloop === "demand") invalidate();
       return;
     }
 
@@ -318,6 +330,7 @@ const ModelsGroup = memo(function ModelsGroup({
     group.rotation.x = THREE.MathUtils.lerp(group.rotation.x, d[0], t);
     group.rotation.y = THREE.MathUtils.lerp(group.rotation.y, d[1], t);
     group.rotation.z = THREE.MathUtils.lerp(group.rotation.z, d[2], t);
+    if (frameloop === "demand") invalidate();
   });
 
   useEffect(() => {
@@ -576,11 +589,12 @@ export default function GlobalCanvas({ onReady, activeStep }) {
   return (
     <>
       <Canvas
+        frameloop={mode === "static" ? "demand" : "always"}
         shadows={false}
-        dpr={isMobile ? 1.5 : 2}
+        dpr={isMobile ? [1, 1.75] : 2}
         gl={{
           powerPreference: "high-performance",
-          antialias: !isMobile,
+          antialias: true,
           alpha: true,
           preserveDrawingBuffer: false,
         }}
@@ -598,7 +612,7 @@ export default function GlobalCanvas({ onReady, activeStep }) {
             files="/venice_sunset_1k.hdr"
             background={false}
             environmentIntensity={1}
-            resolution={16}
+            resolution={isMobile ? 32 : 16}
             frames={1}
           />
           <Warmup onDone={handleWarmupDone} />
