@@ -59,7 +59,7 @@
   }
 
   .hero-content > .col-md-6.mb-5 {
-    margin-top: clamp(10rem, 80svh, 22rem);
+    margin-top: clamp(10rem, 38svh, 22rem);
     margin-bottom: 1.5rem !important;
   }
 
